@@ -1,16 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "love_05",
+  "question_id": "love_02",
   "category": "연애",
-  "part1": "장거리 연애러들 공감할 밸런스게임.",
-  "part2": "장거리 연애 3년 하고 결혼 vs 그냥 지금부터 쭉 솔로.",
-  "part3": "너네라면 뭐 고를 듯?\n#밸런스게임 #공감",
-  "option_a": "장거리 3년",
-  "option_a_sub": "결국 결혼",
-  "option_b": "쭉 솔로",
-  "option_b_sub": "마음은 편함",
-  "comment_type": "프로필유도:5",
-  "comment_text": "다른 질문들도 궁금하면 프로필에 있음 🧑‍💻",
-  "title": "장거리 연애러들 공감할 밸런스게임."
+  "part1": "연애할 때 다들 한 번쯤 겪는 고민.",
+  "part2": "나를 엄청 좋아해주는 사람 vs 내가 엄청 좋아하는 사람.",
+  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#밸런스게임 #선택장애",
+  "option_a": "날 더 좋아함",
+  "option_a_sub": "내 마음은 반반",
+  "option_b": "내가 더 좋아함",
+  "option_b_sub": "상대 마음은 반반",
+  "comment_type": "프로필유도:7",
+  "comment_text": "이런 콘텐츠 계속 받고 싶으면 프로필 확인 🧐",
+  "title": "연애할 때 다들 한 번쯤 겪는 고민."
 }
