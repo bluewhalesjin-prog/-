@@ -9,7 +9,7 @@ GRAPH = "https://graph.threads.net/v1.0"
 
 
 def _post(url: str, params: dict, label: str) -> dict:
-    resp = requests.post(url, data=params, timeout=20)
+    resp = requests.post(url, params=params, timeout=20)
     if not resp.ok:
         print(f"[{label} 실패] status={resp.status_code}")
         print(f"[{label} 응답 본문] {resp.text}")
