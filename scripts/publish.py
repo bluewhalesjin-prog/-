@@ -49,17 +49,15 @@ def main():
     token = load_token()
     user_id = os.environ["THREADS_USER_ID"]
     image_base = os.environ["IMAGE_BASE_URL"].rstrip("/")
-    image_url = f"{image_base}/{draft['card_path']}"
-    
-token = load_token()
-    user_id = os.environ["THREADS_USER_ID"]
-    image_base = os.environ["IMAGE_BASE_URL"].rstrip("/")
     print(f"[디버그] user_id 길이={len(user_id)}, 뒤3글자={repr(user_id[-3:])}, 숫자로만구성={user_id.isdigit()}, token길이={len(token)}")
+    image_url = f"{image_base}/{draft['card_path']}"
 
-result = {
+    result = {
         "date": draft["date"],
-        "question_id": draft.get("question_id"),
+        "title": draft["title"],
+        "mode": draft["mode"],
         "comment_type": draft["comment_type"],
+        "source_url": draft.get("source_url"),
         "card_image": draft["card_path"],
         "image_url": image_url,
         "published": False,
