@@ -1,5 +1,11 @@
 """
-2단계: data/draft.json을 읽어 실제 Threads 발행(또는 DRY_RUN) 후 history.json 갱신
+2단계: data/draft.json 을 읽어 실제 Threads 발행(또는 DRY_RUN)까지 수행하고
+history.json / last_result.json 을 갱신한다. 이미지가 이미 공개 URL로 접근 가능해야 한다.
+
+환경변수:
+    THREADS_ACCESS_TOKEN, THREADS_USER_ID  (필수)
+    IMAGE_BASE_URL                          (필수. 예: https://cdn.jsdelivr.net/gh/OWNER/REPO@SHA)
+    DRY_RUN=true                            (선택)
 """
 import json
 import os
@@ -49,15 +55,14 @@ def main():
     token = load_token()
     user_id = os.environ["THREADS_USER_ID"]
     image_base = os.environ["IMAGE_BASE_URL"].rstrip("/")
-    print(f"[디버그] user_id 길이={len(user_id)}, 뒤3글자={repr(user_id[-3:])}, 숫자로만구성={user_id.isdigit()}, token길이={len(token)}")
     image_url = f"{image_base}/{draft['card_path']}"
 
     result = {
         "date": draft["date"],
-        "title": draft["title"],
-        "mode": draft["mode"],
+        "question_id": draft["question_id"],
+        "category": draft["category"],
         "comment_type": draft["comment_type"],
-        "source_url": draft.get("source_url"),
+        "cta_index": draft["comment_type"].split(":")[1] if ":" in draft["comment_type"] else None,
         "card_image": draft["card_path"],
         "image_url": image_url,
         "published": False,
