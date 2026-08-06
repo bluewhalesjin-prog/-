@@ -106,14 +106,14 @@ def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, st
         last_type = e.get("comment_type") if edate == today - timedelta(days=1) else last_type
 
     candidates = ["본진블로그", "프로필유도", "무댓글"]
-    if this_week_blog_count >= 2 or last_type == "본진블로그":
+    if not blog_url or this_week_blog_count >= 2 or last_type == "본진블로그":
         if "본진블로그" in candidates:
             candidates.remove("본진블로그")
 
     chosen = random.choice(candidates)
 
     if chosen == "본진블로그":
-        return chosen, f"숨은 이야기 더 보기 👉 {blog_url}" if blog_url else (None, None)
+        return chosen, f"숨은 이야기 더 보기 👉 {blog_url}"
     if chosen == "프로필유도":
         used_recent = {e.get("cta_index") for e in entries[-3:] if e.get("comment_type") == "프로필유도"}
         pool = [i for i in range(len(PROFILE_CTAS)) if i not in used_recent] or list(range(len(PROFILE_CTAS)))
