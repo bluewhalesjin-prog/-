@@ -1,10 +1,10 @@
 {
   "date": "2026-08-06",
-  "question_id": "love_02",
-  "category": "연애",
-  "comment_type": "무댓글",
+  "question_id": "job_02",
+  "category": "직장생활",
+  "comment_type": "본진블로그",
   "cta_index": null,
   "card_image": "data/cards/2026-08-06.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ea1b16b33cc3e09328a07ee356cb419b69825645/data/cards/2026-08-06.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@049598988a1fab7eb7068ef3f9cdb9040e0ff441/data/cards/2026-08-06.png",
   "published": false
 }
