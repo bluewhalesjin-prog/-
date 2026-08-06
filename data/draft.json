@@ -1,19 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_02",
-  "category": "라이프스타일",
-  "part1": "헬스 좀 해본 사람이라면 공감할 밸런스게임.",
-  "part2": "운동은 매일 하고 식단은 자유 vs 운동은 안 하고 식단만 철저히.",
-  "part3": "이건 진짜 케바케인 듯. 너네 선택은?\n#TMI #공감",
-  "option_a": "매일 운동",
-  "option_a_sub": "식단은 자유",
-  "option_b": "운동 안 함",
-  "option_b_sub": "식단만 철저",
-  "comment_type": "본진블로그",
-  "comment_text": [
-    null,
-    null
-  ],
-  "title": "헬스 좀 해본 사람이라면 공감할 밸런스게임."
+  "question_id": "job_08",
+  "category": "직장생활",
+  "part1": "점심시간 스타일도 은근 갈림.",
+  "part2": "점심시간 1시간 칼같이 챙기기 vs 점심 짧게 먹고 그만큼 일찍 퇴근하기.",
+  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #밸런스게임",
+  "option_a": "점심 1시간",
+  "option_a_sub": "퇴근은 정시",
+  "option_b": "점심은 짧게",
+  "option_b_sub": "퇴근은 일찍",
+  "comment_type": "프로필유도:0",
+  "comment_text": "이런 밸런스게임 매일 하나씩 올림. 프로필 확인 🔍",
+  "title": "점심시간 스타일도 은근 갈림."
 }
