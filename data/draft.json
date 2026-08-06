@@ -1,19 +1,19 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_03",
+  "question_id": "life_01",
   "category": "라이프스타일",
-  "part1": "돈 모으는 방식도 사람마다 다름.",
-  "part2": "돈 아끼며 여행 자주 가기 vs 돈 모아서 한 번 크게 가기.",
-  "part3": "나는 진심 고민되던데, 너넨 어때?\n#밸런스게임 #TMI",
-  "option_a": "자주 소소하게",
-  "option_a_sub": "여행 퀄리티는 낮음",
-  "option_b": "가끔 크게",
-  "option_b_sub": "기다리는 시간 김",
+  "part1": "자기계발 좀 해본 사람이면 다 아는 그 고민.",
+  "part2": "억지로 아침형 인간 되기 vs 밤에 집중 잘되는 패턴 유지하기.",
+  "part3": "나는 진심 고민되던데, 너넨 어때?\n#선택장애 #밸런스게임",
+  "option_a": "아침형 전환",
+  "option_a_sub": "적응 힘듦",
+  "option_b": "야행성 유지",
+  "option_b_sub": "아침이 늘 힘듦",
   "comment_type": "본진블로그",
   "comment_text": [
     null,
     null
   ],
-  "title": "돈 모으는 방식도 사람마다 다름."
+  "title": "자기계발 좀 해본 사람이면 다 아는 그 고민."
 }
