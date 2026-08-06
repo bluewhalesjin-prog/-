@@ -1,19 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_08",
-  "category": "라이프스타일",
-  "part1": "취미에 돈 쓰는 스타일도 다름.",
-  "part2": "취미엔 돈 아낌없이 쓰는 사람 vs 취미도 가성비 따지는 사람.",
-  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #밸런스게임",
-  "option_a": "아낌없이 씀",
-  "option_a_sub": "통장은 얇아짐",
-  "option_b": "가성비 따짐",
-  "option_b_sub": "만족도는 낮을 때도",
-  "comment_type": "본진블로그",
-  "comment_text": [
-    null,
-    null
-  ],
-  "title": "취미에 돈 쓰는 스타일도 다름."
+  "question_id": "love_05",
+  "category": "연애",
+  "part1": "장거리 연애러들 공감할 밸런스게임.",
+  "part2": "장거리 연애 3년 하고 결혼 vs 그냥 지금부터 쭉 솔로.",
+  "part3": "너네라면 뭐 고를 듯?\n#밸런스게임 #공감",
+  "option_a": "장거리 3년",
+  "option_a_sub": "결국 결혼",
+  "option_b": "쭉 솔로",
+  "option_b_sub": "마음은 편함",
+  "comment_type": "프로필유도:5",
+  "comment_text": "다른 질문들도 궁금하면 프로필에 있음 🧑‍💻",
+  "title": "장거리 연애러들 공감할 밸런스게임."
 }
