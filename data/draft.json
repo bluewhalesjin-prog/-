@@ -1,19 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_03",
-  "category": "라이프스타일",
-  "part1": "돈 모으는 방식도 사람마다 다름.",
-  "part2": "돈 아끼며 여행 자주 가기 vs 돈 모아서 한 번 크게 가기.",
-  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #공감",
-  "option_a": "자주 소소하게",
-  "option_a_sub": "여행 퀄리티는 낮음",
-  "option_b": "가끔 크게",
-  "option_b_sub": "기다리는 시간 김",
-  "comment_type": "본진블로그",
-  "comment_text": [
-    null,
-    null
-  ],
-  "title": "돈 모으는 방식도 사람마다 다름."
+  "question_id": "love_01",
+  "category": "연애",
+  "part1": "나 궁금한데 스레드에서 다들 이거 어떻게 생각하는지.",
+  "part2": "이상형인데 3개월 안에 헤어질 사람, 그냥 그런데 편하게 오래갈 사람.",
+  "part3": "나는 진심 고민되던데, 너넨 어때?\n#공감 #선택장애",
+  "option_a": "이상형",
+  "option_a_sub": "3개월 컷",
+  "option_b": "그냥 그런 사람",
+  "option_b_sub": "평생 편함",
+  "comment_type": "프로필유도:0",
+  "comment_text": "이런 밸런스게임 매일 하나씩 올림. 프로필 확인 🔍",
+  "title": "나 궁금한데 스레드에서 다들 이거 어떻게 생각하는지."
 }
