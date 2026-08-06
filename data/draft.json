@@ -1,16 +1,19 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "job_08",
-  "category": "직장생활",
-  "part1": "점심시간 스타일도 은근 갈림.",
-  "part2": "점심시간 1시간 칼같이 챙기기 vs 점심 짧게 먹고 그만큼 일찍 퇴근하기.",
-  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #밸런스게임",
-  "option_a": "점심 1시간",
-  "option_a_sub": "퇴근은 정시",
-  "option_b": "점심은 짧게",
-  "option_b_sub": "퇴근은 일찍",
-  "comment_type": "프로필유도:0",
-  "comment_text": "이런 밸런스게임 매일 하나씩 올림. 프로필 확인 🔍",
-  "title": "점심시간 스타일도 은근 갈림."
+  "question_id": "love_02",
+  "category": "연애",
+  "part1": "연애할 때 다들 한 번쯤 겪는 고민.",
+  "part2": "나를 엄청 좋아해주는 사람 vs 내가 엄청 좋아하는 사람.",
+  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#밸런스게임 #공감",
+  "option_a": "날 더 좋아함",
+  "option_a_sub": "내 마음은 반반",
+  "option_b": "내가 더 좋아함",
+  "option_b_sub": "상대 마음은 반반",
+  "comment_type": "본진블로그",
+  "comment_text": [
+    null,
+    null
+  ],
+  "title": "연애할 때 다들 한 번쯤 겪는 고민."
 }
