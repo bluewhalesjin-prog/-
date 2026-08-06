@@ -1,10 +1,10 @@
 {
   "date": "2026-08-06",
-  "question_id": "life_03",
-  "category": "라이프스타일",
-  "comment_type": "프로필유도:6",
-  "cta_index": "6",
+  "question_id": "love_02",
+  "category": "연애",
+  "comment_type": "무댓글",
+  "cta_index": null,
   "card_image": "data/cards/2026-08-06.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@bf7e4612d6897fb1f3c9f17d2607b3455732fb2d/data/cards/2026-08-06.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ea1b16b33cc3e09328a07ee356cb419b69825645/data/cards/2026-08-06.png",
   "published": false
 }
