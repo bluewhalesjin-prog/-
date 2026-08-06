@@ -1,16 +1,19 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "love_02",
-  "category": "연애",
-  "part1": "연애할 때 다들 한 번쯤 겪는 고민.",
-  "part2": "나를 엄청 좋아해주는 사람 vs 내가 엄청 좋아하는 사람.",
-  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#밸런스게임 #선택장애",
-  "option_a": "날 더 좋아함",
-  "option_a_sub": "내 마음은 반반",
-  "option_b": "내가 더 좋아함",
-  "option_b_sub": "상대 마음은 반반",
-  "comment_type": "프로필유도:7",
-  "comment_text": "이런 콘텐츠 계속 받고 싶으면 프로필 확인 🧐",
-  "title": "연애할 때 다들 한 번쯤 겪는 고민."
+  "question_id": "life_03",
+  "category": "라이프스타일",
+  "part1": "돈 모으는 방식도 사람마다 다름.",
+  "part2": "돈 아끼며 여행 자주 가기 vs 돈 모아서 한 번 크게 가기.",
+  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #공감",
+  "option_a": "자주 소소하게",
+  "option_a_sub": "여행 퀄리티는 낮음",
+  "option_b": "가끔 크게",
+  "option_b_sub": "기다리는 시간 김",
+  "comment_type": "본진블로그",
+  "comment_text": [
+    null,
+    null
+  ],
+  "title": "돈 모으는 방식도 사람마다 다름."
 }
