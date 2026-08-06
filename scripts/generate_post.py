@@ -1,5 +1,10 @@
 """
 스레드 3파트 타래 글 생성 (밸런스게임/질문형 포맷, AI 호출 없음)
+
+- question_bank.py 에서 최근에 안 쓴 질문을 골라 사용 (전체를 다 돌 때까지 반복 방지)
+- 1~2파트: 상황극 설정 (질문 뱅크의 setup 두 줄)
+- 3파트: 궁금증 유발 마무리 + A/B 카드 이미지 + 댓글 유도 문구
+- 첫 댓글: 본진블로그/프로필유도/무댓글 랜덤, 빈도 제한(본진블로그 주 2회, 연속 금지)
 """
 import json
 import os
@@ -10,9 +15,9 @@ from question_bank import QUESTIONS
 
 CURIOSITY_PATTERNS = [
     "너네라면 뭐 고를 듯?",
-    "나는 진심 고민되던데, 너넨 어때?",
-    "생각보다 반반으로 갈리더라. 댓글로 골라줘.",
-    "이건 진짜 케바케인 듯. 너네 선택은?",
+    "나는 진짜 고민됨. 너넨 뭐 고를 듯?",
+    "생각보다 반반으로 갈림. 댓글로 골라줘.",
+    "이건 진짜 케바케인 듯. 너네 선택은 뭐임?",
 ]
 
 PROFILE_CTAS = [
@@ -39,9 +44,11 @@ def load_history(history_path: str) -> dict:
 
 
 def pick_question(history: dict) -> dict:
+    """최근에 안 쓴 질문 우선 선택. 전체를 다 쓰면 다시 처음부터 순환."""
     entries = history.get("entries", [])
     used_ids = [e.get("question_id") for e in entries if e.get("question_id")]
-    recent_used = set(used_ids[-(len(QUESTIONS) - 1):])
+    recent_used = set(used_ids[-(len(QUESTIONS) - 1):])  # 전체 뱅크를 거의 다 돌기 전엔 반복 안 함
+
     candidates = [q for q in QUESTIONS if q["id"] not in recent_used]
     if not candidates:
         candidates = QUESTIONS
@@ -49,6 +56,7 @@ def pick_question(history: dict) -> dict:
 
 
 def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, str]:
+    """comment_type 랜덤 선택. 본진블로그는 주 2회, 연속 금지."""
     entries = history.get("entries", [])
     today = today or datetime.now().date()
     week_start = today - timedelta(days=today.weekday())
