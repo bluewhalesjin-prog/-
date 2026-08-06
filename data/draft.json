@@ -1,16 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "taste_07",
-  "category": "가벼운취향",
-  "part1": "라면 취향으로 은근 갈리는 사람들.",
-  "part2": "매콤한 신라면파 vs 깔끔한 진라면파.",
-  "part3": "이건 진짜 케바케인 듯. 너네 선택은?\n#밸런스게임 #공감",
-  "option_a": "신라면파",
-  "option_a_sub": "매콤한 게 최고",
-  "option_b": "진라면파",
-  "option_b_sub": "깔끔한 국물 최고",
-  "comment_type": "프로필유도:2",
-  "comment_text": "이런 거 계속 보고 싶으면 프로필 링크 확인 🔗",
-  "title": "라면 취향으로 은근 갈리는 사람들."
+  "question_id": "life_05",
+  "category": "라이프스타일",
+  "part1": "계획형 vs 즉흥형, 은근 성격 갈리는 주제.",
+  "part2": "하루 일정 다 짜놓고 움직이기 vs 그때그때 즉흥적으로 움직이기.",
+  "part3": "너네라면 뭐 고를 듯?\n#밸런스게임 #공감",
+  "option_a": "계획형",
+  "option_a_sub": "안정적이지만 뻔함",
+  "option_b": "즉흥형",
+  "option_b_sub": "재밌지만 피곤함",
+  "comment_type": "무댓글",
+  "comment_text": null,
+  "title": "계획형 vs 즉흥형, 은근 성격 갈리는 주제."
 }
