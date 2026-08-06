@@ -1,3 +1,12 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "date": "2026-08-06",
+      "question_id": "job_08",
+      "comment_type": "프로필유도:0",
+      "card_image": "data/cards/2026-08-06.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@0e483ffdd8e4cd59dd604ec4fe7d2849cf25a8f7/data/cards/2026-08-06.png",
+      "published": false
+    }
+  ]
 }
