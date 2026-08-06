@@ -2,8 +2,8 @@ name: daily-threads-post
 
 on:
   schedule:
-    - cron: '30 10 * * *' 
-    workflow_dispatch:
+    - cron: '30 10 * * *'
+  workflow_dispatch:
     inputs:
       dry_run:
         description: "true로 두면 실제 발행 없이 초안/이미지만 생성"
