@@ -14,12 +14,29 @@ from datetime import datetime, timedelta
 
 from question_bank import QUESTIONS
 
+
+def has_batchim(word: str) -> bool:
+    """단어의 마지막 글자에 받침이 있는지 확인 (조사 이/가, 이랑/랑, 이냐/냐 등 선택용)."""
+    if not word:
+        return False
+    last = word[-1]
+    code = ord(last)
+    if 0xAC00 <= code <= 0xD7A3:
+        return (code - 0xAC00) % 28 != 0
+    return False
+
+
+def josa(word: str, with_batchim: str, without_batchim: str) -> str:
+    return with_batchim if has_batchim(word) else without_batchim
+
+
 # 마무리 질문 템플릿. {a}/{b}에 그 질문의 실제 option_a/option_b가 들어가서
 # 매번 소재에 딱 맞는 클로징 질문이 되도록 함 (범용 랜덤 문구 지양).
+# {a_nya}/{b_nya}는 "이냐/냐", {a_rang}는 "이랑/랑" 조사가 붙은 형태.
 CLOSING_TEMPLATES = [
     "{a} vs {b}, 너넨 뭐 고를 듯?",
-    "나는 진짜 고민되던데 {a}냐 {b}냐, 너넨 뭐 고를 듯?",
-    "{a}랑 {b} 중에 딱 하나만 골라야 한다면 뭐 고를 듯?",
+    "나는 진짜 고민되던데 {a_nya} {b_nya}, 너넨 뭐 고를 듯?",
+    "{a_rang} {b} 중에 딱 하나만 골라야 한다면 뭐 고를 듯?",
     "이건 진짜 케바케인 듯. {a} vs {b}, 너네 선택은 뭐임?",
     "생각보다 반반으로 갈릴 듯. {a} 아니면 {b}, 댓글로 골라줘.",
 ]
@@ -61,8 +78,14 @@ def pick_question(history: dict) -> dict:
 
 def build_closing(q: dict) -> str:
     """그 질문의 실제 option_a/option_b를 넣어 소재에 맞는 마무리 질문을 만든다."""
+    a, b = q["option_a"], q["option_b"]
     template = random.choice(CLOSING_TEMPLATES)
-    return template.format(a=q["option_a"], b=q["option_b"])
+    return template.format(
+        a=a, b=b,
+        a_nya=a + josa(a, "이냐", "냐"),
+        b_nya=b + josa(b, "이냐", "냐"),
+        a_rang=a + josa(a, "이랑", "랑"),
+    )
 
 
 def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, str]:
