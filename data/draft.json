@@ -1,16 +1,16 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_05",
+  "question_id": "life_01",
   "category": "라이프스타일",
-  "part1": "계획형 vs 즉흥형, 은근 성격 갈리는 주제.",
-  "part2": "하루 일정 다 짜놓고 움직이기 vs 그때그때 즉흥적으로 움직이기.",
-  "part3": "너네라면 뭐 고를 듯?\n#밸런스게임 #공감",
-  "option_a": "계획형",
-  "option_a_sub": "안정적이지만 뻔함",
-  "option_b": "즉흥형",
-  "option_b_sub": "재밌지만 피곤함",
-  "comment_type": "무댓글",
-  "comment_text": null,
-  "title": "계획형 vs 즉흥형, 은근 성격 갈리는 주제."
+  "part1": "자기계발 좀 해본 사람이면 다 아는 그 고민.",
+  "part2": "억지로 아침형 인간 되기 vs 밤에 집중 잘되는 패턴 유지하기.",
+  "part3": "나는 진심 고민되던데, 너넨 어때?\n#공감 #TMI",
+  "option_a": "아침형 전환",
+  "option_a_sub": "적응 힘듦",
+  "option_b": "야행성 유지",
+  "option_b_sub": "아침이 늘 힘듦",
+  "comment_type": "프로필유도:6",
+  "comment_text": "매일 새 밸런스게임 올림. 궁금하면 프로필 확인 🎁",
+  "title": "자기계발 좀 해본 사람이면 다 아는 그 고민."
 }
