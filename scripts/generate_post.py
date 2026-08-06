@@ -2,8 +2,9 @@
 스레드 3파트 타래 글 생성 (밸런스게임/질문형 포맷, AI 호출 없음)
 
 - question_bank.py 에서 최근에 안 쓴 질문을 골라 사용 (전체를 다 돌 때까지 반복 방지)
-- 1~2파트: 상황극 설정 (질문 뱅크의 setup 두 줄)
-- 3파트: 궁금증 유발 마무리 + A/B 카드 이미지 + 댓글 유도 문구
+- 1~2파트: 상황극 설정 (질문 뱅크의 setup 두 줄, 각 파트 약 62~70자 narrative)
+- 3파트: 그 질문의 실제 option_a/option_b를 넣어 만든 맞춤형 마무리 질문
+  (범용 문구 랜덤이 아니라 매번 소재 자체에 맞는 클로징) + A/B 카드 이미지 + 댓글 유도 문구
 - 첫 댓글: 본진블로그/프로필유도/무댓글 랜덤, 빈도 제한(본진블로그 주 2회, 연속 금지)
 """
 import json
@@ -13,11 +14,14 @@ from datetime import datetime, timedelta
 
 from question_bank import QUESTIONS
 
-CURIOSITY_PATTERNS = [
-    "너네라면 뭐 고를 듯?",
-    "나는 진짜 고민됨. 너넨 뭐 고를 듯?",
-    "생각보다 반반으로 갈림. 댓글로 골라줘.",
-    "이건 진짜 케바케인 듯. 너네 선택은 뭐임?",
+# 마무리 질문 템플릿. {a}/{b}에 그 질문의 실제 option_a/option_b가 들어가서
+# 매번 소재에 딱 맞는 클로징 질문이 되도록 함 (범용 랜덤 문구 지양).
+CLOSING_TEMPLATES = [
+    "{a} vs {b}, 너넨 뭐 고를 듯?",
+    "나는 진짜 고민되던데 {a}냐 {b}냐, 너넨 뭐 고를 듯?",
+    "{a}랑 {b} 중에 딱 하나만 골라야 한다면 뭐 고를 듯?",
+    "이건 진짜 케바케인 듯. {a} vs {b}, 너네 선택은 뭐임?",
+    "생각보다 반반으로 갈릴 듯. {a} 아니면 {b}, 댓글로 골라줘.",
 ]
 
 PROFILE_CTAS = [
@@ -53,6 +57,12 @@ def pick_question(history: dict) -> dict:
     if not candidates:
         candidates = QUESTIONS
     return random.choice(candidates)
+
+
+def build_closing(q: dict) -> str:
+    """그 질문의 실제 option_a/option_b를 넣어 소재에 맞는 마무리 질문을 만든다."""
+    template = random.choice(CLOSING_TEMPLATES)
+    return template.format(a=q["option_a"], b=q["option_b"])
 
 
 def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, str]:
@@ -97,7 +107,7 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     part1 = setup_lines[0]
     part2 = setup_lines[1] if len(setup_lines) > 1 else ""
 
-    closing = random.choice(CURIOSITY_PATTERNS)
+    closing = build_closing(q)
     tags = " ".join(random.sample(HASHTAGS, 2))
     part3 = f"{closing}\n{tags}"
 
