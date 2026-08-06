@@ -5,11 +5,11 @@ import os
 import time
 import requests
 
-GRAPH = "https://graph.threads.net/v1.0"
+GRAPH = "https://graph.threads.com/v1.0"
 
 
 def _post(url: str, params: dict, label: str) -> dict:
-    resp = requests.post(url, params=params, timeout=20)
+    resp = requests.post(url, data=params, timeout=20)
     if not resp.ok:
         print(f"[{label} 실패] status={resp.status_code}")
         print(f"[{label} 응답 본문] {resp.text}")
@@ -29,7 +29,7 @@ def _get(url: str, params: dict, label: str) -> dict:
 def refresh_token(token: str) -> dict:
     """장기 토큰 갱신. 발급 후 24시간 이상 지난 토큰만 갱신 가능."""
     return _get(
-        "https://graph.threads.net/refresh_access_token",
+        "https://graph.threads.com/refresh_access_token",
         {"grant_type": "th_refresh_token", "access_token": token},
         "토큰 갱신",
     )
