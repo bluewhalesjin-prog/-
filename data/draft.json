@@ -1,19 +1,19 @@
 {
   "date": "2026-08-06",
   "card_path": "data/cards/2026-08-06.png",
-  "question_id": "life_01",
+  "question_id": "life_08",
   "category": "라이프스타일",
-  "part1": "자기계발 좀 해본 사람이면 다 아는 그 고민.",
-  "part2": "억지로 아침형 인간 되기 vs 밤에 집중 잘되는 패턴 유지하기.",
-  "part3": "나는 진심 고민되던데, 너넨 어때?\n#선택장애 #밸런스게임",
-  "option_a": "아침형 전환",
-  "option_a_sub": "적응 힘듦",
-  "option_b": "야행성 유지",
-  "option_b_sub": "아침이 늘 힘듦",
+  "part1": "취미에 돈 쓰는 스타일도 다름.",
+  "part2": "취미엔 돈 아낌없이 쓰는 사람 vs 취미도 가성비 따지는 사람.",
+  "part3": "생각보다 반반으로 갈리더라. 댓글로 골라줘.\n#선택장애 #밸런스게임",
+  "option_a": "아낌없이 씀",
+  "option_a_sub": "통장은 얇아짐",
+  "option_b": "가성비 따짐",
+  "option_b_sub": "만족도는 낮을 때도",
   "comment_type": "본진블로그",
   "comment_text": [
     null,
     null
   ],
-  "title": "자기계발 좀 해본 사람이면 다 아는 그 고민."
+  "title": "취미에 돈 쓰는 스타일도 다름."
 }
