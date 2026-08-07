@@ -1,12 +1,19 @@
 {
   "date": "2026-08-07",
-  "question_id": "love_07",
+  "question_id": "love_09",
   "category": "연애",
-  "comment_type": "프로필유도:1",
-  "cta_index": "1",
+  "comment_type": "무댓글",
+  "cta_index": null,
   "card_image": "data/cards/2026-08-07.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@14960cbdc886bd701e08eb8220174d40bab534db/data/cards/2026-08-07.png",
-  "published": false,
-  "instagram_published": false,
-  "instagram_skipped_reason": "DRY_RUN"
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@d630664e40d306a3946c219d8f05ff032691a20b/data/cards/2026-08-07.png",
+  "published": true,
+  "permalink": "https://www.threads.com/@pick1_daily/post/DbvfUaioNe-",
+  "post_ids": [
+    "17888439822431994",
+    "17960659971158118",
+    "18413210635151633"
+  ],
+  "instagram_published": true,
+  "instagram_media_id": "17986250810852500",
+  "instagram_permalink": "https://www.instagram.com/p/DbvfcACILLv/"
 }
