@@ -1,6 +1,7 @@
 """
 카드 이미지 생성 v2 (Pillow, 무료/외부 API 불필요).
 - 브랜드 컬러 그라데이션 카드 + 그림자 + 원형 VS 배지 + 워터마크
+- Instagram 캐러셀용 서사 텍스트 슬라이드 카드 생성 기능 포함
 """
 import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -237,8 +238,67 @@ def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: 
     return out_path
 
 
+def make_text_slide(text: str, out_path: str, slide_no: int = None, slide_total: int = None,
+                     handle: str = "@pick1_daily", eyebrow: str = "오늘의 밸런스게임"):
+    """Instagram 캐러셀용 서사(narrative) 텍스트 슬라이드 카드를 렌더링한다.
+    카드 이미지와 동일한 브랜드 톤(배경색/상단 라벨/워터마크)을 유지하고,
+    가운데에 텍스트를 자동 줄바꿈 + 자동 폰트 크기 조정으로 배치한다."""
+    W, H = 1080, 1080
+    img = Image.new("RGBA", (W, H), BG_COLOR + (255,))
+    draw = ImageDraw.Draw(img)
+
+    brand_font = load_font(38)
+    watermark_font = load_font(26)
+
+    # 상단 브랜드 라벨
+    eyebrow_bb = draw.textbbox((0, 0), eyebrow, font=brand_font)
+    eyebrow_w = eyebrow_bb[2] - eyebrow_bb[0]
+    draw.text(((W - eyebrow_w) / 2, 84), eyebrow, font=brand_font, fill=(70, 70, 75))
+    draw.line([(W / 2 - 40, 140), (W / 2 + 40, 140)], fill=(220, 120, 110), width=4)
+
+    # 우상단 슬라이드 번호 배지 (예: 1/3) - 스와이프 유도
+    if slide_no and slide_total:
+        badge = f"{slide_no}/{slide_total}"
+        bb = draw.textbbox((0, 0), badge, font=brand_font)
+        bw = bb[2] - bb[0]
+        draw.text((W - bw - 64, 84), badge, font=brand_font, fill=(180, 180, 185))
+
+    # 중앙 텍스트: 자동 줄바꿈 + 자동 폰트 크기 조정
+    max_w = W - 160
+    font, lines = fit_wrapped_sub(draw, text, max_w, start_size=64, min_size=32, max_lines=9)
+
+    line_metrics = []
+    total_h = 0
+    line_gap = 16
+    for line in lines:
+        lb = draw.textbbox((0, 0), line, font=font)
+        lh = lb[3] - lb[1]
+        line_metrics.append((lh, lb[1]))
+        total_h += lh
+    total_h += line_gap * max(len(lines) - 1, 0)
+
+    top = (H - total_h) / 2 + 30
+    y = top
+    for line, (lh, ltop) in zip(lines, line_metrics):
+        lb = draw.textbbox((0, 0), line, font=font)
+        lw = lb[2] - lb[0]
+        draw.text(((W - lw) / 2, y - ltop), line, font=font, fill=TEXT_DARK)
+        y += lh + line_gap
+
+    # 하단 워터마크
+    wm = f"{handle}  ·  밸런스게임연구소"
+    wb = draw.textbbox((0, 0), wm, font=watermark_font)
+    ww = wb[2] - wb[0]
+    draw.text(((W - ww) / 2, H - 100), wm, font=watermark_font, fill=MUTED)
+
+    img.convert("RGB").save(out_path, "PNG")
+    return out_path
+
+
 if __name__ == "__main__":
     # 로컬 테스트용 샘플 카드 생성
     make_vs_card("신라면파", "땀 뻘뻘 흘리면서\n먹어야 라면 각이지 ㅋㅋ!",
                  "진라면파", "자극 없는 깔끔한 국물이\n진짜 찐이지!",
                  "sample_card.png")
+    make_text_slide("새벽 5시 알람을 열 번 넘게 끄고서야 겨우 일어나면서도, 또 이 짓을 반복하고 있는 나 자신이 새삼 한심하게 느껴짐.",
+                     "sample_slide1.png", slide_no=1, slide_total=3)
