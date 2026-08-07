@@ -22,7 +22,6 @@ STATE_DIR = "data/state"
 HISTORY_PATH = "data/history.json"
 DRAFT_PATH = "data/draft.json"
 
-
 def load_token() -> str:
     cached = os.path.join(STATE_DIR, "token.txt")
     if os.path.exists(cached):
@@ -32,12 +31,25 @@ def load_token() -> str:
             return tok
     return os.environ["THREADS_ACCESS_TOKEN"]
 
-
 def save_token(token: str):
     os.makedirs(STATE_DIR, exist_ok=True)
     with open(os.path.join(STATE_DIR, "token.txt"), "w", encoding="utf-8") as f:
         f.write(token)
 
+def load_ig_token() -> str:
+    """캐시된 갱신 토큰이 있으면 우선 사용하고, 없으면 GitHub Secret(IG_ACCESS_TOKEN)을 쓴다."""
+    cached = os.path.join(STATE_DIR, "ig_token.txt")
+    if os.path.exists(cached):
+        with open(cached, "r", encoding="utf-8") as f:
+            tok = f.read().strip()
+        if tok:
+            return tok
+    return os.environ.get("IG_ACCESS_TOKEN", "")
+
+def save_ig_token(token: str):
+    os.makedirs(STATE_DIR, exist_ok=True)
+    with open(os.path.join(STATE_DIR, "ig_token.txt"), "w", encoding="utf-8") as f:
+        f.write(token)
 
 def append_history(entry: dict):
     if os.path.exists(HISTORY_PATH):
@@ -49,7 +61,6 @@ def append_history(entry: dict):
     history["entries"] = history["entries"][-90:]
     with open(HISTORY_PATH, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
-
 
 def build_instagram_caption(draft: dict) -> str:
     """캡션 앞부분(125~150자)이 가장 중요하므로 이미 후킹용으로 다듬어진
@@ -72,10 +83,9 @@ def build_instagram_caption(draft: dict) -> str:
         caption += f"\n\n{hashtags}"
     return caption
 
-
 def cross_post_instagram(draft: dict, image_base: str, image_url: str, dry_run: bool) -> dict:
     """IG_ACCESS_TOKEN/IG_USER_ID가 설정된 경우에만 Instagram에 캐러셀로 발행한다."""
-    ig_token = os.environ.get("IG_ACCESS_TOKEN")
+    ig_token = load_ig_token()
     ig_user_id = os.environ.get("IG_USER_ID")
     if not ig_token or not ig_user_id:
         return {"instagram_published": False, "instagram_skipped_reason": "IG_ACCESS_TOKEN/IG_USER_ID 미설정"}
@@ -105,6 +115,14 @@ def cross_post_instagram(draft: dict, image_base: str, image_url: str, dry_run: 
             caption=caption,
         )
         print(f"[Instagram 발행 성공] {ig_result['permalink']}")
+
+        try:
+            refreshed = instagram_client.refresh_token(ig_token)
+            save_ig_token(refreshed["access_token"])
+            print(f"[IG 토큰 갱신 성공] {refreshed.get('expires_in', '?')}초 후 만료 (약 60일)")
+        except Exception as e:
+            print(f"[경고] IG 토큰 갱신 실패, 기존 토큰 유지 (발급/갱신 후 24시간 이내면 정상적인 실패): {e}")
+
         return {
             "instagram_published": True,
             "instagram_media_id": ig_result["media_id"],
@@ -113,7 +131,6 @@ def cross_post_instagram(draft: dict, image_base: str, image_url: str, dry_run: 
     except Exception as e:
         print(f"[경고] Instagram 발행 실패 (Threads 발행 결과에는 영향 없음): {e}")
         return {"instagram_published": False, "instagram_error": str(e)}
-
 
 def main():
     with open(DRAFT_PATH, "r", encoding="utf-8") as f:
@@ -163,7 +180,6 @@ def main():
         json.dump(result, f, ensure_ascii=False, indent=2)
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
-
 
 if __name__ == "__main__":
     main()
