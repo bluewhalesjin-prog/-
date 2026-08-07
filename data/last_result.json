@@ -1,16 +1,18 @@
 {
   "date": "2026-08-07",
-  "question_id": "life_01",
+  "question_id": "life_07",
   "category": "라이프스타일",
   "comment_type": "무댓글",
   "cta_index": null,
   "card_image": "data/cards/2026-08-07.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@96dcabd67bea00a3d772d4113ade8917f8ce6d10/data/cards/2026-08-07.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@3d8a1234b719a2559d3f83789abb4cd835c7a715/data/cards/2026-08-07.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/DbvKnTMFl9h",
+  "permalink": "https://www.threads.com/@pick1_daily/post/DbvRenjFrOe",
   "post_ids": [
-    "18376599352231710",
-    "18092633954635264",
-    "18110980730281546"
-  ]
+    "18128978806646642",
+    "18112784125981541",
+    "17895683790379113"
+  ],
+  "instagram_published": false,
+  "instagram_error": "400 Client Error: Bad Request for url: https://graph.facebook.com/v21.0/17841437627116930/media"
 }
