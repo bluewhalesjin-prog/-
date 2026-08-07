@@ -1,18 +1,12 @@
 {
   "date": "2026-08-07",
-  "question_id": "life_07",
-  "category": "라이프스타일",
-  "comment_type": "무댓글",
-  "cta_index": null,
+  "question_id": "love_07",
+  "category": "연애",
+  "comment_type": "프로필유도:1",
+  "cta_index": "1",
   "card_image": "data/cards/2026-08-07.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@3d8a1234b719a2559d3f83789abb4cd835c7a715/data/cards/2026-08-07.png",
-  "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/DbvRenjFrOe",
-  "post_ids": [
-    "18128978806646642",
-    "18112784125981541",
-    "17895683790379113"
-  ],
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@14960cbdc886bd701e08eb8220174d40bab534db/data/cards/2026-08-07.png",
+  "published": false,
   "instagram_published": false,
-  "instagram_error": "400 Client Error: Bad Request for url: https://graph.facebook.com/v21.0/17841437627116930/media"
+  "instagram_skipped_reason": "DRY_RUN"
 }

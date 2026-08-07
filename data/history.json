@@ -97,6 +97,18 @@
       ],
       "instagram_published": false,
       "instagram_error": "400 Client Error: Bad Request for url: https://graph.facebook.com/v21.0/17841437627116930/media"
+    },
+    {
+      "date": "2026-08-07",
+      "question_id": "love_07",
+      "category": "연애",
+      "comment_type": "프로필유도:1",
+      "cta_index": "1",
+      "card_image": "data/cards/2026-08-07.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@14960cbdc886bd701e08eb8220174d40bab534db/data/cards/2026-08-07.png",
+      "published": false,
+      "instagram_published": false,
+      "instagram_skipped_reason": "DRY_RUN"
     }
   ]
 }
