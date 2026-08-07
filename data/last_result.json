@@ -1,10 +1,16 @@
 {
-  "date": "2026-08-06",
-  "question_id": "love_03",
-  "category": "연애",
+  "date": "2026-08-07",
+  "question_id": "life_01",
+  "category": "라이프스타일",
   "comment_type": "무댓글",
   "cta_index": null,
-  "card_image": "data/cards/2026-08-06.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@7a637171e65f426d789936b575918bddcf6e4a0d/data/cards/2026-08-06.png",
-  "published": false
+  "card_image": "data/cards/2026-08-07.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@96dcabd67bea00a3d772d4113ade8917f8ce6d10/data/cards/2026-08-07.png",
+  "published": true,
+  "permalink": "https://www.threads.com/@pick1_daily/post/DbvKnTMFl9h",
+  "post_ids": [
+    "18376599352231710",
+    "18092633954635264",
+    "18110980730281546"
+  ]
 }
