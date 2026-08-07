@@ -1,11 +1,14 @@
 """
 Instagram Graph API 클라이언트: 이미지 컨테이너 생성 -> 상태 확인 -> 퍼블리시
 (Threads 발행에 실패 영향을 주지 않도록 publish.py에서 별도로 감싸서 호출한다)
+
+주의: Instagram 로그인(Instagram Login) 방식으로 발급받은 토큰(IGAA로 시작)은
+graph.facebook.com이 아니라 graph.instagram.com 으로 호출해야 한다.
 """
 import time
 import requests
 
-GRAPH = "https://graph.facebook.com/v21.0"
+GRAPH = "https://graph.instagram.com/v21.0"
 
 
 def _post(url: str, params: dict, label: str) -> dict:
