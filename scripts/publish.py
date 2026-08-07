@@ -1,8 +1,9 @@
 """
 2단계: data/draft.json 을 읽어 실제 Threads 발행(또는 DRY_RUN)까지 수행하고
 history.json / last_result.json 을 갱신한다. 이미지가 이미 공개 URL로 접근 가능해야 한다.
-Threads 발행이 끝나면 동일 콘텐츠를 Instagram에도 크로스포스팅한다
-(IG_ACCESS_TOKEN / IG_USER_ID가 설정된 경우에만 시도하며, 실패해도 Threads 결과에는 영향 없음).
+Threads 발행이 끝나면 동일 콘텐츠를 Instagram에도 캐러셀(서사 슬라이드 2장 + VS 카드 1장)로
+크로스포스팅한다 (IG_ACCESS_TOKEN / IG_USER_ID가 설정된 경우에만 시도하며,
+실패해도 Threads 결과에는 영향 없음).
 환경변수:
 THREADS_ACCESS_TOKEN, THREADS_USER_ID (필수)
 IMAGE_BASE_URL (필수. 예: https://cdn.jsdelivr.net/gh/OWNER/REPO@SHA)
@@ -50,24 +51,48 @@ def append_history(entry: dict):
         json.dump(history, f, ensure_ascii=False, indent=2)
 
 
-def cross_post_instagram(draft: dict, image_url: str, dry_run: bool) -> dict:
-    """IG_ACCESS_TOKEN/IG_USER_ID가 설정된 경우에만 Instagram에 동일 콘텐츠를 발행한다."""
+def build_instagram_caption(draft: dict) -> str:
+    """캡션 앞부분(125~150자)이 가장 중요하므로 이미 후킹용으로 다듬어진
+    part1을 그대로 앞에 쓰고, 스와이프 유도 문구 + part3에 있는 해시태그를 붙인다."""
+    hook = draft.get("part1", "")
+    hashtags = " ".join(
+        tok for tok in (draft.get("part3") or "").split() if tok.startswith("#")
+    )
+    caption = f"{hook}\n\n👉 스와이프해서 마지막 장 밸런스게임 확인!"
+    if hashtags:
+        caption += f"\n\n{hashtags}"
+    return caption
+
+
+def cross_post_instagram(draft: dict, image_base: str, image_url: str, dry_run: bool) -> dict:
+    """IG_ACCESS_TOKEN/IG_USER_ID가 설정된 경우에만 Instagram에 캐러셀로 발행한다."""
     ig_token = os.environ.get("IG_ACCESS_TOKEN")
     ig_user_id = os.environ.get("IG_USER_ID")
     if not ig_token or not ig_user_id:
         return {"instagram_published": False, "instagram_skipped_reason": "IG_ACCESS_TOKEN/IG_USER_ID 미설정"}
 
-    caption = "\n\n".join(p for p in [draft.get("part1"), draft.get("part2"), draft.get("part3")] if p)
+    slide1_path = draft.get("ig_slide1_path")
+    slide2_path = draft.get("ig_slide2_path")
+    if not slide1_path or not slide2_path:
+        return {"instagram_published": False, "instagram_skipped_reason": "ig_slide 경로 없음 (draft.json 확인 필요)"}
+
+    image_urls = [
+        f"{image_base}/{slide1_path}",
+        f"{image_base}/{slide2_path}",
+        image_url,
+    ]
+    caption = build_instagram_caption(draft)
 
     if dry_run:
-        print(f"[DRY_RUN] Instagram 발행 생략. 캡션 미리보기:\n{caption}")
+        print(f"[DRY_RUN] Instagram 캐러셀 발행 생략. 캡션 미리보기:\n{caption}")
+        print(f"[DRY_RUN] 슬라이드 URL: {image_urls}")
         return {"instagram_published": False, "instagram_skipped_reason": "DRY_RUN"}
 
     try:
-        ig_result = instagram_client.publish_image_post(
+        ig_result = instagram_client.publish_carousel_post(
             ig_user_id=ig_user_id,
             token=ig_token,
-            image_url=image_url,
+            image_urls=image_urls,
             caption=caption,
         )
         print(f"[Instagram 발행 성공] {ig_result['permalink']}")
@@ -122,7 +147,7 @@ def main():
         except Exception as e:
             print(f"[경고] 토큰 갱신 실패, 기존 토큰 유지: {e}")
 
-    result.update(cross_post_instagram(draft, image_url, dry_run))
+    result.update(cross_post_instagram(draft, image_base, image_url, dry_run))
 
     append_history(result)
     with open("data/last_result.json", "w", encoding="utf-8") as f:
