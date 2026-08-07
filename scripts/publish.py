@@ -53,12 +53,21 @@ def append_history(entry: dict):
 
 def build_instagram_caption(draft: dict) -> str:
     """캡션 앞부분(125~150자)이 가장 중요하므로 이미 후킹용으로 다듬어진
-    part1을 그대로 앞에 쓰고, 스와이프 유도 문구 + part3에 있는 해시태그를 붙인다."""
+    part1을 그대로 앞에 쓰고, 스와이프 유도 문구 -> part3의 질문(댓글 유도) 문장 ->
+    댓글 유도 CTA -> 해시태그 순으로 붙인다."""
     hook = draft.get("part1", "")
-    hashtags = " ".join(
-        tok for tok in (draft.get("part3") or "").split() if tok.startswith("#")
-    )
+    part3 = draft.get("part3") or ""
+
+    hashtags = " ".join(tok for tok in part3.split() if tok.startswith("#"))
+    question_lines = [
+        line.strip() for line in part3.split("\n")
+        if line.strip() and not line.strip().startswith("#")
+    ]
+    question = question_lines[-1] if question_lines else ""
+
     caption = f"{hook}\n\n👉 스와이프해서 마지막 장 밸런스게임 확인!"
+    if question:
+        caption += f"\n\n{question}\n댓글로 골라주세요! 👇"
     if hashtags:
         caption += f"\n\n{hashtags}"
     return caption
