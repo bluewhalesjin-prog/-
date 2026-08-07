@@ -9,7 +9,7 @@ import time
 import requests
 
 GRAPH = "https://graph.instagram.com/v21.0"
-
+GRAPH_ROOT = "https://graph.instagram.com"
 
 def _post(url: str, params: dict, label: str) -> dict:
     resp = requests.post(url, data=params, timeout=20)
@@ -19,7 +19,6 @@ def _post(url: str, params: dict, label: str) -> dict:
         resp.raise_for_status()
     return resp.json()
 
-
 def _get(url: str, params: dict, label: str) -> dict:
     resp = requests.get(url, params=params, timeout=20)
     if not resp.ok:
@@ -27,7 +26,6 @@ def _get(url: str, params: dict, label: str) -> dict:
         print(f"[{label} 응답 본문] {resp.text}")
         resp.raise_for_status()
     return resp.json()
-
 
 def create_image_container(ig_user_id: str, token: str, image_url: str, caption: str) -> str:
     params = {
@@ -37,7 +35,6 @@ def create_image_container(ig_user_id: str, token: str, image_url: str, caption:
     }
     data = _post(f"{GRAPH}/{ig_user_id}/media", params, "IG 이미지 컨테이너 생성")
     return data["id"]
-
 
 def create_carousel_item(ig_user_id: str, token: str, image_url: str) -> str:
     """캐러셀에 들어갈 자식(child) 이미지 컨테이너를 생성한다 (캡션 없음)."""
@@ -49,7 +46,6 @@ def create_carousel_item(ig_user_id: str, token: str, image_url: str) -> str:
     data = _post(f"{GRAPH}/{ig_user_id}/media", params, "IG 캐러셀 아이템 생성")
     return data["id"]
 
-
 def create_carousel_container(ig_user_id: str, token: str, children_ids: list, caption: str) -> str:
     """자식 컨테이너 id 목록을 묶어 캐러셀(부모) 컨테이너를 생성한다."""
     params = {
@@ -60,7 +56,6 @@ def create_carousel_container(ig_user_id: str, token: str, children_ids: list, c
     }
     data = _post(f"{GRAPH}/{ig_user_id}/media", params, "IG 캐러셀 컨테이너 생성")
     return data["id"]
-
 
 def wait_until_ready(container_id: str, token: str, timeout_sec: int = 60, interval_sec: int = 3) -> None:
     """컨테이너가 FINISHED 상태가 될 때까지 대기 (IN_PROGRESS -> FINISHED/ERROR)."""
@@ -80,7 +75,6 @@ def wait_until_ready(container_id: str, token: str, timeout_sec: int = 60, inter
         elapsed += interval_sec
     raise TimeoutError("IG 컨테이너 처리 대기 시간 초과")
 
-
 def publish_container(ig_user_id: str, token: str, creation_id: str) -> str:
     data = _post(
         f"{GRAPH}/{ig_user_id}/media_publish",
@@ -88,7 +82,6 @@ def publish_container(ig_user_id: str, token: str, creation_id: str) -> str:
         "IG 발행",
     )
     return data["id"]
-
 
 def get_permalink(media_id: str, token: str) -> str:
     data = _get(
@@ -98,7 +91,6 @@ def get_permalink(media_id: str, token: str) -> str:
     )
     return data.get("permalink", "")
 
-
 def publish_image_post(ig_user_id: str, token: str, image_url: str, caption: str) -> dict:
     """이미지 1장 + 캡션으로 Instagram 피드 게시물을 발행한다."""
     creation_id = create_image_container(ig_user_id, token, image_url, caption)
@@ -106,7 +98,6 @@ def publish_image_post(ig_user_id: str, token: str, image_url: str, caption: str
     media_id = publish_container(ig_user_id, token, creation_id)
     permalink = get_permalink(media_id, token)
     return {"media_id": media_id, "permalink": permalink}
-
 
 def publish_carousel_post(ig_user_id: str, token: str, image_urls: list, caption: str) -> dict:
     """여러 장의 이미지를 캐러셀(슬라이드)로 묶어 Instagram에 발행한다."""
@@ -121,3 +112,14 @@ def publish_carousel_post(ig_user_id: str, token: str, image_urls: list, caption
     media_id = publish_container(ig_user_id, token, parent_id)
     permalink = get_permalink(media_id, token)
     return {"media_id": media_id, "permalink": permalink}
+
+def refresh_token(token: str) -> dict:
+    """장기 액세스 토큰(60일)을 갱신해 유효기간을 60일 더 연장한다.
+    발급/직전 갱신 후 24시간이 지나야 갱신 가능하며, 24시간 미만이면 Meta가
+    에러를 반환한다 (이 경우 호출부에서 예외를 잡고 기존 토큰을 그대로 쓰면 된다)."""
+    data = _get(
+        f"{GRAPH_ROOT}/refresh_access_token",
+        {"grant_type": "ig_refresh_token", "access_token": token},
+        "IG 토큰 갱신",
+    )
+    return data
