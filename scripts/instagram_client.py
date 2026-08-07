@@ -39,6 +39,29 @@ def create_image_container(ig_user_id: str, token: str, image_url: str, caption:
     return data["id"]
 
 
+def create_carousel_item(ig_user_id: str, token: str, image_url: str) -> str:
+    """캐러셀에 들어갈 자식(child) 이미지 컨테이너를 생성한다 (캡션 없음)."""
+    params = {
+        "image_url": image_url,
+        "is_carousel_item": "true",
+        "access_token": token,
+    }
+    data = _post(f"{GRAPH}/{ig_user_id}/media", params, "IG 캐러셀 아이템 생성")
+    return data["id"]
+
+
+def create_carousel_container(ig_user_id: str, token: str, children_ids: list, caption: str) -> str:
+    """자식 컨테이너 id 목록을 묶어 캐러셀(부모) 컨테이너를 생성한다."""
+    params = {
+        "media_type": "CAROUSEL",
+        "children": ",".join(children_ids),
+        "caption": caption,
+        "access_token": token,
+    }
+    data = _post(f"{GRAPH}/{ig_user_id}/media", params, "IG 캐러셀 컨테이너 생성")
+    return data["id"]
+
+
 def wait_until_ready(container_id: str, token: str, timeout_sec: int = 60, interval_sec: int = 3) -> None:
     """컨테이너가 FINISHED 상태가 될 때까지 대기 (IN_PROGRESS -> FINISHED/ERROR)."""
     elapsed = 0
@@ -81,5 +104,20 @@ def publish_image_post(ig_user_id: str, token: str, image_url: str, caption: str
     creation_id = create_image_container(ig_user_id, token, image_url, caption)
     wait_until_ready(creation_id, token)
     media_id = publish_container(ig_user_id, token, creation_id)
+    permalink = get_permalink(media_id, token)
+    return {"media_id": media_id, "permalink": permalink}
+
+
+def publish_carousel_post(ig_user_id: str, token: str, image_urls: list, caption: str) -> dict:
+    """여러 장의 이미지를 캐러셀(슬라이드)로 묶어 Instagram에 발행한다."""
+    children_ids = []
+    for url in image_urls:
+        cid = create_carousel_item(ig_user_id, token, url)
+        wait_until_ready(cid, token)
+        children_ids.append(cid)
+
+    parent_id = create_carousel_container(ig_user_id, token, children_ids, caption)
+    wait_until_ready(parent_id, token)
+    media_id = publish_container(ig_user_id, token, parent_id)
     permalink = get_permalink(media_id, token)
     return {"media_id": media_id, "permalink": permalink}
