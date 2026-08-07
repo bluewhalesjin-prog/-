@@ -36,7 +36,6 @@ jobs:
           key: threads-state-${{ github.run_id }}
           restore-keys: |
             threads-state-
-
       - name: 1단계 - 밸런스게임 선택 및 초안 생성
         env:
           BLOG_URL: ${{ secrets.BLOG_URL }}
@@ -51,11 +50,12 @@ jobs:
           git commit -m "chore: draft $(date -u +%F)" || echo "변경 없음"
           git push
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-
-      - name: 2단계 - Threads 발행
+      - name: 2단계 - Threads·Instagram 발행
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IMAGE_BASE_URL: https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ steps.commit_draft.outputs.sha }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: python scripts/publish.py
