@@ -1,0 +1,45 @@
+name: test-carousel-only
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 새 초안 + 슬라이드 이미지 생성 (Threads 발행 없음)
+        env:
+          BLOG_URL: ${{ secrets.BLOG_URL }}
+        run: python scripts/prepare.py
+
+      - name: 카드 이미지 커밋 (공개 URL 확보)
+        id: commit_draft
+        run: |
+          git config user.name "threads-auto-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/cards data/draft.json
+          git commit -m "chore: test carousel draft $(date -u +%F)" || echo "변경 없음"
+          git push
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Instagram 캐러셀 발행 단독 테스트
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IMAGE_BASE_URL: https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ steps.commit_draft.outputs.sha }}
+        run: python scripts/test_carousel.py
