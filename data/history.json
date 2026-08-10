@@ -159,6 +159,24 @@
       "published": false,
       "instagram_published": false,
       "instagram_skipped_reason": "DRY_RUN"
+    },
+    {
+      "date": "2026-08-10",
+      "question_id": "job_04",
+      "category": "직장생활",
+      "comment_type": "프로필유도:2",
+      "cta_index": "2",
+      "card_image": "data/cards/2026-08-10.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@fa58bfc012df03aed514b7edc82dba9bec76db50/data/cards/2026-08-10.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Db1zYwOj1RM",
+      "post_ids": [
+        "17986261089044850",
+        "17934069894360036",
+        "18347620660220363"
+      ],
+      "instagram_published": false,
+      "instagram_error": "400 Client Error: Bad Request for url: https://graph.instagram.com/v21.0/912665117972552/media"
     }
   ]
 }
