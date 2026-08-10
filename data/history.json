@@ -178,6 +178,25 @@
       "instagram_published": true,
       "instagram_media_id": "18160572844467268",
       "instagram_permalink": "https://www.instagram.com/p/ObiBTy9j99Q/"
+    },
+    {
+      "date": "2026-08-10",
+      "question_id": "job_07",
+      "category": "직장생활",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": "data/cards/2026-08-10.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@472bba3702fd3c782581ee0fba666ffc25525279/data/cards/2026-08-10.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Db2zXSID8Pa",
+      "post_ids": [
+        "17984922150024837",
+        "18482998225100701",
+        "18092848862087815"
+      ],
+      "instagram_published": true,
+      "instagram_media_id": "17857773135696874",
+      "instagram_permalink": "https://www.instagram.com/p/Db2zfmDjyXd/"
     }
   ]
 }
