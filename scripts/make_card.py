@@ -11,6 +11,10 @@ FONT_CANDIDATES = [
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
+    "/System/Library/Fonts/Supplemental/AppleSDGothicNeo.ttc",
+    "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+    "/Library/Fonts/AppleGothic.ttf",
+    "/System/Library/Fonts/AppleGothic.ttf",
 ]
 
 # 브랜드 컬러 (프로필 마스코트와 통일감)
