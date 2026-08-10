@@ -13,6 +13,7 @@
     "17934069894360036",
     "18347620660220363"
   ],
-  "instagram_published": false,
-  "instagram_error": "400 Client Error: Bad Request for url: https://graph.instagram.com/v21.0/912665117972552/media"
+  "instagram_published": true,
+  "instagram_media_id": "18160572844467268",
+  "instagram_permalink": "https://www.instagram.com/p/ObiBTy9j99Q/"
 }
