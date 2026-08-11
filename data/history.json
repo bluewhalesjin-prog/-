@@ -197,6 +197,25 @@
       "instagram_published": true,
       "instagram_media_id": "17857773135696874",
       "instagram_permalink": "https://www.instagram.com/p/Db2zfmDjyXd/"
+    },
+    {
+      "date": "2026-08-11",
+      "question_id": "love_05",
+      "category": "연애",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": "data/cards/2026-08-11.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a90babc3c2000ff518f27c02176c84a022963993/data/cards/2026-08-11.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Db5YKTcj0_x",
+      "post_ids": [
+        "18227419390323660",
+        "17885853675455169",
+        "17980803675101675"
+      ],
+      "instagram_published": true,
+      "instagram_media_id": "18125073541743141",
+      "instagram_permalink": "https://www.instagram.com/p/Db5YSt8D_wa/"
     }
   ]
 }
