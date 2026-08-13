@@ -235,6 +235,25 @@
       "instagram_published": true,
       "instagram_media_id": "18129848068654491",
       "instagram_permalink": "https://www.instagram.com/p/Db79HKoDyF2/"
+    },
+    {
+      "date": "2026-08-13",
+      "question_id": "taste_08",
+      "category": "가벼운취향",
+      "comment_type": "프로필유도:2",
+      "cta_index": "2",
+      "card_image": "data/cards/2026-08-13.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@94918a1599dad4627f9fd95c1b21fa407b85d388/data/cards/2026-08-13.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Db-hv6SDyBT",
+      "post_ids": [
+        "17952186135238690",
+        "17913062343434384",
+        "18612163438019211"
+      ],
+      "instagram_published": true,
+      "instagram_media_id": "17984836967863752",
+      "instagram_permalink": "https://www.instagram.com/p/Db-h5h4D3T6/"
     }
   ]
 }
