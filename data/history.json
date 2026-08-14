@@ -254,6 +254,25 @@
       "instagram_published": true,
       "instagram_media_id": "17984836967863752",
       "instagram_permalink": "https://www.instagram.com/p/Db-h5h4D3T6/"
+    },
+    {
+      "date": "2026-08-14",
+      "question_id": "life_05",
+      "category": "라이프스타일",
+      "comment_type": "프로필유도:4",
+      "cta_index": "4",
+      "card_image": "data/cards/2026-08-14.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@cb3470c421566a9b33bbe9684f8af31273aafe2a/data/cards/2026-08-14.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/DcBGiwjjw6v",
+      "post_ids": [
+        "18082413104692282",
+        "18111007541005458",
+        "18103890095521762"
+      ],
+      "instagram_published": true,
+      "instagram_media_id": "18085952870214099",
+      "instagram_permalink": "https://www.instagram.com/p/DcBGtB5j8JH/"
     }
   ]
 }
