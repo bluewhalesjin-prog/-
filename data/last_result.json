@@ -1,19 +1,19 @@
 {
-  "date": "2026-08-21",
-  "question_id": "life_08",
-  "category": "라이프스타일",
-  "comment_type": "무댓글",
-  "cta_index": null,
-  "card_image": "data/cards/2026-08-21.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@5455f2ed099619a54ca4df7f0c2cb602ef5c60e0/data/cards/2026-08-21.png",
+  "date": "2026-08-22",
+  "question_id": "taste_04",
+  "category": "가벼운취향",
+  "comment_type": "프로필유도:3",
+  "cta_index": "3",
+  "card_image": "data/cards/2026-08-22.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@63c89bd96faa0b72c1bd4bde9cd2fa369b878dbd/data/cards/2026-08-22.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/DcTIHMVj-5K",
+  "permalink": "https://www.threads.com/@pick1_daily/post/DcVs6GqD1pk",
   "post_ids": [
-    "18388481098164392",
-    "18085888811222782",
-    "18006489617968226"
+    "17973595868915209",
+    "18112068836102236",
+    "18112203326095370"
   ],
   "instagram_published": true,
-  "instagram_media_id": "18021280256858827",
-  "instagram_permalink": "https://www.instagram.com/p/DcTIQIUjxFn/"
+  "instagram_media_id": "18079591196704329",
+  "instagram_permalink": "https://www.instagram.com/p/DcVtESAj8qh/"
 }
