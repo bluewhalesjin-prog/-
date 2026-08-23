@@ -425,6 +425,25 @@
       "instagram_published": true,
       "instagram_media_id": "18079591196704329",
       "instagram_permalink": "https://www.instagram.com/p/DcVtESAj8qh/"
+    },
+    {
+      "date": "2026-08-23",
+      "question_id": "love_08",
+      "category": "연애",
+      "comment_type": "프로필유도:5",
+      "cta_index": "5",
+      "card_image": "data/cards/2026-08-23.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@aa1e7d008d90223e5e9d2b0486c06a24f9ea613a/data/cards/2026-08-23.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/DcYRs55D24n",
+      "post_ids": [
+        "18550952842079762",
+        "18012126689938852",
+        "18128811220671982"
+      ],
+      "instagram_published": true,
+      "instagram_media_id": "18088974503174980",
+      "instagram_permalink": "https://www.instagram.com/p/DcYR3JAD5RN/"
     }
   ]
 }
