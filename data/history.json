@@ -463,6 +463,24 @@
       "instagram_published": true,
       "instagram_media_id": "18082412159427548",
       "instagram_permalink": "https://www.instagram.com/p/DcdbccqgSpX/"
+    },
+    {
+      "date": "2026-08-26",
+      "question_id": "taste_03",
+      "category": "가벼운취향",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": "data/cards/2026-08-26.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@6a3e1f9c31f5e284ba0c5ea434fa496d912c49f7/data/cards/2026-08-26.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/DcgAFUZgQEZ",
+      "post_ids": [
+        "18621545647056661",
+        "18068225594774737",
+        "17984804976027214"
+      ],
+      "instagram_published": false,
+      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
     }
   ]
 }

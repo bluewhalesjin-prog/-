@@ -1,19 +1,18 @@
 {
-  "date": "2026-08-25",
-  "question_id": "life_06",
-  "category": "라이프스타일",
-  "comment_type": "프로필유도:1",
-  "cta_index": "1",
-  "card_image": "data/cards/2026-08-25.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@90aa8af94e8a28c1005ccfab3f7c38202bf56c85/data/cards/2026-08-25.png",
+  "date": "2026-08-26",
+  "question_id": "taste_03",
+  "category": "가벼운취향",
+  "comment_type": "무댓글",
+  "cta_index": null,
+  "card_image": "data/cards/2026-08-26.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@6a3e1f9c31f5e284ba0c5ea434fa496d912c49f7/data/cards/2026-08-26.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/DcdbSpYgZut",
+  "permalink": "https://www.threads.com/@pick1_daily/post/DcgAFUZgQEZ",
   "post_ids": [
-    "18122953522880336",
-    "18125616499815383",
-    "17974407201103747"
+    "18621545647056661",
+    "18068225594774737",
+    "17984804976027214"
   ],
-  "instagram_published": true,
-  "instagram_media_id": "18082412159427548",
-  "instagram_permalink": "https://www.instagram.com/p/DcdbccqgSpX/"
+  "instagram_published": false,
+  "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
 }
