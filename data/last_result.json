@@ -1,17 +1,17 @@
 {
-  "date": "2026-08-27",
-  "question_id": "love_04",
-  "category": "연애",
+  "date": "2026-08-28",
+  "question_id": "taste_01",
+  "category": "가벼운취향",
   "comment_type": "무댓글",
   "cta_index": null,
-  "card_image": "data/cards/2026-08-27.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@df264b1f24df4f15405dbed354bfc7abb19e6357/data/cards/2026-08-27.png",
+  "card_image": "data/cards/2026-08-28.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@18d745868ec9c8044d3be534aa0aa55717cb27fd/data/cards/2026-08-28.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/Dcik4UIgTIE",
+  "permalink": "https://www.threads.com/@pick1_daily/post/DclJrJOD0yC",
   "post_ids": [
-    "18013491851948422",
-    "18146448493541162",
-    "18102251018227039"
+    "17919796506423817",
+    "18103383149349743",
+    "17912507055265358"
   ],
   "instagram_published": false,
   "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
