@@ -1,17 +1,17 @@
 {
-  "date": "2026-08-28",
-  "question_id": "taste_01",
-  "category": "가벼운취향",
+  "date": "2026-08-29",
+  "question_id": "job_09",
+  "category": "직장생활",
   "comment_type": "무댓글",
   "cta_index": null,
-  "card_image": "data/cards/2026-08-28.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@18d745868ec9c8044d3be534aa0aa55717cb27fd/data/cards/2026-08-28.png",
+  "card_image": "data/cards/2026-08-29.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ac90f22a3733083860f938dc062a3e8cf9ecb95d/data/cards/2026-08-29.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/DclJrJOD0yC",
+  "permalink": "https://www.threads.com/@pick1_daily/post/Dcnud-6oIco",
   "post_ids": [
-    "17919796506423817",
-    "18103383149349743",
-    "17912507055265358"
+    "18106837583167100",
+    "18467726437113642",
+    "18350610091171397"
   ],
   "instagram_published": false,
   "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
