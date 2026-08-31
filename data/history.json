@@ -553,6 +553,24 @@
       ],
       "instagram_published": false,
       "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
+    },
+    {
+      "date": "2026-08-31",
+      "question_id": "job_03",
+      "category": "직장생활",
+      "comment_type": "프로필유도:7",
+      "cta_index": "7",
+      "card_image": "data/cards/2026-08-31.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ff8a4e6f89486ca916bf0e7fe2adbd50f8608ee0/data/cards/2026-08-31.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Dcs4DOgD-38",
+      "post_ids": [
+        "17985911826113646",
+        "18077450228365962",
+        "18003523412968243"
+      ],
+      "instagram_published": false,
+      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
     }
   ]
 }
