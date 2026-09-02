@@ -589,6 +589,24 @@
       ],
       "instagram_published": false,
       "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
+    },
+    {
+      "date": "2026-09-02",
+      "question_id": "life_09",
+      "category": "라이프스타일",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": "data/cards/2026-09-02.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a5b3d155ba4d5efebdd78d82b88ad6c04a780518/data/cards/2026-09-02.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/DcyBpk2j_Sl",
+      "post_ids": [
+        "18084204566275674",
+        "18112475125817377",
+        "18198596014335954"
+      ],
+      "instagram_published": false,
+      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
     }
   ]
 }
