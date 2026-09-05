@@ -625,6 +625,24 @@
       ],
       "instagram_published": false,
       "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
+    },
+    {
+      "date": "2026-09-05",
+      "question_id": "taste_07",
+      "category": "가벼운취향",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": "data/cards/2026-09-05.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@157f863c294ccec8d656382492c50d174f53592a/data/cards/2026-09-05.png",
+      "published": true,
+      "permalink": "https://www.threads.com/@pick1_daily/post/Dc5wCEIDxxU",
+      "post_ids": [
+        "18044811467815168",
+        "18352245721170411",
+        "18093954485110190"
+      ],
+      "instagram_published": false,
+      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
     }
   ]
 }
