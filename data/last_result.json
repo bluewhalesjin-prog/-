@@ -1,18 +1,19 @@
 {
-  "date": "2026-09-05",
-  "question_id": "taste_07",
-  "category": "가벼운취향",
+  "date": "2026-09-06",
+  "question_id": "life_03",
+  "category": "라이프스타일",
   "comment_type": "무댓글",
   "cta_index": null,
-  "card_image": "data/cards/2026-09-05.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@157f863c294ccec8d656382492c50d174f53592a/data/cards/2026-09-05.png",
+  "card_image": "data/cards/2026-09-06.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a1ebfa0b2cde5047ab8180690c75595dba7e0c26/data/cards/2026-09-06.png",
   "published": true,
-  "permalink": "https://www.threads.com/@pick1_daily/post/Dc5wCEIDxxU",
+  "permalink": "https://www.threads.com/@pick1_daily/post/Dc8U0_XIAH0",
   "post_ids": [
-    "18044811467815168",
-    "18352245721170411",
-    "18093954485110190"
+    "18008519114965091",
+    "17966495754157429",
+    "17940339231343706"
   ],
-  "instagram_published": false,
-  "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
+  "instagram_published": true,
+  "instagram_media_id": "18128332954836068",
+  "instagram_permalink": "https://www.instagram.com/p/Dc8U8eBIM91/"
 }
