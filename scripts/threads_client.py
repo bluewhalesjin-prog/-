@@ -106,6 +106,30 @@ def publish_thread_sequence(user_id: str, token: str, parts: list[str], image_ur
     return result
 
 
+def publish_single_post(user_id: str, token: str, text: str, image_url: str,
+                         comment_text: str = None) -> dict:
+    """
+    답글 체인 대신 본문 전체 + 이미지를 포스트 1개로 발행한다.
+    comment_text가 있으면 그 포스트 바로 아래에 답글 1개(CTA)만 추가로 단다.
+    """
+    cid = create_image_container(user_id, token, text, image_url)
+    time.sleep(3)
+    root_id = publish_container(user_id, token, cid)
+
+    result = {"post_ids": [root_id], "root_id": root_id}
+    result["permalink"] = get_permalink(root_id, token)
+
+    if comment_text:
+        time.sleep(2)
+        ccid = create_text_container(user_id, token, comment_text, reply_to_id=root_id)
+        time.sleep(3)
+        comment_id = publish_container(user_id, token, ccid)
+        result["post_ids"].append(comment_id)
+        result["comment_id"] = comment_id
+
+    return result
+
+
 if __name__ == "__main__":
     # 단독 실행 시 토큰 갱신만 테스트
     tok = os.environ["THREADS_ACCESS_TOKEN"]
