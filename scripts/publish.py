@@ -156,10 +156,10 @@ def main():
     if dry_run:
         print(f"[DRY_RUN] 발행 생략. 이미지 URL 확인용: {image_url}")
     else:
-        publish_result = threads_client.publish_thread_sequence(
+        publish_result = threads_client.publish_single_post(
             user_id=user_id,
             token=token,
-            parts=[draft["part1"], draft["part2"], draft["part3"]],
+            text=draft["full_text"],
             image_url=image_url,
             comment_text=draft["comment_text"],
         )
