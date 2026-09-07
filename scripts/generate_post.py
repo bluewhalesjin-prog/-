@@ -88,6 +88,12 @@ def build_closing(q: dict) -> str:
     )
 
 
+def build_full_text(part1: str, part2: str, part3: str) -> str:
+    """Threads 단일 포스트용 통합 본문.
+    답글 체인 대신 포스트 1개로 발행해 조회수·참여가 분산되지 않도록 한다."""
+    return f"{part1}\n\n{part2}\n\n{part3}"
+
+
 def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, str]:
     """comment_type 랜덤 선택. 본진블로그는 주 2회, 연속 금지."""
     entries = history.get("entries", [])
@@ -142,6 +148,7 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         "part1": part1,
         "part2": part2,
         "part3": part3,
+        "full_text": build_full_text(part1, part2, part3),
         "option_a": q["option_a"],
         "option_a_sub": q["option_a_sub"],
         "option_b": q["option_b"],
