@@ -1,19 +1,17 @@
 {
-  "date": "2026-09-08",
-  "slot": "evening",
-  "question_id": "v2_taste_02",
-  "category": "가벼운취향",
-  "comment_type": "프로필유도:7",
-  "cta_index": "7",
-  "card_image": "data/cards/2026-09-08.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@40a384a58c1b086356b929f954b499ad90cf8548/data/cards/2026-09-08.png",
+  "date": "2026-09-09",
+  "slot": "morning",
+  "question_id": "v2_love_04",
+  "category": "연애",
+  "comment_type": "무댓글",
+  "cta_index": null,
+  "card_image": null,
+  "image_url": null,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/DdBebN9j-w7",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/DdC0Pcfge1i",
   "post_ids": [
-    "17968897389160183",
-    "17885657994476170"
+    "18141149395514274"
   ],
-  "instagram_published": true,
-  "instagram_media_id": "18143493823560304",
-  "instagram_permalink": "https://www.instagram.com/p/DdBehPjDwy8/"
+  "instagram_published": false,
+  "instagram_skipped_reason": "slot=morning (아침 슬롯은 텍스트 전용)"
 }
