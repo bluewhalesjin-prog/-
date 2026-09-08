@@ -106,13 +106,18 @@ def publish_thread_sequence(user_id: str, token: str, parts: list[str], image_ur
     return result
 
 
-def publish_single_post(user_id: str, token: str, text: str, image_url: str,
+def publish_single_post(user_id: str, token: str, text: str, image_url: str = None,
                          comment_text: str = None) -> dict:
     """
-    답글 체인 대신 본문 전체 + 이미지를 포스트 1개로 발행한다.
+    본문 전체를 포스트 1개로 발행한다.
+    image_url이 None이면 텍스트 전용으로 발행한다. 2026-09 기준 국내 스레드에서
+    반응이 좋은 '썰' 계정들이 텍스트 중심이라 텍스트 전용을 기본 경로로 둔다.
     comment_text가 있으면 그 포스트 바로 아래에 답글 1개(CTA)만 추가로 단다.
     """
-    cid = create_image_container(user_id, token, text, image_url)
+    if image_url:
+        cid = create_image_container(user_id, token, text, image_url)
+    else:
+        cid = create_text_container(user_id, token, text)
     time.sleep(3)
     root_id = publish_container(user_id, token, cid)
 
