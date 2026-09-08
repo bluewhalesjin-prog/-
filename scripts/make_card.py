@@ -159,86 +159,98 @@ def centered_multiline(draw, box, main, sub_lines, main_font, sub_font, main_col
 
 def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: str, out_path: str,
                   handle: str = "@pick1_daily"):
+    """시안 D: 실제 인기 밸런스게임/카드뉴스 콘텐츠 벤치마킹 기반.
+    그라데이션 색블록 버튼형 디자인(구버전) 대신, 두꺼운 검은 테두리 프레임 + 거대한
+    2줄 헤드라인 타이포 + 형광펜 하이라이트 + 작은 A/B 원형 배지로 구성한다."""
     W, H = 1080, 1080
-    img = Image.new("RGBA", (W, H), BG_COLOR + (255,))
+    BG = (250, 249, 246)
+    INK = (26, 26, 28)
+    ACCENT = (255, 59, 48)
+    HILITE_A = (255, 224, 74)
+    HILITE_B = (220, 230, 255)
+    MUTED_GRAY = (110, 108, 104)
+
+    img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
-    brand_font = load_font(38)
+    border_pad = 34
+    draw.rounded_rectangle(
+        [(border_pad, border_pad), (W - border_pad, H - border_pad)],
+        radius=28, outline=INK, width=6
+    )
+
+    inner_pad = border_pad + 46
+    max_w = W - inner_pad * 2
+
+    tag_font = load_font(30)
+    draw.text((inner_pad, 96), "#오늘의 밸런스게임", font=tag_font, fill=ACCENT)
+
+    # 옵션 A 헤드라인 + 형광펜 하이라이트
+    font_a = fit_font(draw, option_a, max_w, start_size=118, min_size=52)
+    ba = draw.textbbox((0, 0), option_a, font=font_a)
+    ya = 220
+    hi_pad = 10
+    draw.rectangle(
+        [(inner_pad - hi_pad, ya + (ba[3] - ba[1]) * 0.35),
+         (inner_pad + (ba[2] - ba[0]) + hi_pad, ya + (ba[3] - ba[1]) * 1.05)],
+        fill=HILITE_A
+    )
+    draw.text((inner_pad, ya), option_a, font=font_a, fill=INK)
+
+    sub_font_a, lines_a = fit_wrapped_sub(draw, f"\u201c{option_a_sub}\u201d", max_w, start_size=34, min_size=22, max_lines=2)
+    sub_y = ya + (ba[3] - ba[1]) + 34
+    for line in lines_a:
+        draw.text((inner_pad, sub_y), line, font=sub_font_a, fill=MUTED_GRAY)
+        lb = draw.textbbox((0, 0), line, font=sub_font_a)
+        sub_y += (lb[3] - lb[1]) + 10
+
+    badge_font = load_font(34)
+    r = 30
+    cx = W - inner_pad - r
+    cy_a = ya + 6 + r
+    draw.ellipse([(cx - r, cy_a - r), (cx + r, cy_a + r)], outline=INK, width=4, fill=BG)
+    lba = draw.textbbox((0, 0), "A", font=badge_font)
+    draw.text((cx - (lba[2] - lba[0]) / 2, cy_a - (lba[3] - lba[1]) / 2 - lba[1]), "A", font=badge_font, fill=INK)
+
+    # VS 구분선
+    vy = 560
     vs_font = load_font(46)
-    watermark_font = load_font(26)
-
-    # 상단 브랜드 라벨
-    brand_text = "오늘의 밸런스게임"
-    bb = draw.textbbox((0, 0), brand_text, font=brand_font)
-    bw = bb[2] - bb[0]
-    draw.text(((W - bw) / 2, 84), brand_text, font=brand_font, fill=(70, 70, 75))
-    draw.line([(W / 2 - 40, 140), (W / 2 + 40, 140)], fill=(220, 120, 110), width=4)
-
-    pad = 64
-    gap = 28
-    box_w = (W - pad * 2 - gap) // 2
-    box_top = 210
-    box_h = 620
-    radius = 36
-
-    box_a = [(pad, box_top), (pad + box_w, box_top + box_h)]
-    box_b = [(pad + box_w + gap, box_top), (W - pad, box_top + box_h)]
-
-    # 그림자
-    paste_shadow(img, box_a, radius)
-    paste_shadow(img, box_b, radius)
-
-    # 그라데이션 카드
-    draw_gradient_card(img, box_a, radius, CORAL_TOP, CORAL_BOT)
-    draw_gradient_card(img, box_b, radius, BLUE_TOP, BLUE_BOT)
-
-    draw = ImageDraw.Draw(img)
-    text_max_w = box_w - 56  # 카드 안쪽 여백 확보
-    font_a = fit_font(draw, option_a, text_max_w, start_size=84, min_size=40)
-    font_b = fit_font(draw, option_b, text_max_w, start_size=84, min_size=40)
-    main_font_size = min(font_a.size, font_b.size)
-    main_font = load_font(main_font_size)
-
-    quoted_a = f"“{option_a_sub}”"
-    quoted_b = f"“{option_b_sub}”"
-
-    sub_font_a, lines_a = fit_wrapped_sub(draw, quoted_a, text_max_w, start_size=36, min_size=22, max_lines=3)
-    sub_font_b, lines_b = fit_wrapped_sub(draw, quoted_b, text_max_w, start_size=36, min_size=22, max_lines=3)
-    sub_font_size = min(sub_font_a.size, sub_font_b.size)
-    sub_font = load_font(sub_font_size)
-    # 폰트 크기를 맞췄으니 줄바꿈도 그 크기 기준으로 다시 계산 (명시적 \n 우선)
-    lines_a = split_and_wrap(draw, quoted_a, sub_font, text_max_w)
-    lines_b = split_and_wrap(draw, quoted_b, sub_font, text_max_w)
-
-    centered_multiline(draw, box_a, option_a, lines_a, main_font, sub_font,
-                        (255, 255, 255), (255, 235, 232), block_gap=46)
-    centered_multiline(draw, box_b, option_b, lines_b, main_font, sub_font,
-                        (255, 255, 255), (225, 232, 255), block_gap=46)
-
-    # 중앙 VS 배지
-    badge_r = 56
-    badge_cx, badge_cy = W / 2, box_top + box_h / 2
-    badge_box = [(badge_cx - badge_r, badge_cy - badge_r), (badge_cx + badge_r, badge_cy + badge_r)]
-    shadow_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    sd = ImageDraw.Draw(shadow_layer)
-    sd.ellipse([(badge_box[0][0], badge_box[0][1] + 6), (badge_box[1][0], badge_box[1][1] + 6)],
-               fill=(0, 0, 0, 60))
-    shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
-    img.alpha_composite(shadow_layer)
-
-    draw = ImageDraw.Draw(img)
-    draw.ellipse(badge_box, fill=(255, 255, 255, 255), outline=(235, 235, 235, 255), width=2)
     vb = draw.textbbox((0, 0), "VS", font=vs_font)
-    vw, vh = vb[2] - vb[0], vb[3] - vb[1]
-    draw.text((badge_cx - vw / 2, badge_cy - vh / 2 - vb[1]), "VS", font=vs_font, fill=TEXT_DARK)
+    draw.text((W / 2 - (vb[2] - vb[0]) / 2, vy), "VS", font=vs_font, fill=INK)
+    line_y = vy + (vb[3] - vb[1]) / 2
+    draw.line([(inner_pad, line_y), (W / 2 - 70, line_y)], fill=(210, 206, 198), width=3)
+    draw.line([(W / 2 + 70, line_y), (W - inner_pad, line_y)], fill=(210, 206, 198), width=3)
+
+    # 옵션 B 헤드라인 + 형광펜 하이라이트
+    font_b = fit_font(draw, option_b, max_w, start_size=118, min_size=52)
+    bb_ = draw.textbbox((0, 0), option_b, font=font_b)
+    yb = 660
+    draw.rectangle(
+        [(inner_pad - hi_pad, yb + (bb_[3] - bb_[1]) * 0.35),
+         (inner_pad + (bb_[2] - bb_[0]) + hi_pad, yb + (bb_[3] - bb_[1]) * 1.05)],
+        fill=HILITE_B
+    )
+    draw.text((inner_pad, yb), option_b, font=font_b, fill=INK)
+
+    sub_font_b, lines_b = fit_wrapped_sub(draw, f"\u201c{option_b_sub}\u201d", max_w, start_size=34, min_size=22, max_lines=2)
+    sub_y = yb + (bb_[3] - bb_[1]) + 34
+    for line in lines_b:
+        draw.text((inner_pad, sub_y), line, font=sub_font_b, fill=MUTED_GRAY)
+        lb2 = draw.textbbox((0, 0), line, font=sub_font_b)
+        sub_y += (lb2[3] - lb2[1]) + 10
+
+    cy_b = yb + 6 + r
+    draw.ellipse([(cx - r, cy_b - r), (cx + r, cy_b + r)], outline=INK, width=4, fill=BG)
+    lbb = draw.textbbox((0, 0), "B", font=badge_font)
+    draw.text((cx - (lbb[2] - lbb[0]) / 2, cy_b - (lbb[3] - lbb[1]) / 2 - lbb[1]), "B", font=badge_font, fill=INK)
 
     # 하단 워터마크
-    wm = f"{handle}  ·  밸런스게임연구소"
-    wb = draw.textbbox((0, 0), wm, font=watermark_font)
-    ww = wb[2] - wb[0]
-    draw.text(((W - ww) / 2, box_top + box_h + 40), wm, font=watermark_font, fill=MUTED)
+    wm_font = load_font(26, bold=False)
+    wm = f"{handle} \u00b7 \uBC38\uB7F0\uC2A4\uAC8C\uC784\uC5F0\uAD6C\uC18C"
+    wb = draw.textbbox((0, 0), wm, font=wm_font)
+    draw.text((W / 2 - (wb[2] - wb[0]) / 2, H - 96), wm, font=wm_font, fill=MUTED_GRAY)
 
-    img.convert("RGB").save(out_path, "PNG")
+    img.save(out_path, "PNG")
     return out_path
 
 
