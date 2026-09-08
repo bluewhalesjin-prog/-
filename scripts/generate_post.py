@@ -54,6 +54,12 @@ PROFILE_CTAS = [
     "재밌으면 프로필 눌러서 팔로우 ✍️",
 ]
 
+# 시그니처 태그. 모든 썰의 훅과 같은 줄에 접두사로 붙어 브랜드 역할을 한다.
+# 별도 줄로 두면 피드 미리보기 첫 줄이 매번 똑같아져서 훅이 스크롤을 못 멈추므로,
+# 반드시 훅과 같은 줄에 붙인다.
+# "주워들은"이라는 표현이 창작 썰을 자기 경험으로 주장하지 않는 프레임도 겸한다.
+SIGNATURE_TAG = "[주워들은 썰]"
+
 # 2026-09-08: 썰 계정으로 전환하면서 해시태그도 교체.
 # 실측상 고성과 썰 게시물이 쓰던 태그 위주로 구성했다.
 HASHTAGS = ["#직장인썰", "#회사썰", "#썰", "#직장생활", "#공감"]
@@ -249,9 +255,10 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     if is_v2(q):
         # v2 썰 구조: hook(제목형 훅) + body(대사 포함 본문) + closing(썰 요청형 CTA)
         hook, body, closing = q["hook"], q["body"], q["closing"]
-        full_text = f"{hook}\n\n{body}\n\n{closing}\n{tags}"
+        headline = f"{SIGNATURE_TAG} {hook}"
+        full_text = f"{headline}\n\n{body}\n\n{closing}\n{tags}"
         # Instagram 슬라이드는 짧아야 하므로 훅과 본문 첫 문단만 쓴다
-        part1 = hook
+        part1 = headline
         part2 = body.split("\n\n")[0]
         part3 = f"{closing}\n{tags}"
         title = hook
