@@ -17,6 +17,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 import threads_client
 import instagram_client
+from generate_post import append_published_log
 
 STATE_DIR = "data/state"
 HISTORY_PATH = "data/history.json"
@@ -170,6 +171,10 @@ def main():
         result["published"] = True
         result["permalink"] = publish_result["permalink"]
         result["post_ids"] = publish_result["post_ids"]
+
+        # 같은 글이 두 번 올라가지 않도록 영구 기록에 남긴다.
+        # history.json은 최근 90건만 유지되므로 이 기록이 중복 판정의 기준이 된다.
+        append_published_log(draft["question_id"])
 
         try:
             refreshed = threads_client.refresh_token(token)
