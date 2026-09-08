@@ -64,16 +64,33 @@ def load_history(history_path: str) -> dict:
         return json.load(f)
 
 
+# 카테고리별 선택 가중치. 실제 조회수 데이터상 직장생활 카테고리가 평균적으로
+# 반응이 좋아 살짝 더 자주 뽑히도록 하되, 완전히 몰아주지는 않는다(다양성 유지).
+CATEGORY_WEIGHTS = {
+    "직장생활": 1.5,
+    "연애": 1.0,
+    "라이프스타일": 1.0,
+    "가벼운취향": 1.0,
+}
+
+
 def pick_question(history: dict) -> dict:
-    """최근에 안 쓴 질문 우선 선택. 전체를 다 쓰면 다시 처음부터 순환."""
+    """최근에 '실제 발행된' 질문만 회피 대상으로 삼아 우선 선택.
+    전체를 다 쓰면 다시 처음부터 순환. dry-run/미발행 기록은 반복 방지 계산에서 제외한다
+    (예전 버그: 미발행 기록까지 섞여 카운트되면서 최근-사용 창이 실제보다 빨리 소진 -> 조기 반복 발생).
+    카테고리 가중치를 적용해 직장생활이 약간 더 자주 뽑히도록 한다."""
     entries = history.get("entries", [])
-    used_ids = [e.get("question_id") for e in entries if e.get("question_id")]
-    recent_used = set(used_ids[-(len(QUESTIONS) - 1):])  # 전체 뱅크를 거의 다 돌기 전엔 반복 안 함
+    published_ids = [
+        e.get("question_id") for e in entries
+        if e.get("published") and e.get("question_id")
+    ]
+    recent_used = set(published_ids[-(len(QUESTIONS) - 1):])  # 전체 뱅크를 거의 다 돌기 전엔 반복 안 함
 
     candidates = [q for q in QUESTIONS if q["id"] not in recent_used]
     if not candidates:
         candidates = QUESTIONS
-    return random.choice(candidates)
+    weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in candidates]
+    return random.choices(candidates, weights=weights, k=1)[0]
 
 
 def build_closing(q: dict) -> str:
