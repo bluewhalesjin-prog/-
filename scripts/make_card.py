@@ -158,7 +158,7 @@ def centered_multiline(draw, box, main, sub_lines, main_font, sub_font, main_col
 
 
 def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: str, out_path: str,
-                  handle: str = "@pick1_daily"):
+                  handle: str = "@ssuldaeri"):
     """시안 D: 실제 인기 밸런스게임/카드뉴스 콘텐츠 벤치마킹 기반.
     그라데이션 색블록 버튼형 디자인(구버전) 대신, 두꺼운 검은 테두리 프레임 + 거대한
     2줄 헤드라인 타이포 + 형광펜 하이라이트 + 작은 A/B 원형 배지로 구성한다."""
@@ -246,7 +246,7 @@ def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: 
 
     # 하단 워터마크
     wm_font = load_font(26, bold=False)
-    wm = f"{handle} \u00b7 \uBC38\uB7F0\uC2A4\uAC8C\uC784\uC5F0\uAD6C\uC18C"
+    wm = f"{handle} · 썰대리"
     wb = draw.textbbox((0, 0), wm, font=wm_font)
     draw.text((W / 2 - (wb[2] - wb[0]) / 2, H - 96), wm, font=wm_font, fill=MUTED_GRAY)
 
@@ -255,7 +255,7 @@ def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: 
 
 
 def make_text_slide(text: str, out_path: str, slide_no: int = None, slide_total: int = None,
-                     handle: str = "@pick1_daily", eyebrow: str = "오늘의 밸런스게임"):
+                     handle: str = "@ssuldaeri", eyebrow: str = "주워들은 썰"):
     """Instagram 캐러셀용 서사(narrative) 텍스트 슬라이드 카드를 렌더링한다.
     카드 이미지와 동일한 브랜드 톤(배경색/상단 라벨/워터마크)을 유지하고,
     가운데에 텍스트를 자동 줄바꿈 + 자동 폰트 크기 조정으로 배치한다."""
@@ -302,7 +302,7 @@ def make_text_slide(text: str, out_path: str, slide_no: int = None, slide_total:
         y += lh + line_gap
 
     # 하단 워터마크
-    wm = f"{handle}  ·  밸런스게임연구소"
+    wm = f"{handle} · 썰대리"
     wb = draw.textbbox((0, 0), wm, font=watermark_font)
     ww = wb[2] - wb[0]
     draw.text(((W - ww) / 2, H - 100), wm, font=watermark_font, fill=MUTED)
