@@ -159,7 +159,7 @@ def centered_multiline(draw, box, main, sub_lines, main_font, sub_font, main_col
 
 def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: str, out_path: str,
                   handle: str = "@ssuldaeri"):
-    """시안 D: 실제 인기 밸런스게임/카드뉴스 콘텐츠 벤치마킹 기반.
+    """시안 D: 실제 인기 썰/카드뉴스 콘텐츠 벤치마킹 기반.
     그라데이션 색블록 버튼형 디자인(구버전) 대신, 두꺼운 검은 테두리 프레임 + 거대한
     2줄 헤드라인 타이포 + 형광펜 하이라이트 + 작은 A/B 원형 배지로 구성한다."""
     W, H = 1080, 1080
@@ -183,7 +183,7 @@ def make_vs_card(option_a: str, option_a_sub: str, option_b: str, option_b_sub: 
     max_w = W - inner_pad * 2
 
     tag_font = load_font(30)
-    draw.text((inner_pad, 96), "#오늘의 밸런스게임", font=tag_font, fill=ACCENT)
+    draw.text((inner_pad, 96), "#주워들은썰", font=tag_font, fill=ACCENT)
 
     # 옵션 A 헤드라인 + 형광펜 하이라이트
     font_a = fit_font(draw, option_a, max_w, start_size=118, min_size=52)
