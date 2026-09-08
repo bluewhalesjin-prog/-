@@ -298,3 +298,12 @@ QUESTIONS = [
 "option_a": "25만원 지르기", "option_a_sub": "이 순간은 다시\n안 오는 거지!",
 "option_b": "저축 지키기", "option_b_sub": "통장이 든든해야\n마음도 편하지!"},
 ]
+
+# ---------------------------------------------------------------------------
+# v2 썰 구조(hook/body/closing) 항목을 이어붙인다. (2026-09-08)
+# 위 항목들은 v1(setup 2줄) 구조이고, 아래로 갈수록 v2로 교체해 나간다.
+# generate_post.pick_question()이 v2를 우선 소진하도록 되어 있다.
+# ---------------------------------------------------------------------------
+from question_bank_v2 import V2_QUESTIONS  # noqa: E402
+
+QUESTIONS = QUESTIONS + V2_QUESTIONS
