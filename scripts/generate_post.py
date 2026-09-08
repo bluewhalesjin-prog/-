@@ -89,19 +89,54 @@ def unused_questions(history: dict) -> list:
     return [q for q in QUESTIONS if q["id"] not in used]
 
 
+def is_v2(q: dict) -> bool:
+    """v2(썰 구조: hook/body/closing) 항목인지."""
+    return bool(q.get("hook"))
+
+
+def next_series_episode(history: dict):
+    """진행 중인 시리즈가 있으면 그 다음 화를 돌려준다.
+    1화가 나갔는데 2화가 안 나갔으면 2화를 반드시 먼저 발행해 순서를 보장한다."""
+    used = set(published_ids(history))
+    candidates = []
+    for q in QUESTIONS:
+        if not q.get("series") or q["id"] in used:
+            continue
+        ep = q.get("ep") or 1
+        if ep == 1:
+            continue
+        prev = [p for p in QUESTIONS
+                if p.get("series") == q["series"] and (p.get("ep") or 1) == ep - 1]
+        if prev and prev[0]["id"] in used:
+            candidates.append(q)
+    if not candidates:
+        return None
+    return sorted(candidates, key=lambda q: (q["series"], q.get("ep") or 1))[0]
+
+
 def pick_question(history: dict) -> dict:
     """중복 없이 뽑는다.
-    1순위: 한 번도 발행 안 된 질문 중에서 카테고리 가중치를 적용해 선택.
-           -> 뱅크를 한 바퀴 다 돌 때까지 중복이 구조적으로 발생할 수 없다.
-    2순위: 전부 소진됐을 때만 '가장 오래전에 쓴 것'부터 재사용해 간격을 최대로 벌린다.
+    0순위: 이미 시작된 시리즈의 다음 화 (순서가 꼬이면 안 되므로 최우선).
+    1순위: 아직 안 쓴 v2(썰 구조) 항목. 구조가 개선된 글부터 소진한다.
+    2순위: 아직 안 쓴 나머지 항목.
+    3순위: 전부 소진됐을 때만 '가장 오래전에 쓴 것'부터 재사용해 간격을 최대로 벌린다.
            (예전에는 이 상황에서 전체를 무작위로 다시 열어버려 어제 질문까지 재등장했음)"""
-    pubs = published_ids(history)
+    nxt = next_series_episode(history)
+    if nxt:
+        return nxt
 
     unused = unused_questions(history)
     if unused:
-        weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in unused]
-        return random.choices(unused, weights=weights, k=1)[0]
+        # 시리즈 2화 이상은 위에서만 나가야 하므로 일반 추첨 대상에서 제외
+        pool = [q for q in unused if (q.get("ep") or 1) == 1]
+        if not pool:
+            pool = unused
+        v2_pool = [q for q in pool if is_v2(q)]
+        target = v2_pool or pool
+        weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in target]
+        return random.choices(target, weights=weights, k=1)[0]
 
+    pubs = published_ids(history)
     last_seen = {}
     for i, qid in enumerate(pubs):
         last_seen[qid] = i
@@ -164,30 +199,47 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     history = load_history(history_path)
     q = pick_question(history)
 
-    setup_lines = q["setup"].split("\n")
-    part1 = setup_lines[0]
-    part2 = setup_lines[1] if len(setup_lines) > 1 else ""
-
-    closing = build_closing(q)
     tags = " ".join(random.sample(HASHTAGS, 2))
-    part3 = f"{closing}\n{tags}"
+
+    if is_v2(q):
+        # v2 썰 구조: hook(제목형 훅) + body(대사 포함 본문) + closing(썰 요청형 CTA)
+        hook, body, closing = q["hook"], q["body"], q["closing"]
+        full_text = f"{hook}\n\n{body}\n\n{closing}\n{tags}"
+        # Instagram 슬라이드는 짧아야 하므로 훅과 본문 첫 문단만 쓴다
+        part1 = hook
+        part2 = body.split("\n\n")[0]
+        part3 = f"{closing}\n{tags}"
+        title = hook
+    else:
+        # v1 구조(구버전): setup 2줄 + 자동 생성 클로징
+        setup_lines = q["setup"].split("\n")
+        part1 = setup_lines[0]
+        part2 = setup_lines[1] if len(setup_lines) > 1 else ""
+        closing = build_closing(q)
+        part3 = f"{closing}\n{tags}"
+        full_text = build_full_text(part1, part2, part3)
+        title = part1
 
     comment_type, comment_text = pick_comment_type(history, blog_url, today=today)
 
     return {
         "question_id": q["id"],
         "category": q["category"],
+        "format": "v2" if is_v2(q) else "v1",
+        "series": q.get("series"),
+        "ep": q.get("ep"),
+        "ep_total": q.get("ep_total"),
         "part1": part1,
         "part2": part2,
         "part3": part3,
-        "full_text": build_full_text(part1, part2, part3),
+        "full_text": full_text,
         "option_a": q["option_a"],
         "option_a_sub": q["option_a_sub"],
         "option_b": q["option_b"],
         "option_b_sub": q["option_b_sub"],
         "comment_type": comment_type,
         "comment_text": comment_text,
-        "title": q["setup"].split("\n")[0],
+        "title": title,
     }
 
 
