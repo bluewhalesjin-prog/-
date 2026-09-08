@@ -74,23 +74,38 @@ CATEGORY_WEIGHTS = {
 }
 
 
-def pick_question(history: dict) -> dict:
-    """최근에 '실제 발행된' 질문만 회피 대상으로 삼아 우선 선택.
-    전체를 다 쓰면 다시 처음부터 순환. dry-run/미발행 기록은 반복 방지 계산에서 제외한다
-    (예전 버그: 미발행 기록까지 섞여 카운트되면서 최근-사용 창이 실제보다 빨리 소진 -> 조기 반복 발생).
-    카테고리 가중치를 적용해 직장생활이 약간 더 자주 뽑히도록 한다."""
-    entries = history.get("entries", [])
-    published_ids = [
-        e.get("question_id") for e in entries
+def published_ids(history: dict) -> list:
+    """실제로 발행에 성공한 question_id만 발행 순서대로 반환.
+    dry-run/실패 기록은 제외한다(예전 버그: 미발행 기록이 섞여 반복 방지가 조기 소진됨)."""
+    return [
+        e.get("question_id") for e in history.get("entries", [])
         if e.get("published") and e.get("question_id")
     ]
-    recent_used = set(published_ids[-(len(QUESTIONS) - 1):])  # 전체 뱅크를 거의 다 돌기 전엔 반복 안 함
 
-    candidates = [q for q in QUESTIONS if q["id"] not in recent_used]
-    if not candidates:
-        candidates = QUESTIONS
-    weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in candidates]
-    return random.choices(candidates, weights=weights, k=1)[0]
+
+def unused_questions(history: dict) -> list:
+    """아직 한 번도 발행된 적 없는 질문 목록 (재고 감시용)."""
+    used = set(published_ids(history))
+    return [q for q in QUESTIONS if q["id"] not in used]
+
+
+def pick_question(history: dict) -> dict:
+    """중복 없이 뽑는다.
+    1순위: 한 번도 발행 안 된 질문 중에서 카테고리 가중치를 적용해 선택.
+           -> 뱅크를 한 바퀴 다 돌 때까지 중복이 구조적으로 발생할 수 없다.
+    2순위: 전부 소진됐을 때만 '가장 오래전에 쓴 것'부터 재사용해 간격을 최대로 벌린다.
+           (예전에는 이 상황에서 전체를 무작위로 다시 열어버려 어제 질문까지 재등장했음)"""
+    pubs = published_ids(history)
+
+    unused = unused_questions(history)
+    if unused:
+        weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in unused]
+        return random.choices(unused, weights=weights, k=1)[0]
+
+    last_seen = {}
+    for i, qid in enumerate(pubs):
+        last_seen[qid] = i
+    return sorted(QUESTIONS, key=lambda q: last_seen.get(q["id"], -1))[0]
 
 
 def build_closing(q: dict) -> str:
