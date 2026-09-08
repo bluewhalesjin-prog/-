@@ -76,19 +76,58 @@ CATEGORY_WEIGHTS = {
 }
 
 
+PUBLISHED_LOG_PATH = "data/published_ids.json"
+
+
+def load_published_log() -> list:
+    """발행 완료 id 영구 기록. history.json은 최근 90건만 남기고 잘리기 때문에
+    그것만 믿으면 46일쯤 지난 글이 '미사용'으로 되살아나 재발행된다.
+    중복 발행 방지의 기준은 항상 이 파일이다."""
+    if not os.path.exists(PUBLISHED_LOG_PATH):
+        return []
+    with open(PUBLISHED_LOG_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return list(data.get("ids", [])) if isinstance(data, dict) else list(data)
+
+
+def append_published_log(question_id: str):
+    """발행 성공 시 영구 기록에 추가한다(이미 있으면 그대로 둔다)."""
+    ids = load_published_log()
+    if question_id in ids:
+        return
+    ids.append(question_id)
+    os.makedirs(os.path.dirname(PUBLISHED_LOG_PATH), exist_ok=True)
+    payload = {
+        "_comment": "발행 완료된 question_id 영구 기록. history.json은 최근 90건만 "
+                    "남기고 잘리므로, 중복 발행 방지는 이 파일을 기준으로 판단한다. "
+                    "절대 임의로 비우지 말 것.",
+        "ids": ids,
+    }
+    with open(PUBLISHED_LOG_PATH, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+
 def published_ids(history: dict) -> list:
-    """실제로 발행에 성공한 question_id만 발행 순서대로 반환.
-    dry-run/실패 기록은 제외한다(예전 버그: 미발행 기록이 섞여 반복 방지가 조기 소진됨)."""
-    return [
-        e.get("question_id") for e in history.get("entries", [])
-        if e.get("published") and e.get("question_id")
-    ]
+    """지금까지 발행된 question_id 전부(영구 기록 + 이번 history)를 순서대로 반환."""
+    seen = []
+    for qid in load_published_log():
+        if qid and qid not in seen:
+            seen.append(qid)
+    for e in history.get("entries", []):
+        if e.get("published") and e.get("question_id") and e["question_id"] not in seen:
+            seen.append(e["question_id"])
+    return seen
 
 
 def unused_questions(history: dict) -> list:
     """아직 한 번도 발행된 적 없는 질문 목록 (재고 감시용)."""
     used = set(published_ids(history))
     return [q for q in QUESTIONS if q["id"] not in used]
+
+
+class SoldOutError(RuntimeError):
+    """미사용 글이 없어 발행을 중단해야 할 때 던진다.
+    같은 글을 두 번 올리지 않기 위한 안전장치이므로 무시하고 넘기지 말 것."""
 
 
 def is_v2(q: dict) -> bool:
@@ -128,21 +167,25 @@ def pick_question(history: dict) -> dict:
         return nxt
 
     unused = unused_questions(history)
-    if unused:
-        # 시리즈 2화 이상은 위에서만 나가야 하므로 일반 추첨 대상에서 제외
-        pool = [q for q in unused if (q.get("ep") or 1) == 1]
-        if not pool:
-            pool = unused
-        v2_pool = [q for q in pool if is_v2(q)]
-        target = v2_pool or pool
-        weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in target]
-        return random.choices(target, weights=weights, k=1)[0]
+    if not unused:
+        # 재사용은 하지 않는다. 한 번 나간 글은 다시 올리지 않는 게 이 계정의 원칙이라
+        # 재고가 떨어지면 발행을 아예 중단한다. run_daily.sh가 set -e라서
+        # 여기서 예외가 나면 publish 단계까지 가지 않고 그날은 아무것도 안 올라간다.
+        raise SoldOutError(
+            "발행 가능한 미사용 글이 없습니다. 재사용을 막기 위해 발행을 중단합니다. "
+            "question_bank_v2.py에 새 글을 추가하세요."
+        )
 
-    pubs = published_ids(history)
-    last_seen = {}
-    for i, qid in enumerate(pubs):
-        last_seen[qid] = i
-    return sorted(QUESTIONS, key=lambda q: last_seen.get(q["id"], -1))[0]
+    # 시리즈 후속화는 next_series_episode()로만 나가야 하므로 일반 추첨에서 제외
+    pool = [q for q in unused if (q.get("ep") or 1) == 1]
+    if not pool:
+        raise SoldOutError(
+            "남은 미사용 글이 시리즈 후속화뿐인데 선행화가 아직 안 나갔습니다. "
+            "순서가 꼬이지 않도록 발행을 중단합니다."
+        )
+
+    weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in pool]
+    return random.choices(pool, weights=weights, k=1)[0]
 
 
 def build_closing(q: dict) -> str:
