@@ -139,28 +139,32 @@ def main():
     dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
     token = load_token()
     user_id = os.environ["THREADS_USER_ID"]
-    image_base = os.environ["IMAGE_BASE_URL"].rstrip("/")
-    image_url = f"{image_base}/{draft['card_path']}"
+    slot = draft.get("slot", "evening")
+
+    # 스레드는 텍스트 전용으로 발행한다. 이미지는 Instagram 캐러셀에만 쓰인다.
+    image_base = (os.environ.get("IMAGE_BASE_URL") or "").rstrip("/")
+    image_url = f"{image_base}/{draft['card_path']}" if (image_base and draft.get("card_path")) else None
 
     result = {
         "date": draft["date"],
+        "slot": slot,
         "question_id": draft["question_id"],
         "category": draft["category"],
         "comment_type": draft["comment_type"],
         "cta_index": draft["comment_type"].split(":")[1] if ":" in draft["comment_type"] else None,
-        "card_image": draft["card_path"],
+        "card_image": draft.get("card_path"),
         "image_url": image_url,
         "published": False,
     }
 
     if dry_run:
-        print(f"[DRY_RUN] 발행 생략. 이미지 URL 확인용: {image_url}")
+        print(f"[DRY_RUN] 발행 생략. 본문:\n{draft['full_text']}")
     else:
         publish_result = threads_client.publish_single_post(
             user_id=user_id,
             token=token,
             text=draft["full_text"],
-            image_url=image_url,
+            image_url=None,          # 텍스트 전용 발행
             comment_text=draft["comment_text"],
         )
         result["published"] = True
@@ -173,7 +177,11 @@ def main():
         except Exception as e:
             print(f"[경고] 토큰 갱신 실패, 기존 토큰 유지: {e}")
 
-    result.update(cross_post_instagram(draft, image_base, image_url, dry_run))
+    if slot == "evening" and image_url:
+        result.update(cross_post_instagram(draft, image_base, image_url, dry_run))
+    else:
+        result.update({"instagram_published": False,
+                       "instagram_skipped_reason": f"slot={slot} (아침 슬롯은 텍스트 전용)"})
 
     append_history(result)
     with open("data/last_result.json", "w", encoding="utf-8") as f:
