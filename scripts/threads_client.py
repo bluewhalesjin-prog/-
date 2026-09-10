@@ -106,6 +106,49 @@ def publish_thread_sequence(user_id: str, token: str, parts: list[str], image_ur
     return result
 
 
+def publish_chain(user_id: str, token: str, parts: list, comment_text: str = None) -> dict:
+    """본문을 여러 게시물로 나눠 체인(타래)으로 발행한다.
+
+    2026-09-10 신설. 각 파트를 직전 파트의 답글로 올리면 스레드가 이를
+    1/3, 2/3, 3/3 타래로 묶어서 보여준다. 핵심은 각 파트가 별개 게시물로
+    피드에 노출된다는 점이다. 한 덩어리로 올리면 노출 기회가 1번뿐이다.
+
+    comment_text(프로필 유도 등)는 마지막 파트 아래에 단다.
+    끝까지 읽은 사람에게 보여야 의미가 있기 때문이다.
+
+    중간에 실패해도 이미 올라간 파트는 되돌리지 않는다.
+    타래가 잘린 채 남는 게, 발행 자체가 없는 것보다 낫다.
+    """
+    parts = [p for p in (parts or []) if p and p.strip()]
+    if not parts:
+        raise ValueError("발행할 파트가 없다")
+
+    ids = []
+    reply_to = None
+    for idx, text in enumerate(parts):
+        cid = create_text_container(user_id, token, text, reply_to_id=reply_to)
+        time.sleep(3)
+        pid = publish_container(user_id, token, cid)
+        ids.append(pid)
+        reply_to = pid
+        if idx < len(parts) - 1:
+            time.sleep(2)
+
+    root_id = ids[0]
+    result = {"post_ids": ids, "root_id": root_id, "parts_published": len(ids)}
+    result["permalink"] = get_permalink(root_id, token)
+
+    if comment_text:
+        time.sleep(2)
+        ccid = create_text_container(user_id, token, comment_text, reply_to_id=ids[-1])
+        time.sleep(3)
+        comment_id = publish_container(user_id, token, ccid)
+        result["post_ids"].append(comment_id)
+        result["comment_id"] = comment_id
+
+    return result
+
+
 def publish_single_post(user_id: str, token: str, text: str, image_url: str = None,
                          comment_text: str = None) -> dict:
     """
