@@ -717,6 +717,23 @@
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "slot=morning (아침 슬롯은 텍스트 전용)"
+    },
+    {
+      "date": "2026-09-10",
+      "slot": "morning",
+      "question_id": "v2_job_15",
+      "category": "직장생활",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "card_image": null,
+      "image_url": null,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DdFrV66D0Of",
+      "post_ids": [
+        "18114853975969327"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "slot=morning (아침 슬롯은 텍스트 전용)"
     }
   ]
 }
