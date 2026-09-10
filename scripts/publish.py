@@ -161,19 +161,31 @@ def main():
         "cta_index": draft["comment_type"].split(":")[1] if ":" in draft["comment_type"] else None,
         "card_image": draft.get("card_path"),
         "image_url": image_url,
+        "parts_count": len(draft.get("parts") or []),
         "published": False,
     }
 
     if dry_run:
         print(f"[DRY_RUN] 발행 생략. 본문:\n{draft['full_text']}")
     else:
-        publish_result = threads_client.publish_single_post(
-            user_id=user_id,
-            token=token,
-            text=draft["full_text"],
-            image_url=None,          # 텍스트 전용 발행
-            comment_text=draft["comment_text"],
-        )
+        # 2026-09-10: 3부 체인 발행으로 전환.
+        # parts가 있으면 체인으로, 없으면(구버전 draft) 기존 단일 발행으로 떨어진다.
+        parts = draft.get("parts") or []
+        if len([p for p in parts if p and p.strip()]) >= 2:
+            publish_result = threads_client.publish_chain(
+                user_id=user_id,
+                token=token,
+                parts=parts,
+                comment_text=draft["comment_text"],
+            )
+        else:
+            publish_result = threads_client.publish_single_post(
+                user_id=user_id,
+                token=token,
+                text=draft["full_text"],
+                image_url=None,          # 텍스트 전용 발행
+                comment_text=draft["comment_text"],
+            )
         result["published"] = True
         result["permalink"] = publish_result["permalink"]
         result["post_ids"] = publish_result["post_ids"]
