@@ -23,6 +23,12 @@ STATE_DIR = "data/state"
 HISTORY_PATH = "data/history.json"
 DRAFT_PATH = "data/draft.json"
 
+# 2026-09-10: Instagram 운영 중단.
+#   작은 계정(팔로워 5,000 미만)에서 캐러셀은 비팔로워 도달이 사실상 없다.
+#   게다가 기존 카드는 폐기된 밸런스게임(A/B VS) 포맷이라 썰 정체성과도 어긋났다.
+#   스레드에 집중하기로 하고 껐다. 되돌리려면 .env에 ENABLE_INSTAGRAM=true 를 넣는다.
+ENABLE_INSTAGRAM = os.environ.get("ENABLE_INSTAGRAM", "false").lower() == "true"
+
 def load_token() -> str:
     cached = os.path.join(STATE_DIR, "token.txt")
     if os.path.exists(cached):
@@ -182,7 +188,10 @@ def main():
         except Exception as e:
             print(f"[경고] 토큰 갱신 실패, 기존 토큰 유지: {e}")
 
-    if slot == "evening" and image_url:
+    if not ENABLE_INSTAGRAM:
+        result.update({"instagram_published": False,
+                       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"})
+    elif slot == "evening" and image_url:
         result.update(cross_post_instagram(draft, image_base, image_url, dry_run))
     else:
         result.update({"instagram_published": False,
