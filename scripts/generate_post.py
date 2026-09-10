@@ -1,5 +1,5 @@
 """
-스레드 3파트 타래 글 생성 (밸런스게임/질문형 포맷, AI 호출 없음)
+스레드 3부 체인(타래) 썰 생성. AI 호출 없이 뱅크에서 고른다.
 
 - question_bank.py 에서 최근에 안 쓴 질문을 골라 사용 (전체를 다 돌 때까지 반복 방지)
 - 1~2파트: 상황극 설정 (질문 뱅크의 setup 두 줄, 각 파트 약 62~70자 narrative)
@@ -42,16 +42,16 @@ CLOSING_TEMPLATES = [
 ]
 
 PROFILE_CTAS = [
-    "이런 밸런스게임 매일 하나씩 올림. 프로필 확인 🔍",
-    "다음 밸런스게임도 궁금하면 프로필 눌러보셈 👆",
-    "이런 거 계속 보고 싶으면 프로필 링크 확인 🔗",
-    "매일 하나씩 새 질문 올리는 중. 프로필 확인 ✅",
-    "선택장애 유발자 계속 보고 싶으면 프로필 확인 🫶",
-    "다른 질문들도 궁금하면 프로필에 있음 🧑‍💻",
-    "매일 새 밸런스게임 올림. 궁금하면 프로필 확인 🎁",
-    "이런 콘텐츠 계속 받고 싶으면 프로필 확인 🧐",
-    "지난 밸런스게임들도 프로필에 다 있음 📚",
-    "재밌으면 프로필 눌러서 팔로우 ✍️",
+    "이런 썰 아침 8시, 저녁 7시 30분에 하나씩 올림. 프로필 확인 🔍",
+    "다음 썰도 궁금하면 프로필 눌러보셈 👆",
+    "시리즈물은 중간부터 보면 앞뒤가 안 맞음. 프로필에 다 있음 📚",
+    "회사에서 주워들은 썰 매일 풀고 있음. 프로필 확인 ✅",
+    "이런 거 계속 보고 싶으면 프로필 눌러서 팔로우 ✍️",
+    "지난 썰들도 프로필에 다 모아놨음 🗂️",
+    "댓글에 님들 썰 풀어주면 그거 읽는 재미가 절반임 🫶",
+    "매일 두 편씩 올라감. 놓치기 싫으면 프로필 확인 🧐",
+    "다음 화 궁금하면 팔로우해두는 게 편함 👀",
+    "주워들은 썰 계속 받고 싶으면 프로필 확인 🔗",
 ]
 
 # 시그니처 태그. 모든 썰의 훅과 같은 줄에 접두사로 붙어 브랜드 역할을 한다.
@@ -246,6 +246,61 @@ def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, st
     return "무댓글", None
 
 
+
+# ── 2026-09-10: 스레드 3부 체인 발행 ──────────────────────────────────
+# 왜 바꿨나
+#   8/18에 6.5만 조회가 나온 유일한 글은 게시물 3개짜리 체인이었다.
+#     1/3 상황만 제시하고 끊음 → 좋아요 77, 답글 53
+#     2/3 딜레마 공개          → 좋아요 27
+#     3/3 A/B 선택 요청        → 좋아요 6
+#   v2로 넘어오면서 이걸 게시물 1개로 합쳤고, 그 뒤 최고 조회가 3천이다.
+#   체인은 각 파트가 별개 게시물로 피드에 노출되므로 기회가 3배다.
+#   또 그 글의 답글 하나가 좋아요 407개를 받았다. 원글(77)의 5배다.
+#   답하기 쉬운 판을 깔아주면 답글 자체가 콘텐츠가 된다.
+#
+#   주의: 표본 1개다. "체인이면 터진다"는 뜻이 아니다.
+#   다만 노출 기회를 3→1로 줄이고 답글 난이도를 올린 건 구조적 사실이라 되돌린다.
+#
+#   option_a/option_b는 원래 인스타 카드용이었는데 인스타를 껐으므로
+#   3화의 선택지로 재활용한다. 뱅크 원고는 한 글자도 수정하지 않는다.
+
+def split_body_for_chain(body: str) -> tuple[str, str]:
+    """본문 문단을 두 덩어리로 나눈다. 앞쪽이 약 45%가 되는 문단 경계에서 자른다.
+
+    문장 중간이 아니라 반드시 문단 경계에서 자르므로 1화가 어색하게 끊기지 않는다.
+    문단이 2개 이하면 첫 문단만 1화로 보낸다.
+    """
+    paras = [p.strip() for p in body.split("\n\n") if p.strip()]
+    if len(paras) <= 2:
+        return paras[0], "\n\n".join(paras[1:])
+
+    total = sum(len(p) for p in paras)
+    acc = 0
+    cut = 1
+    for i, p in enumerate(paras):
+        acc += len(p)
+        if acc >= total * 0.45:
+            cut = i + 1
+            break
+    cut = max(1, min(cut, len(paras) - 1))
+    return "\n\n".join(paras[:cut]), "\n\n".join(paras[cut:])
+
+
+def build_choice_block(q: dict) -> str:
+    """3화 끝에 붙는 양자택일 + 요청 문구.
+
+    양자택일은 답글 문턱을 낮추고(3초면 답함),
+    뒤의 썰 요청은 긴 답글도 열어둔다. 둘 다 필요하다.
+    """
+    a, b = q["option_a"], q["option_b"]
+    ep, ep_total = q.get("ep"), q.get("ep_total")
+    if q.get("series") and ep and ep_total and ep < ep_total:
+        prompt = "다음 화 나오기 전에 찍어보셈."
+    else:
+        prompt = "님들이면? 비슷한 거 겪은 사람 썰도 풀어줘."
+    return f"A. {a}\nB. {b}\n\n{prompt}"
+
+
 def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     history = load_history(history_path)
     q = pick_question(history)
@@ -257,10 +312,12 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         hook, body, closing = q["hook"], q["body"], q["closing"]
         headline = f"{SIGNATURE_TAG} {hook}"
         full_text = f"{headline}\n\n{body}\n\n{closing}\n{tags}"
-        # Instagram 슬라이드는 짧아야 하므로 훅과 본문 첫 문단만 쓴다
-        part1 = headline
-        part2 = body.split("\n\n")[0]
-        part3 = f"{closing}\n{tags}"
+
+        # 스레드 3부 체인. 각 파트가 별개 게시물로 나가 노출 기회가 3배가 된다.
+        front, back = split_body_for_chain(body)
+        part1 = f"{headline}\n\n{front}"
+        part2 = back
+        part3 = f"{closing}\n\n{build_choice_block(q)}\n\n{tags}"
         title = hook
     else:
         # v1 구조(구버전): setup 2줄 + 자동 생성 클로징
@@ -285,6 +342,7 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         "part2": part2,
         "part3": part3,
         "full_text": full_text,
+        "parts": [part1, part2, part3],
         "option_a": q["option_a"],
         "option_a_sub": q["option_a_sub"],
         "option_b": q["option_b"],
