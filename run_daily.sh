@@ -34,6 +34,28 @@ if ! git pull --quiet; then
   notify "git pull 실패 - 로컬 코드로 계속 진행"
 fi
 
+# ── 1-2. 주간 신규 썰 자동 반영 ─────────────────────────────────
+# 2026-09-15 추가.
+#   주간 보충 작업이 GitHub 커밋을 Claude in Chrome에 의존해 왔는데
+#   9/1, 9/15 두 번 확인된 실패가 있었다. 확장이 끊기면 18편이 통째로 날아간다.
+#   이제 예약작업은 연결 폴더에 pending_v2_*.py 를 떨구기만 하고,
+#   실제 뱅크 반영은 여기서 한다. 맥은 git 인증이 살아 있고 하루 두 번 도니까
+#   브라우저가 아예 필요 없어진다.
+#
+#   스크립트는 검증 실패 시 뱅크를 원상 복구하고 종료코드 1을 준다.
+#   그 경우에도 발행은 계속한다. 재고가 안 늘었을 뿐 오늘 나갈 글은 있다.
+if python3 scripts/apply_pending.py; then
+  if ! git diff --quiet -- scripts/question_bank_v2.py; then
+    git add scripts/question_bank_v2.py
+    git commit -m "feat: 주간 신규 썰 자동 반영 $(date +%F)" --quiet
+    git push --quiet || notify "뱅크 반영 push 실패 - 다음 실행에서 재시도됨"
+    notify "주간 신규 썰을 뱅크에 반영했습니다"
+  fi
+else
+  notify "pending 반영 실패 - 뱅크는 원상 복구됨. Cowork에서 확인 필요"
+  git checkout -- scripts/question_bank_v2.py 2>/dev/null || true
+fi
+
 # ── 2. 원고 생성 ────────────────────────────────────────────────
 # 이건 실패하면 발행할 게 없으므로 여기서 중단한다.
 if ! python3 scripts/prepare.py; then
