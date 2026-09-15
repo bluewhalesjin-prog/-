@@ -1,20 +1,19 @@
 {
-  "date": "2026-09-15",
-  "slot": "evening",
-  "question_id": "v2_job_03",
+  "date": "2026-09-16",
+  "slot": "morning",
+  "question_id": "v2_job_06",
   "category": "직장생활",
-  "comment_type": "프로필유도:1",
-  "cta_index": "1",
+  "comment_type": "무댓글",
+  "cta_index": null,
   "card_image": null,
   "image_url": null,
   "parts_count": 3,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/DdTf-lyj7QR",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/DdU1zrFgWID",
   "post_ids": [
-    "18109886246157646",
-    "18015923585929323",
-    "18344676451268791",
-    "18103305173523225"
+    "18114932743779926",
+    "18111152432032735",
+    "18127598524796027"
   ],
   "instagram_published": false,
   "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
