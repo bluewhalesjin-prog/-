@@ -213,7 +213,24 @@ def build_full_text(part1: str, part2: str, part3: str) -> str:
 
 
 def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, str]:
-    """comment_type 랜덤 선택. 본진블로그는 주 2회, 연속 금지."""
+    """첫 댓글(CTA) 선택. 본진블로그는 주 2회, 연속 금지.
+
+    2026-09-16: '무댓글'을 후보에서 뺐다.
+      기존에는 본진블로그/프로필유도/무댓글 중 랜덤이었고, 블로그 URL이 없으니
+      실질적으로 프로필유도 vs 무댓글 50:50이었다. 최근 10건 중 6건이 CTA 없이 나갔다.
+      9/13~9/15는 조회가 5만 늘었는데 순 팔로워가 +2에 그친 구간인데,
+      그 5건 중 4건이 무댓글이었다. 9/16 아침 3.8만짜리 글에도 CTA가 없었다.
+
+      '무댓글'은 밸런스게임 시절 유산이다. 그때는 매일 같은 CTA가 반복되면
+      스팸처럼 보일까 봐 섞어 썼다. 지금은 조회 42만에 팔로워 80명인 상태라
+      "스팸으로 보일 위험"보다 "팔로우할 이유를 안 주는 손실"이 훨씬 크다.
+      CTA 문구가 10종이고 연속 3건 내 중복도 막혀 있어서 반복 위험은 낮다.
+      3부 체인이라 CTA는 4번째 게시물이고 본문을 방해하지도 않는다.
+
+      주의: 이게 팔로워를 늘린다는 증거는 아직 없다. 상관만 봤다.
+      다만 비용이 0이라 먼저 켜두고, 일주일 뒤에 효과를 본다.
+      절반씩 섞여 있으면 측정 자체가 안 된다.
+    """
     entries = history.get("entries", [])
     today = today or datetime.now().date()
     week_start = today - timedelta(days=today.weekday())
@@ -229,7 +246,8 @@ def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, st
             this_week_blog_count += 1
         last_type = e.get("comment_type") if edate == today - timedelta(days=1) else last_type
 
-    candidates = ["본진블로그", "프로필유도", "무댓글"]
+    # 무댓글 제거. 매 발행마다 반드시 CTA가 하나 붙는다.
+    candidates = ["본진블로그", "프로필유도"]
     if not blog_url or this_week_blog_count >= 2 or last_type == "본진블로그":
         if "본진블로그" in candidates:
             candidates.remove("본진블로그")
