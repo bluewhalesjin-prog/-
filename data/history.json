@@ -1041,6 +1041,27 @@
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-09-18",
+      "slot": "morning",
+      "question_id": "v2_love_02",
+      "category": "연애",
+      "comment_type": "프로필유도:9",
+      "cta_index": "9",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DdZ_Zq3AbOE",
+      "post_ids": [
+        "17992919783840167",
+        "18357834769218852",
+        "17887937382683054",
+        "18109650485323787"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
     }
   ]
 }
