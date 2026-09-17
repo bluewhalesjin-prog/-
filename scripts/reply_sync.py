@@ -109,14 +109,29 @@ def load_token():
     return os.environ["THREADS_ACCESS_TOKEN"]
 
 
-def api_get(path, token, **params):
+_warned = set()
+
+
+def api_get(path, token, quiet=False, **params):
+    """실패하면 None. 같은 종류의 오류는 한 번만 출력한다(로그 도배 방지)."""
     params["access_token"] = token
     try:
         r = requests.get(f"{GRAPH}/{path}", params=params, timeout=30)
         if r.status_code != 200:
+            if not quiet:
+                try:
+                    msg = r.json().get("error", {}).get("message", "")[:120]
+                except ValueError:
+                    msg = r.text[:120]
+                key = (path.split("/")[-1], r.status_code)
+                if key not in _warned:
+                    _warned.add(key)
+                    print(f"[api] {r.status_code} on .../{key[0]}: {msg}")
             return None
         return r.json()
-    except requests.RequestException:
+    except requests.RequestException as e:
+        if not quiet:
+            print(f"[api] 요청 실패 {path}: {e}")
         return None
 
 
@@ -191,9 +206,19 @@ def collect(token, me, folder):
     now = datetime.now(timezone.utc)
 
     def age_hours(c):
-        try:
-            t = datetime.fromisoformat(c["timestamp"].replace("Z", "+00:00"))
-            return (now - t).total_seconds() / 3600
+        """Threads는 '2026-09-16T07:38:54+0000' 형식을 준다. 콜론이 없어서
+        fromisoformat이 못 읽는다(3.11 미만). strptime %z는 둘 다 처리한다."""
+        raw = (c.get("timestamp") or "").strip()
+        if not raw:
+            return 999
+        raw = raw.replace("Z", "+0000")
+        for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S.%f%z"):
+            try:
+                return (now - datetime.strptime(raw, fmt)).total_seconds() / 3600
+            except ValueError:
+                continue
+        try:  # 마지막 수단
+            return (now - datetime.fromisoformat(raw)).total_seconds() / 3600
         except Exception:
             return 999
 
@@ -209,15 +234,23 @@ def collect(token, me, folder):
         c["likes"] = 0
 
     def score(c):
+        # 좋아요는 insights 권한이 없으면 전부 0으로 들어온다.
+        # 그 경우에도 순위가 무너지지 않도록 나머지 신호를 충분히 크게 잡았다.
         s = c["likes"] * 3
         if c["is_question"]:
             s += 8
         if len(c["text"]) >= 60:      # 자기 경험을 길게 쓴 답글
             s += 6
-        if c["age_h"] <= 1:
-            s += 10                    # 막 달린 것 (초기 반응이 노출을 만든다)
-        elif c["age_h"] <= 6:
+        if len(c["text"]) >= 120:     # 아주 길게 푼 썰
             s += 4
+        if c["age_h"] <= 1:
+            s += 12                    # 막 달린 것 (초기 반응이 노출을 만든다)
+        elif c["age_h"] <= 3:
+            s += 8
+        elif c["age_h"] <= 12:
+            s += 4
+        elif c["age_h"] > 48:
+            s -= 6                     # 식은 글은 회신해도 안 보인다
         return s
 
     cands.sort(key=score, reverse=True)
