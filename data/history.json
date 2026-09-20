@@ -1146,6 +1146,27 @@
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-09-20",
+      "slot": "evening",
+      "question_id": "s_hubae_02",
+      "category": "직장생활",
+      "comment_type": "프로필유도:5",
+      "cta_index": "5",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DdgX9Haj-y_",
+      "post_ids": [
+        "18134122519629185",
+        "18139713454619953",
+        "18127296376693376",
+        "17956556166228489"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
     }
   ]
 }
