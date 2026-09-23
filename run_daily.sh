@@ -82,10 +82,18 @@ fi
 python3 scripts/publish.py
 PUB_STATUS=$?
 
+# ── 4-2. 성과 수집 ──────────────────────────────────────────────
+# 2026-09-22 추가.
+#   67건을 발행했는데 조회수가 기록된 건 6건뿐이었다. 9%를 보고 규칙을 만들고 있었다.
+#   이제 매 실행마다 최근 10일치 글의 조회/답글/좋아요와 팔로워 수를
+#   data/metrics.json 에 쌓는다.
+#   이 단계는 무슨 일이 있어도 발행을 막지 않는다(스크립트가 항상 exit 0).
+python3 scripts/collect_insights.py --quiet || true
+
 # ── 5. 결과 기록 ────────────────────────────────────────────────
 # published_ids.json이 기존 스크립트에서 빠져 있었다.
 # 이 파일이 중복 발행 방지의 기준인데 커밋이 안 돼서 원격에 반영되지 않았다.
-git add data/history.json data/last_result.json data/published_ids.json
+git add data/history.json data/last_result.json data/published_ids.json data/metrics.json
 git commit -m "chore: result $(date +%F)" --quiet || echo "[변경 없음] result 커밋 스킵"
 git push --quiet || notify "결과 push 실패 - 다음 실행에서 재시도됨"
 
