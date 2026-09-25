@@ -1356,6 +1356,27 @@
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-09-25",
+      "slot": "evening",
+      "question_id": "v2_life_14",
+      "category": "라이프스타일",
+      "comment_type": "프로필유도:7",
+      "cta_index": "7",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DdtP7asj212",
+      "post_ids": [
+        "18563780449078457",
+        "17981480678899163",
+        "18115436464807179",
+        "18344743903253175"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
     }
   ]
 }
