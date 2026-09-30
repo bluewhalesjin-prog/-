@@ -1587,6 +1587,27 @@
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-01",
+      "slot": "morning",
+      "question_id": "v2_life_01",
+      "category": "라이프스타일",
+      "comment_type": "프로필유도:2",
+      "cta_index": "2",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/Dd7du_vgaG2",
+      "post_ids": [
+        "18100773623562992",
+        "18097685234099150",
+        "18432108112176591",
+        "18098064674303372"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
     }
   ]
 }
