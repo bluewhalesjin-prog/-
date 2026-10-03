@@ -2,14 +2,6 @@
   "entries": [
     {
       "date": "2026-08-06",
-      "question_id": "job_08",
-      "comment_type": "프로필유도:0",
-      "card_image": "data/cards/2026-08-06.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@0e483ffdd8e4cd59dd604ec4fe7d2849cf25a8f7/data/cards/2026-08-06.png",
-      "published": false
-    },
-    {
-      "date": "2026-08-06",
       "question_id": "taste_07",
       "category": "가벼운취향",
       "comment_type": "프로필유도:6",
@@ -1710,6 +1702,27 @@
         "17877493716562783",
         "17893067145429094",
         "18147025096564777"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-04",
+      "slot": "morning",
+      "question_id": "v2_job_22",
+      "category": "직장생활",
+      "comment_type": "프로필유도:4",
+      "cta_index": "4",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DeDMHTXAeR6",
+      "post_ids": [
+        "17997939704826825",
+        "18126815215633258",
+        "18111295439135691",
+        "18145419931575431"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
