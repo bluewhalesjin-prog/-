@@ -2,16 +2,6 @@
   "entries": [
     {
       "date": "2026-08-06",
-      "question_id": "love_02",
-      "category": "연애",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": "data/cards/2026-08-06.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ea1b16b33cc3e09328a07ee356cb419b69825645/data/cards/2026-08-06.png",
-      "published": false
-    },
-    {
-      "date": "2026-08-06",
       "question_id": "job_02",
       "category": "직장생활",
       "comment_type": "본진블로그",
@@ -1739,6 +1729,27 @@
         "17976702180129438",
         "17984644899107189",
         "18152686567528347"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-05",
+      "slot": "evening",
+      "question_id": "v2_love_27",
+      "category": "연애",
+      "comment_type": "프로필유도:1",
+      "cta_index": "1",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DeG_3_XjyC4",
+      "post_ids": [
+        "17906198562568219",
+        "17873857341593352",
+        "17913384156532006",
+        "18009060836779527"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
