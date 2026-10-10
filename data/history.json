@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-08-11",
-      "question_id": "love_05",
-      "category": "연애",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": "data/cards/2026-08-11.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a90babc3c2000ff518f27c02176c84a022963993/data/cards/2026-08-11.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/Db5YKTcj0_x",
-      "post_ids": [
-        "18227419390323660",
-        "17885853675455169",
-        "17980803675101675"
-      ],
-      "instagram_published": true,
-      "instagram_media_id": "18125073541743141",
-      "instagram_permalink": "https://www.instagram.com/p/Db5YSt8D_wa/"
-    },
-    {
       "date": "2026-08-12",
       "question_id": "love_06",
       "category": "연애",
@@ -1806,6 +1787,27 @@
         "18130042480837704",
         "17957413278017305",
         "17890825932456262"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-11",
+      "slot": "morning",
+      "question_id": "v2_love_12",
+      "category": "연애",
+      "comment_type": "프로필유도:8",
+      "cta_index": "8",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DeVNrfngclY",
+      "post_ids": [
+        "18113504135586415",
+        "18109829105180386",
+        "18383420983226332",
+        "18496911130104000"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
