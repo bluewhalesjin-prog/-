@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-08-12",
-      "question_id": "love_06",
-      "category": "연애",
-      "comment_type": "프로필유도:3",
-      "cta_index": "3",
-      "card_image": "data/cards/2026-08-12.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@64e93b851851fcfef2cdc908a100838b6a9c231e/data/cards/2026-08-12.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/Db789NIDwQC",
-      "post_ids": [
-        "18109484660025400",
-        "18120588307834876",
-        "18387635569203043"
-      ],
-      "instagram_published": true,
-      "instagram_media_id": "18129848068654491",
-      "instagram_permalink": "https://www.instagram.com/p/Db79HKoDyF2/"
-    },
-    {
       "date": "2026-08-13",
       "question_id": "taste_08",
       "category": "가벼운취향",
@@ -1808,6 +1789,27 @@
         "18109829105180386",
         "18383420983226332",
         "18496911130104000"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-11",
+      "slot": "evening",
+      "question_id": "s_gyeomjik_01",
+      "category": "직장생활",
+      "comment_type": "프로필유도:9",
+      "cta_index": "9",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DeWcpNzD0h7",
+      "post_ids": [
+        "18478520596118405",
+        "17985331203119134",
+        "18100793279054569",
+        "17974938384147932"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
