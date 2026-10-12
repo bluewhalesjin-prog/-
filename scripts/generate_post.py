@@ -169,6 +169,16 @@ def next_series_episode(history: dict):
     return sorted(candidates, key=lambda q: (q["series"], q.get("ep") or 1))[0]
 
 
+def is_toon_slot(today=None) -> bool:
+    """이번 발행이 4컷 만화 슬롯인가 (아침 + 월·목).
+
+    prepare.py 의 렌더 조건과 같은 식을 쓴다. 한쪽만 바꾸면 조용히 어긋난다.
+    어긋나도 사고는 아니다. 만화 없는 편이 뽑히면 텍스트로 나갈 뿐이다."""
+    slot = (os.environ.get("POST_SLOT", "evening") or "").strip().lower()
+    d = today or datetime.now()
+    return slot == "morning" and d.weekday() in (0, 3)
+
+
 def pick_question(history: dict) -> dict:
     """중복 없이 뽑는다.
     0순위: 이미 시작된 시리즈의 다음 화 (순서가 꼬이면 안 되므로 최우선).
@@ -197,6 +207,27 @@ def pick_question(history: dict) -> dict:
             "남은 미사용 글이 시리즈 후속화뿐인데 선행화가 아직 안 나갔습니다. "
             "순서가 꼬이지 않도록 발행을 중단합니다."
         )
+
+    # 2026-10-12: 월·목 아침은 panels(4컷 데이터) 있는 편을 먼저 쓴다.
+    # 좁히기만 하고 카테고리 가중치는 그대로다.
+    #
+    # 시리즈물은 한 단계 더 미룬다. 만화 슬롯에서 시리즈 1화를 뽑으면
+    # 2·3화는 next_series_episode() 가 다음 슬롯(저녁일 수 있다)에 강제로
+    # 밀어넣는다. 그러면 1화만 만화고 나머지는 텍스트로 나가 한 시리즈가
+    # 중간에 그림이 끊긴다. 그래서 단편 panels 를 먼저 소진한다.
+    # 단편이 없으면 시리즈라도 쓴다. 아예 안 나가는 것보다는 낫다.
+    if is_toon_slot():
+        toonable = [q for q in pool if q.get("panels")]
+        solo = [q for q in toonable if not q.get("series")]
+        if solo:
+            print(f"[만화슬롯] 단편 panels {len(solo)}편으로 좁힘 "
+                  f"(panels 전체 {len(toonable)} / 미사용 {len(pool)})")
+            pool = solo
+        elif toonable:
+            print(f"[만화슬롯] 단편 panels 소진 — 시리즈 포함 {len(toonable)}편으로 좁힘")
+            pool = toonable
+        else:
+            print("[만화슬롯] panels 보유 편이 없음 — 전체 풀에서 뽑고 텍스트로 발행")
 
     weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in pool]
     return random.choices(pool, weights=weights, k=1)[0]
