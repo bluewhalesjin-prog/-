@@ -85,6 +85,22 @@ def main():
         draft["ig_slide1_path"] = ig_slide1_path
         draft["ig_slide2_path"] = ig_slide2_path
 
+    # ── 4컷 만화 (2026-10-08) ──
+    # 아침 슬롯의 월·목만 만화로 나간다(주 2편). 효과가 확인되면 빈도를 올린다.
+    # 렌더가 실패해도 card_path 가 None 으로 남아 텍스트 발행이 그대로 진행된다.
+    if slot == "morning" and datetime.now().weekday() in (0, 3) and thread.get("panels"):
+        try:
+            from toon_render import render_toon
+            os.makedirs(CARDS_DIR, exist_ok=True)
+            toon_path = os.path.join(CARDS_DIR, f"{today}_toon.png")
+            if render_toon(thread, toon_path):
+                draft["card_path"] = toon_path
+                print(f"[만화] 렌더 완료: {toon_path}")
+            else:
+                print("[만화] panels 가 없거나 렌더 실패 — 텍스트로 발행")
+        except Exception as e:
+            print(f"[만화] 예외 발생, 텍스트로 계속: {e}")
+
     with open(DRAFT_PATH, "w", encoding="utf-8") as f:
         json.dump(draft, f, ensure_ascii=False, indent=2)
 

@@ -352,6 +352,8 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     return {
         "question_id": q["id"],
         "category": q["category"],
+        # 2026-10-08: 4컷 만화용. 뱅크에 panels 가 있는 편만 만화로 나간다.
+        "panels": q.get("panels"),
         "format": "v2" if is_v2(q) else "v1",
         "series": q.get("series"),
         "ep": q.get("ep"),

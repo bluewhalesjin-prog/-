@@ -39,7 +39,8 @@ FOLDER_NAME = "쓰레드 100만 팔로워 달성하기"
 
 KEY_ORDER = ["id", "category", "series", "ep", "ep_total",
              "hook", "body", "closing",
-             "option_a", "option_a_sub", "option_b", "option_b_sub"]
+             "option_a", "option_a_sub", "option_b", "option_b_sub",
+             "panels"]
 
 
 def find_pending_dir():
@@ -128,7 +129,9 @@ def fmt(q):
         f' "body": {g("body")},\n'
         f' "closing": {g("closing")},\n'
         f' "option_a": {g("option_a")}, "option_a_sub": {g("option_a_sub")},\n'
-        f' "option_b": {g("option_b")}, "option_b_sub": {g("option_b_sub")}}},\n'
+        f' "option_b": {g("option_b")}, "option_b_sub": {g("option_b_sub")},\n'
+        # 2026-10-08: panels 를 안 적으면 병합 때 만화 데이터가 통째로 사라진다
+        f' "panels": {g("panels")}}},\n'
     )
 
 

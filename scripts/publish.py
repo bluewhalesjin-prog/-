@@ -177,6 +177,9 @@ def main():
                 token=token,
                 parts=parts,
                 comment_text=draft["comment_text"],
+                # 2026-10-08: 4컷 만화는 1/3에 붙인다.
+                # 댓글 496개가 100% 1화에서 나왔고 3/3은 1화의 15%만 본다.
+                image_url=image_url,
             )
         else:
             publish_result = threads_client.publish_single_post(

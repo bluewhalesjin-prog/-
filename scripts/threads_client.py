@@ -106,7 +106,8 @@ def publish_thread_sequence(user_id: str, token: str, parts: list[str], image_ur
     return result
 
 
-def publish_chain(user_id: str, token: str, parts: list, comment_text: str = None) -> dict:
+def publish_chain(user_id: str, token: str, parts: list, comment_text: str = None,
+                  image_url: str = None) -> dict:
     """본문을 여러 게시물로 나눠 체인(타래)으로 발행한다.
 
     2026-09-10 신설. 각 파트를 직전 파트의 답글로 올리면 스레드가 이를
@@ -126,7 +127,12 @@ def publish_chain(user_id: str, token: str, parts: list, comment_text: str = Non
     ids = []
     reply_to = None
     for idx, text in enumerate(parts):
-        cid = create_text_container(user_id, token, text, reply_to_id=reply_to)
+        if image_url and idx == 0:
+            # 1/3에만 이미지를 붙인다. 2·3화는 그대로 텍스트.
+            cid = create_image_container(user_id, token, text, image_url,
+                                         reply_to_id=reply_to)
+        else:
+            cid = create_text_container(user_id, token, text, reply_to_id=reply_to)
         time.sleep(3)
         pid = publish_container(user_id, token, cid)
         ids.append(pid)
