@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-08-19",
-      "question_id": "taste_05",
-      "category": "가벼운취향",
-      "comment_type": "프로필유도:0",
-      "cta_index": "0",
-      "card_image": "data/cards/2026-08-19.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@8a33645cdb51d78f5faae6ad2e819620219be420/data/cards/2026-08-19.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/DcN-hVvDwrZ",
-      "post_ids": [
-        "18485215597100383",
-        "18151842175514529",
-        "18338314237271538"
-      ],
-      "instagram_published": true,
-      "instagram_media_id": "18129064075709280",
-      "instagram_permalink": "https://www.instagram.com/p/DcN-rFlj4wD/"
-    },
-    {
       "date": "2026-08-20",
       "question_id": "life_02",
       "category": "라이프스타일",
@@ -1822,6 +1803,27 @@
         "18115415372099354",
         "17933839908405063",
         "18624633337023669"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-15",
+      "slot": "morning",
+      "question_id": "s_yeonbongpyo_03",
+      "category": "직장생활",
+      "comment_type": "프로필유도:4",
+      "cta_index": "4",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 3,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/Defg3NvAb-m",
+      "post_ids": [
+        "17961570504238239",
+        "18105606545181592",
+        "18115455686025208",
+        "18413761471157916"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
