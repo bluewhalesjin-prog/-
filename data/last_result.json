@@ -1,20 +1,20 @@
 {
-  "date": "2026-10-15",
-  "slot": "evening",
-  "question_id": "v2_love_16",
-  "category": "연애",
-  "comment_type": "프로필유도:4",
-  "cta_index": "4",
+  "date": "2026-10-16",
+  "slot": "morning",
+  "question_id": "v2_job_32",
+  "category": "직장생활",
+  "comment_type": "프로필유도:8",
+  "cta_index": "8",
   "card_image": null,
   "image_url": null,
   "parts_count": 3,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/Degv0l3j5EX",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/DeiFpsEATXH",
   "post_ids": [
-    "18211866514366342",
-    "18117395071807139",
-    "18132604639688091",
-    "18129912203500228"
+    "17926285710424267",
+    "17913486102523648",
+    "18128280421853368",
+    "18103772321571491"
   ],
   "instagram_published": false,
   "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
