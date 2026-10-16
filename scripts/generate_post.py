@@ -332,7 +332,11 @@ def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, st
 #   3화의 선택지로 재활용한다. 뱅크 원고는 한 글자도 수정하지 않는다.
 
 def split_body_for_chain(body: str) -> tuple[str, str]:
-    """본문 문단을 두 덩어리로 나눈다. 앞쪽이 약 45%가 되는 문단 경계에서 자른다.
+    """본문 문단을 두 덩어리로 나눈다. 앞쪽이 약 72%가 되는 문단 경계에서 자른다.
+
+    2026-10-16: 45% → 72%.
+      A/B 선택지를 1화로 올리려면 1화 안에서 딜레마가 서야 한다.
+      45%에서는 상황만 깔리고 무엇을 고르는지가 안 나와서 선택지가 뜬금없다.
 
     문장 중간이 아니라 반드시 문단 경계에서 자르므로 1화가 어색하게 끊기지 않는다.
     문단이 2개 이하면 첫 문단만 1화로 보낸다.
@@ -346,7 +350,7 @@ def split_body_for_chain(body: str) -> tuple[str, str]:
     cut = 1
     for i, p in enumerate(paras):
         acc += len(p)
-        if acc >= total * 0.45:
+        if acc >= total * 0.72:
             cut = i + 1
             break
     cut = max(1, min(cut, len(paras) - 1))
@@ -383,10 +387,16 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         full_text = f"{headline}\n\n{body}\n\n{closing}\n{tags}"
 
         # 스레드 3부 체인. 각 파트가 별개 게시물로 나가 노출 기회가 3배가 된다.
+        # 2026-10-16: 3부 → 2부. A/B 를 1화로 올린다.
+        #   58편 실측에서 답글 555건이 100% 1화에서 나왔다. 2·3화 답글은 0건이다.
+        #   3/3 도달률은 중위 24.9%, 터진 글은 10~16%였다.
+        #   즉 반응 요청을 답글이 안 나오는 자리에 두고 있었다.
+        #   A/B(3초면 답하는 낮은 문턱)는 100%가 보는 1화로,
+        #   썰 요청(긴 답글)은 끝까지 읽은 사람이 보는 2화에 남긴다.
         front, back = split_body_for_chain(body)
-        part1 = f"{headline}\n\n{front}"
-        part2 = back
-        part3 = f"{closing}\n\n{build_choice_block(q)}\n\n{DISCLOSURE}\n\n{tags}"
+        part1 = f"{headline}\n\n{front}\n\n{build_choice_block(q)}"
+        part2 = f"{back}\n\n{closing}\n\n{DISCLOSURE}\n\n{tags}"
+        part3 = ""
         title = hook
     else:
         # v1 구조(구버전): setup 2줄 + 자동 생성 클로징
@@ -415,7 +425,9 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         "part2": part2,
         "part3": part3,
         "full_text": full_text,
-        "parts": [part1, part2, part3],
+        # 2026-10-16: 2부 체인이라 part3 가 빈 문자열이다. 빈 파트는 빼고 넘긴다.
+        #   publish.py 는 비어 있지 않은 파트가 2개 이상이면 체인으로 발행한다.
+        "parts": [p for p in (part1, part2, part3) if p and p.strip()],
         "option_a": q["option_a"],
         "option_a_sub": q["option_a_sub"],
         "option_b": q["option_b"],
