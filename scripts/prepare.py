@@ -88,7 +88,13 @@ def main():
     # ── 4컷 만화 (2026-10-08) ──
     # 아침 슬롯의 월·목만 만화로 나간다(주 2편). 효과가 확인되면 빈도를 올린다.
     # 렌더가 실패해도 card_path 가 None 으로 남아 텍스트 발행이 그대로 진행된다.
-    if slot == "morning" and datetime.now().weekday() in (0, 3) and thread.get("panels"):
+    # 2026-10-16: 월·목 아침 제한 해제. 미발행 전편에 panels 를 채웠으므로
+    # 아껴 쓸 이유가 없어졌다. panels 가 있으면 어느 슬롯이든 그린다.
+    # 텍스트로 돌리고 싶으면 아래 TOON_EVERY_SLOT 를 False 로 바꾸면
+    # 예전처럼 월·목 아침만 나간다.
+    TOON_EVERY_SLOT = True
+    _toon_day = TOON_EVERY_SLOT or (slot == "morning" and datetime.now().weekday() in (0, 3))
+    if _toon_day and thread.get("panels"):
         try:
             from toon_render import render_toon
             os.makedirs(CARDS_DIR, exist_ok=True)

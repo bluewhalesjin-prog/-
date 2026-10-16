@@ -159,6 +159,7 @@ def main():
         "category": draft["category"],
         "comment_type": draft["comment_type"],
         "cta_index": draft["comment_type"].split(":")[1] if ":" in draft["comment_type"] else None,
+        "hashtags": draft.get("hashtags"),
         "card_image": draft.get("card_path"),
         "image_url": image_url,
         "parts_count": len(draft.get("parts") or []),

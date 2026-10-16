@@ -58,13 +58,54 @@ SHIRT  = (252, 247, 238)
 TIE    = (230, 70, 60)
 INKC   = (20, 20, 22)
 
+# 2026-10-16: 인물 5종으로 확장.
+#   사유: 뱅크 미발행 43편 중 21편이 연애·가족·친구 소재다. me/boss 두 종이면
+#   애인과 어머니가 "안경 쓴 중년 남자 팀장"으로 그려진다.
+#   구분은 색만으로는 약하다. 머리 모양(hairstyle)과 넥타이 유무를 같이 바꾼다.
+#     bowl  바가지 (기본)
+#     short 짧은 머리, 헤어라인 약간 높음
+#     long  긴 머리, 얼굴 뒤로 어깨까지 내려온다
+#     thin  이마가 드러난 숱 적은 머리 (어른)
+#   tie=None 이면 넥타이를 안 그린다(사복).
 CAST = {
-    "me":   dict(hair=HAIR,           jacket=JACKET,         tie=TIE,          glasses=False),
-    "boss": dict(hair=(108, 110, 118), jacket=(118, 122, 132), tie=(64, 68, 82), glasses=True),
+    # 나 — 검정 바가지, 남색 자켓, 빨강 넥타이
+    "me":      dict(hair=HAIR,            jacket=JACKET,          tie=TIE,
+                    glasses=False, hairstyle="bowl"),
+    # 팀장·상사 — 회색, 안경
+    "boss":    dict(hair=(108, 110, 118), jacket=(118, 122, 132), tie=(64, 68, 82),
+                    glasses=True,  hairstyle="bowl"),
+    # 동료·친구 (또래) — 갈색 짧은 머리, 청록 사복, 넥타이 없음
+    "peer":    dict(hair=(58, 44, 36),    jacket=(62, 124, 120),  tie=None,
+                    glasses=False, hairstyle="short"),
+    # 애인 — 갈색 긴 머리, 장미색 사복
+    "partner": dict(hair=(74, 50, 40),    jacket=(196, 108, 120), tie=None,
+                    glasses=False, hairstyle="long"),
+    # 아버지·남자 어른 — 밝은 회색 숱 적은 머리, 베이지 카디건, 안경
+    "elder_m": dict(hair=(176, 176, 180), jacket=(150, 128, 104), tie=None,
+                    glasses=True,  hairstyle="thin"),
+    # 어머니·여자 어른 — 회색 단발(파마기), 자주빛 카디건, 안경
+    "elder_f": dict(hair=(168, 162, 164), jacket=(142, 106, 126), tie=None,
+                    glasses=True,  hairstyle="perm"),
 }
 
+# 예전 이름이나 오타가 들어와도 발행이 멈추면 안 된다.
+CAST_ALIAS = {"elder": "elder_m", "mom": "elder_f", "dad": "elder_m",
+              "friend": "peer", "colleague": "peer", "lover": "partner"}
+
+
+def _cast(who):
+    """who 를 CAST 키로 바꾼다. 모르는 값이면 'me' 로 떨어뜨리고 경고만 남긴다.
+    만화 한 컷의 오타 때문에 그날 발행이 통째로 텍스트가 되면 손해가 더 크다."""
+    if who in CAST:
+        return who
+    alt = CAST_ALIAS.get(who)
+    if alt:
+        return alt
+    print(f"[toon] 모르는 인물 '{who}' — 'me' 로 대체함")
+    return "me"
+
 def draw_character(img, cx, cy, s, who="me", expr="normal", pose="none", fx=None, flip=False):
-    c = CAST[who]
+    c = CAST[_cast(who)]
     lay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
     lw = max(3, int(s * 0.07))
@@ -78,15 +119,48 @@ def draw_character(img, cx, cy, s, who="me", expr="normal", pose="none", fx=None
                         fill=c["jacket"], outline=INKC, width=lw)
     d.polygon([(cx - s*0.44, by - s*0.03), (cx, by + s*0.74), (cx + s*0.44, by - s*0.03)],
               fill=SHIRT, outline=INKC)
-    d.polygon([(cx, by + s*0.24), (cx - s*0.15, by + s*0.48), (cx, by + s*1.04),
-               (cx + s*0.15, by + s*0.48)], fill=c["tie"], outline=INKC)
+    if c.get("tie"):
+        d.polygon([(cx, by + s*0.24), (cx - s*0.15, by + s*0.48), (cx, by + s*1.04),
+                   (cx + s*0.15, by + s*0.48)], fill=c["tie"], outline=INKC)
+    else:
+        # 사복: 넥타이 대신 목선만 한 줄. 이게 없으면 가슴이 비어 보인다.
+        d.line([(cx - s*0.30, by + s*0.30), (cx, by + s*0.60), (cx + s*0.30, by + s*0.30)],
+               fill=INKC, width=lw)
+
+    # ── 뒷머리 (긴 머리만. 얼굴보다 먼저 그려야 뒤로 간다) ──
+    style = c.get("hairstyle", "bowl")
+    if style == "long":
+        for sg in (-1, 1):
+            d.rounded_rectangle([cx + sg*s*0.62 - s*0.46, cy - s*0.70,
+                                 cx + sg*s*0.62 + s*0.46, cy + s*1.34],
+                                radius=s*0.42, fill=c["hair"], outline=INKC, width=lw)
+    elif style == "perm":
+        # 단발: 귀 아래 턱선에서 끝난다. 길이로 partner(긴머리)와 구분된다.
+        for sg in (-1, 1):
+            d.ellipse([cx + sg*s*0.66 - s*0.44, cy - s*0.58,
+                       cx + sg*s*0.66 + s*0.44, cy + s*0.70],
+                      fill=c["hair"], outline=INKC, width=lw)
 
     # ── 얼굴 ──
     d.ellipse([cx - s, cy - s, cx + s, cy + s], fill=SKIN, outline=INKC, width=lw)
 
-    # ── 머리카락 (바가지. 평평한 아랫변 = 헤어라인 -0.55s) ──
-    d.pieslice([cx - s*1.09, cy - s*1.47, cx + s*1.09, cy + s*0.37],
-               180, 360, fill=c["hair"], outline=INKC, width=lw)
+    # ── 앞머리 (스타일별로 헤어라인 높이와 폭이 다르다) ──
+    if style == "thin":
+        # 숱 적은 머리: 이마가 드러나도록 얕고 좁게
+        d.pieslice([cx - s*1.02, cy - s*1.40, cx + s*1.02, cy - s*0.04],
+                   180, 360, fill=c["hair"], outline=INKC, width=lw)
+    elif style == "short":
+        # 짧은 머리: 헤어라인 -0.42s
+        d.pieslice([cx - s*1.06, cy - s*1.45, cx + s*1.06, cy + s*0.22],
+                   180, 360, fill=c["hair"], outline=INKC, width=lw)
+    elif style == "perm":
+        # 단발 앞머리: bowl 보다 살짝 넓고 둥글게
+        d.pieslice([cx - s*1.14, cy - s*1.50, cx + s*1.14, cy + s*0.40],
+                   180, 360, fill=c["hair"], outline=INKC, width=lw)
+    else:
+        # bowl / long: 헤어라인 -0.55s (원본 비율)
+        d.pieslice([cx - s*1.09, cy - s*1.47, cx + s*1.09, cy + s*0.37],
+                   180, 360, fill=c["hair"], outline=INKC, width=lw)
 
     ex, ey = s*0.45, cy - s*0.11
     er = s*0.105
@@ -95,10 +169,16 @@ def draw_character(img, cx, cy, s, who="me", expr="normal", pose="none", fx=None
     byy = cy - s*0.46
     for sg in (-1, 1):
         x0, x1 = cx + sg*ex - s*0.22, cx + sg*ex + s*0.22
+        # 2026-10-16 수정: angry 와 sad 의 눈썹 기울기가 서로 바뀌어 있었다.
+        #   angry = 안쪽 끝이 내려온다(찡그림)
+        #   sad   = 안쪽 끝이 올라간다(걱정·슬픔)
+        #   화면 좌표는 아래로 갈수록 y가 커진다. sg=-1 일 때 x0가 바깥쪽이다.
         if expr in ("angry", "smug"):
-            p = [(x0, byy - sg*s*0.09), (x1, byy + sg*s*0.09)]
-        elif expr in ("sad", "flat"):
             p = [(x0, byy + sg*s*0.09), (x1, byy - sg*s*0.09)]
+        elif expr == "sad":
+            p = [(x0, byy - sg*s*0.09), (x1, byy + sg*s*0.09)]
+        elif expr == "flat":
+            p = [(x0, byy - s*0.02), (x1, byy - s*0.02)]   # 무표정은 일자
         elif expr == "shock":
             p = [(x0, byy - s*0.10), (x1, byy - s*0.10)]
         else:
@@ -210,14 +290,29 @@ def _blinds(d, x0, y0, x1, y1, lw=3):
         d.line([(x0, yy), (x1, yy)], fill=(138, 178, 200), width=2)
         yy += step
 
-def draw_scene(img, kind="plain", light=False, hz_ratio=0.86):
-    """hz_ratio: 벽/바닥 경계 위치. 기본 0.86이면 인물 어깨 아래로 지나간다."""
+def draw_scene(img, kind="plain", light=False, hz_ratio=0.86, prop_side="left"):
+    """hz_ratio: 벽/바닥 경계 위치. 기본 0.86이면 인물 어깨 아래로 지나간다.
+
+    prop_side: 벽 소품(블라인드·창문·상부장)을 둘 쪽.
+      2026-10-16 추가. 소품이 말풍선 꼬리와 화자의 머리 사이에 들어가면
+      꼬리가 소품을 가리키는 것처럼 보여서 누가 말했는지 읽히지 않는다.
+      render() 가 화자 반대쪽을 넘겨서 그 선을 비워 둔다."""
     W, H = img.size
     d = ImageDraw.Draw(img)
     wall  = WALL2 if light else WALL
     floor = FLOOR2 if light else FLOOR
     lw, hz = 3, int(H * hz_ratio)
     band = int(H * 0.30)          # 소품을 둘 벽 상단 띠 (머리 위)
+
+    def sx(a, b):
+        """소품 가로 구간. 인자는 항상 '왼쪽에 뒀을 때' 좌표다.
+        prop_side='right' 면 좌우 대칭으로 뒤집는다."""
+        return (int(W*(1-b)), int(W*(1-a))) if prop_side == "right" else (int(W*a), int(W*b))
+
+    # 벽 소품 세로 구간. 말풍선(y 86~190)보다 아래, 지평선보다 위.
+    # 예전에는 0.26H 부터 시작해 말풍선 꼬리와 인물 머리 사이에 끼었고,
+    # 그래서 꼬리가 소품을 가리키는 것처럼 보였다. 이제 인물 뒤로 내린다.
+    PY0, PY1 = int(H*0.46), int(H*0.80)
 
     d.rectangle([0, 0, W, H], fill=wall)
     if kind == "plain":
@@ -226,35 +321,37 @@ def draw_scene(img, kind="plain", light=False, hz_ratio=0.86):
     d.line([(0, hz), (W, hz)], fill=INK, width=lw)
 
     if kind == "meeting":          # 회의실: 블라인드 + 앞쪽 테이블
-        _blinds(d, int(W*0.06), int(H*0.30), int(W*0.40), band + int(H*0.22), lw)
+        x0_, x1_ = sx(0.02, 0.34)
+        _blinds(d, x0_, PY0, x1_, PY1, lw)
         ty = int(H * 0.88)
         d.rectangle([-20, ty, W+20, H+20], fill=FURN, outline=INK, width=lw)
         d.rectangle([-20, ty, W+20, ty + int(H*0.035)], fill=FURN_L)
 
     elif kind == "office":         # 사무실: 오른쪽 파티션 + 책상
-        d.rectangle([int(W*0.70), int(H*0.26), W+20, hz], fill=FURN_L, outline=INK, width=lw)
+        x0_, x1_ = sx(-0.02, 0.30)
+        d.rectangle([x0_, PY0, x1_, hz], fill=FURN_L, outline=INK, width=lw)
         dy = int(H * 0.89)
         d.rectangle([-20, dy, W+20, H+20], fill=FURN, outline=INK, width=lw)
 
     elif kind == "pantry":         # 탕비실: 상부장 + 조리대
-        d.rectangle([int(W*0.06), int(H*0.26), int(W*0.44), band + int(H*0.14)],
-                    fill=FURN_L, outline=INK, width=lw)
+        x0_, x1_ = sx(0.02, 0.36)
+        d.rectangle([x0_, PY0, x1_, PY1], fill=FURN_L, outline=INK, width=lw)
         cy_ = int(H * 0.87)
         d.rectangle([-20, cy_, W+20, H+20], fill=FURN, outline=INK, width=lw)
         d.rectangle([-20, cy_, W+20, cy_ + int(H*0.03)], fill=WHITE)
 
     elif kind == "home":           # 집: 창문 + 소파 등받이
-        d.rectangle([int(W*0.62), int(H*0.26), int(W*0.92), band + int(H*0.16)],
-                    fill=GLASS, outline=INK, width=lw)
-        d.line([(int(W*0.77), int(H*0.26)), (int(W*0.77), band + int(H*0.16))], fill=INK, width=lw)
+        x0_, x1_ = sx(0.04, 0.34)
+        d.rectangle([x0_, PY0, x1_, PY1], fill=GLASS, outline=INK, width=lw)
+        d.line([((x0_+x1_)//2, PY0), ((x0_+x1_)//2, PY1)], fill=INK, width=lw)
         sy = int(H * 0.86)
         d.rounded_rectangle([-30, sy, W+30, H+40], 22, fill=FURN_L, outline=INK, width=lw)
 
     elif kind == "hall":           # 복도: 문 두 개 (머리 양옆으로)
-        for fx in (0.03, 0.70):
-            d.rectangle([int(W*fx), int(H*0.24), int(W*(fx+0.27)), hz],
+        for fx in (0.0, 0.82):
+            d.rectangle([int(W*fx), PY0, int(W*(fx+0.18)), hz],
                         fill=FURN_L, outline=INK, width=lw)
-            d.ellipse([int(W*(fx+0.225)), int(H*0.56), int(W*(fx+0.25)), int(H*0.59)], fill=INK)
+            d.ellipse([int(W*(fx+0.145)), int(H*0.64), int(W*(fx+0.168)), int(H*0.67)], fill=INK)
 
 
 
@@ -323,11 +420,8 @@ def render(hook, cuts, handle="@ssuldaeri", out="toon.png"):
     for i, c in enumerate(cuts):
         px = M + (i % 2)*(pw + GAP)
         py = head + (i // 2)*(ph + GAP)
-        cut = Image.new("RGBA", (pw, ph), (0, 0, 0, 0))
-        draw_scene(cut, c.get("scene", "plain"), light=(i % 2 == 1))
-        cd = ImageDraw.Draw(cut)
-
-        # 캐릭터: 1명이면 가운데, 2명이면 좌/우
+        # 캐릭터 자리를 먼저 정한다. 벽 소품을 화자 반대쪽에 둬야 하므로
+        # draw_scene() 보다 앞서 화자 위치를 알아야 한다.
         who = c["chars"]
         s = 60
         base_y = ph - 132
@@ -335,6 +429,15 @@ def render(hook, cuts, handle="@ssuldaeri", out="toon.png"):
             spots = [(pw//2, base_y)]
         else:
             spots = [(int(pw*0.27), base_y), (int(pw*0.73), base_y)]
+        spk = int(c.get("speaker", 0))
+        spk = spk if 0 <= spk < len(spots) else 0
+        # 화자가 왼쪽이면 소품은 오른쪽으로 치운다. 1인 컷은 말풍선이 가운데라
+        # 어느 쪽이든 겹치지 않으므로 왼쪽 기본값을 쓴다.
+        prop_side = "right" if (len(spots) > 1 and spots[spk][0] < pw//2) else "left"
+
+        cut = Image.new("RGBA", (pw, ph), (0, 0, 0, 0))
+        draw_scene(cut, c.get("scene", "plain"), light=(i % 2 == 1), prop_side=prop_side)
+        cd = ImageDraw.Draw(cut)
         for spec, (sx, sy) in zip(who, spots):
             w_, e = spec[0], spec[1]
             po = spec[2] if len(spec) > 2 else "none"
@@ -343,12 +446,15 @@ def render(hook, cuts, handle="@ssuldaeri", out="toon.png"):
 
         # 말풍선
         if c.get("line"):
-            spk = c.get("speaker", 0)
             tailx = spots[spk][0]
-            bw_max = pw - 120
+            # 2인 컷에서는 말풍선을 좁혀야 화자 머리 위에 올려놓을 수 있다.
+            # 예전엔 pw-120(거의 컷 전체)이라 풍선이 반대쪽까지 뻗고,
+            # 꼬리가 풍선 가장자리로 밀려 엉뚱한 곳을 가리켰다.
+            bw_max = int(pw * 0.66) if len(spots) > 1 else pw - 120
             lines = wrap(cd, c["line"], fdlg, bw_max)
             twid = max(cd.textlength(l, font=fdlg) for l in lines)
-            bx = min(max(tailx - (twid+44)/2, 24), pw - twid - 68)
+            bwid = twid + 44                      # 풍선 실제 폭 (좌우 여백 포함)
+            bx = min(max(tailx - bwid/2, 16), pw - 16 - bwid)
             bubble(cd, bx, 86, c["line"], fdlg, bw_max, tailx)
 
         # 지문 (상단 띠)
@@ -395,8 +501,16 @@ def render_toon(thread: dict, out_path: str) -> bool:
                 "speaker": int(p.get("speaker", 0)),
                 "chars": [tuple(c) for c in p.get("chars", [["me", "normal"]])],
             })
+        # 2026-10-16 수정: build_thread() 는 'hook' 이 아니라 'title' 로 돌려준다.
+        # thread["hook"] 로 읽던 탓에 매번 KeyError 가 나고, render_toon 이
+        # 그걸 조용히 삼켜서 "panels 는 있는데 만화는 안 나가는" 상태였다.
+        # 10/15 목요일에 만화가 안 나간 원인 중 하나가 이것이다.
+        headline = thread.get("hook") or thread.get("title") or ""
+        if not headline:
+            print("[toon] 제목이 비어 있음 — 텍스트로 계속 진행")
+            return False
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
-        render(thread["hook"], cuts, out=out_path)
+        render(headline, cuts, out=out_path)
         return os.path.exists(out_path)
     except Exception as e:
         print(f"[toon] 렌더 실패(텍스트로 계속 진행): {e}")

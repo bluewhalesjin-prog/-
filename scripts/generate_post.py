@@ -14,6 +14,23 @@ from datetime import datetime, timedelta
 
 from question_bank import QUESTIONS
 
+# 2026-10-16: 구버전 43편의 4컷 데이터를 뱅크에 얹는다.
+#   뱅크 파일 자체는 안 건드린다. 거긴 주간 작업이 매주 덧붙이는 파일이라
+#   직접 끼워 넣으면 병합과 충돌한다. import 시점에 한 번만 합친다.
+#   새 글은 처음부터 panels 를 달고 오므로 그쪽은 이 코드를 안 탄다.
+try:
+    from panels_backfill import PANELS_BACKFILL as _BF
+    _n = 0
+    for _q in QUESTIONS:
+        if not _q.get("panels") and _q["id"] in _BF:
+            _q["panels"] = _BF[_q["id"]]
+            _n += 1
+    if _n:
+        print(f"[panels] 구버전 {_n}편에 4컷 데이터를 붙였습니다")
+except ImportError:
+    # backfill 이 없어도 발행은 그대로 돈다. 만화만 안 붙을 뿐이다.
+    pass
+
 
 def has_batchim(word: str) -> bool:
     """단어의 마지막 글자에 받침이 있는지 확인 (조사 이/가, 이랑/랑, 이냐/냐 등 선택용)."""
@@ -66,6 +83,30 @@ SIGNATURE_TAG = "[주워들은 썰]"
 # 2026-09-08: 썰 계정으로 전환하면서 해시태그도 교체.
 # 실측상 고성과 썰 게시물이 쓰던 태그 위주로 구성했다.
 HASHTAGS = ["#직장인썰", "#회사썰", "#썰", "#직장생활", "#공감"]
+
+# 2026-10-16: 쓰레드는 게시물당 토픽 태그를 하나만 허용한다.
+#   Meta 안내문: "You can only tag one topic per post"
+#   2개를 붙이면 첫 번째만 태그가 되고 나머지는 글자다.
+#   HASHTAGS 는 되돌릴 때를 위해 남겨 두고, 실제 선택은 아래 표를 쓴다.
+#
+# 주의: 아래 태그들이 쓰레드에서 실제로 얼마나 큰 풀인지는 확인하지 못했다.
+#   카테고리와 안 맞는 태그를 없애는 게 목적이지, 특정 태그가 더 잘 터진다는
+#   근거는 없다. history 에 기록이 쌓이면 그때 숫자로 바꾼다.
+CATEGORY_TAGS = {
+    "직장생활":     ["#직장인썰", "#회사썰", "#직장생활"],
+    "가족시댁":     ["#가족", "#썰"],
+    "연애":         ["#연애", "#썰"],
+    "라이프스타일": ["#일상", "#썰"],
+    "친구이웃":     ["#인간관계", "#썰"],
+    "가벼운취향":   ["#일상", "#공감"],
+    "와일드카드":   ["#썰", "#공감"],
+}
+DEFAULT_TAGS = ["#썰", "#공감"]
+
+
+def pick_hashtag(category: str) -> str:
+    """카테고리에 맞는 태그 하나를 고른다. 모르는 카테고리면 범용으로 떨어뜨린다."""
+    return random.choice(CATEGORY_TAGS.get(category) or DEFAULT_TAGS)
 
 # 2026-10-08: 각색 고지. 독자 답글에 "주작 같다"가 반복해서 달렸다.
 # 창작 썰을 실화로 오인시키지 않는 게 목적이다. 먼저 밝히면 주작 공격이 성립하지 않는다.
@@ -169,16 +210,6 @@ def next_series_episode(history: dict):
     return sorted(candidates, key=lambda q: (q["series"], q.get("ep") or 1))[0]
 
 
-def is_toon_slot(today=None) -> bool:
-    """이번 발행이 4컷 만화 슬롯인가 (아침 + 월·목).
-
-    prepare.py 의 렌더 조건과 같은 식을 쓴다. 한쪽만 바꾸면 조용히 어긋난다.
-    어긋나도 사고는 아니다. 만화 없는 편이 뽑히면 텍스트로 나갈 뿐이다."""
-    slot = (os.environ.get("POST_SLOT", "evening") or "").strip().lower()
-    d = today or datetime.now()
-    return slot == "morning" and d.weekday() in (0, 3)
-
-
 def pick_question(history: dict) -> dict:
     """중복 없이 뽑는다.
     0순위: 이미 시작된 시리즈의 다음 화 (순서가 꼬이면 안 되므로 최우선).
@@ -207,27 +238,6 @@ def pick_question(history: dict) -> dict:
             "남은 미사용 글이 시리즈 후속화뿐인데 선행화가 아직 안 나갔습니다. "
             "순서가 꼬이지 않도록 발행을 중단합니다."
         )
-
-    # 2026-10-12: 월·목 아침은 panels(4컷 데이터) 있는 편을 먼저 쓴다.
-    # 좁히기만 하고 카테고리 가중치는 그대로다.
-    #
-    # 시리즈물은 한 단계 더 미룬다. 만화 슬롯에서 시리즈 1화를 뽑으면
-    # 2·3화는 next_series_episode() 가 다음 슬롯(저녁일 수 있다)에 강제로
-    # 밀어넣는다. 그러면 1화만 만화고 나머지는 텍스트로 나가 한 시리즈가
-    # 중간에 그림이 끊긴다. 그래서 단편 panels 를 먼저 소진한다.
-    # 단편이 없으면 시리즈라도 쓴다. 아예 안 나가는 것보다는 낫다.
-    if is_toon_slot():
-        toonable = [q for q in pool if q.get("panels")]
-        solo = [q for q in toonable if not q.get("series")]
-        if solo:
-            print(f"[만화슬롯] 단편 panels {len(solo)}편으로 좁힘 "
-                  f"(panels 전체 {len(toonable)} / 미사용 {len(pool)})")
-            pool = solo
-        elif toonable:
-            print(f"[만화슬롯] 단편 panels 소진 — 시리즈 포함 {len(toonable)}편으로 좁힘")
-            pool = toonable
-        else:
-            print("[만화슬롯] panels 보유 편이 없음 — 전체 풀에서 뽑고 텍스트로 발행")
 
     weights = [CATEGORY_WEIGHTS.get(q["category"], 1.0) for q in pool]
     return random.choices(pool, weights=weights, k=1)[0]
@@ -364,7 +374,7 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     history = load_history(history_path)
     q = pick_question(history)
 
-    tags = " ".join(random.sample(HASHTAGS, 2))
+    tags = pick_hashtag(q["category"])
 
     if is_v2(q):
         # v2 썰 구조: hook(제목형 훅) + body(대사 포함 본문) + closing(썰 요청형 CTA)
@@ -393,6 +403,8 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
     return {
         "question_id": q["id"],
         "category": q["category"],
+        # 2026-10-16: 어떤 태그로 나갔는지 남겨야 나중에 효과를 잴 수 있다.
+        "hashtags": tags,
         # 2026-10-08: 4컷 만화용. 뱅크에 panels 가 있는 편만 만화로 나간다.
         "panels": q.get("panels"),
         "format": "v2" if is_v2(q) else "v1",
