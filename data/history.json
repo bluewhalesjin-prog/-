@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-08-25",
-      "question_id": "life_06",
-      "category": "라이프스타일",
-      "comment_type": "프로필유도:1",
-      "cta_index": "1",
-      "card_image": "data/cards/2026-08-25.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@90aa8af94e8a28c1005ccfab3f7c38202bf56c85/data/cards/2026-08-25.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/DcdbSpYgZut",
-      "post_ids": [
-        "18122953522880336",
-        "18125616499815383",
-        "17974407201103747"
-      ],
-      "instagram_published": true,
-      "instagram_media_id": "18082412159427548",
-      "instagram_permalink": "https://www.instagram.com/p/DcdbccqgSpX/"
-    },
-    {
       "date": "2026-08-26",
       "question_id": "taste_03",
       "category": "가벼운취향",
@@ -1832,6 +1813,27 @@
         "18109099751462518",
         "18017058258393863",
         "18115322918468823"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-17",
+      "slot": "evening",
+      "question_id": "v2_job_38",
+      "category": "직장생활",
+      "comment_type": "프로필유도:6",
+      "cta_index": "6",
+      "hashtags": "#직장생활",
+      "card_image": "data/cards/2026-10-17_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@28a1b9a91f6bdac5341616219a9f4ed47a8f34f0/data/cards/2026-10-17_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/Del5ajAD4b0",
+      "post_ids": [
+        "17957561664017695",
+        "18079740128719393",
+        "18438497863178727"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
