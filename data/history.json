@@ -1,24 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-08-29",
-      "question_id": "job_09",
-      "category": "직장생활",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": "data/cards/2026-08-29.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ac90f22a3733083860f938dc062a3e8cf9ecb95d/data/cards/2026-08-29.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/Dcnud-6oIco",
-      "post_ids": [
-        "18106837583167100",
-        "18467726437113642",
-        "18350610091171397"
-      ],
-      "instagram_published": false,
-      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
-    },
-    {
       "date": "2026-08-30",
       "question_id": "job_06",
       "category": "직장생활",
@@ -1843,6 +1825,27 @@
         "18009323558992607",
         "17910884199312496",
         "18131901904801212"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-19",
+      "slot": "evening",
+      "question_id": "s_insa_03",
+      "category": "직장생활",
+      "comment_type": "프로필유도:9",
+      "cta_index": "9",
+      "hashtags": "#직장인썰",
+      "card_image": "data/cards/2026-10-19_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@1c8ee982478b4465d534f9ea64bf284d0ac356af/data/cards/2026-10-19_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DerDA8uDwM6",
+      "post_ids": [
+        "18156345961518595",
+        "18200120362340318",
+        "18339472096259249"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
