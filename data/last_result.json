@@ -1,20 +1,20 @@
 {
   "date": "2026-10-21",
-  "slot": "morning",
-  "question_id": "v2_love_20",
-  "category": "연애",
-  "comment_type": "프로필유도:8",
-  "cta_index": "8",
+  "slot": "evening",
+  "question_id": "v2_fam_03",
+  "category": "가족시댁",
+  "comment_type": "프로필유도:4",
+  "cta_index": "4",
   "hashtags": "#썰",
   "card_image": "data/cards/2026-10-21_toon.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@78415ede357f0f7cb81c9742947d910eb3486bfa/data/cards/2026-10-21_toon.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ef2b312326770ad751f088ded797b2823a71a245/data/cards/2026-10-21_toon.png",
   "parts_count": 2,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/Deu9otrAXM7",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/DewMmS9D6cD",
   "post_ids": [
-    "18111228257186478",
-    "18081772346348194",
-    "18117759437045071"
+    "17994128387847507",
+    "17926209417202949",
+    "17965471878232138"
   ],
   "instagram_published": false,
   "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"

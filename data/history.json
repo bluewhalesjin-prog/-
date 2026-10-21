@@ -1,24 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-09-02",
-      "question_id": "life_09",
-      "category": "라이프스타일",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": "data/cards/2026-09-02.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a5b3d155ba4d5efebdd78d82b88ad6c04a780518/data/cards/2026-09-02.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/DcyBpk2j_Sl",
-      "post_ids": [
-        "18084204566275674",
-        "18112475125817377",
-        "18198596014335954"
-      ],
-      "instagram_published": false,
-      "instagram_error": "403 Client Error: Forbidden for url: https://graph.instagram.com/v21.0/27234184232926296/media_publish"
-    },
-    {
       "date": "2026-09-03",
       "question_id": "job_08",
       "category": "직장생활",
@@ -1855,6 +1837,27 @@
         "18111228257186478",
         "18081772346348194",
         "18117759437045071"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-21",
+      "slot": "evening",
+      "question_id": "v2_fam_03",
+      "category": "가족시댁",
+      "comment_type": "프로필유도:4",
+      "cta_index": "4",
+      "hashtags": "#썰",
+      "card_image": "data/cards/2026-10-21_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@ef2b312326770ad751f088ded797b2823a71a245/data/cards/2026-10-21_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DewMmS9D6cD",
+      "post_ids": [
+        "17994128387847507",
+        "17926209417202949",
+        "17965471878232138"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
