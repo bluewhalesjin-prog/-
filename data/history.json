@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-09-06",
-      "question_id": "life_03",
-      "category": "라이프스타일",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": "data/cards/2026-09-06.png",
-      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@a1ebfa0b2cde5047ab8180690c75595dba7e0c26/data/cards/2026-09-06.png",
-      "published": true,
-      "permalink": "https://www.threads.com/@pick1_daily/post/Dc8U0_XIAH0",
-      "post_ids": [
-        "18008519114965091",
-        "17966495754157429",
-        "17940339231343706"
-      ],
-      "instagram_published": true,
-      "instagram_media_id": "18128332954836068",
-      "instagram_permalink": "https://www.instagram.com/p/Dc8U8eBIM91/"
-    },
-    {
       "date": "2026-09-07",
       "question_id": "love_02",
       "category": "연애",
@@ -1864,6 +1845,27 @@
         "18100948685455660",
         "18421883581152644",
         "18139293442526896"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-23",
+      "slot": "morning",
+      "question_id": "s_dongban_01",
+      "category": "직장생활",
+      "comment_type": "프로필유도:9",
+      "cta_index": "9",
+      "hashtags": "#직장생활",
+      "card_image": "data/cards/2026-10-23_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@1f5e734b030118df98d91d18a87cec1cede3f128/data/cards/2026-10-23_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/De0HOORgWT1",
+      "post_ids": [
+        "18004954640990462",
+        "18219847471343244",
+        "18103664972635243"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
