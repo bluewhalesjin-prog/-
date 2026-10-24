@@ -1,23 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-09-09",
-      "slot": "morning",
-      "question_id": "v2_love_04",
-      "category": "연애",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": null,
-      "image_url": null,
-      "published": true,
-      "permalink": "https://www.threads.com/@ssuldaeri/post/DdC0Pcfge1i",
-      "post_ids": [
-        "18141149395514274"
-      ],
-      "instagram_published": false,
-      "instagram_skipped_reason": "slot=morning (아침 슬롯은 텍스트 전용)"
-    },
-    {
       "date": "2026-09-10",
       "slot": "morning",
       "question_id": "v2_job_15",
@@ -1870,6 +1853,27 @@
         "18195706498359452",
         "18020690729939985",
         "18038705531902876"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-24",
+      "slot": "evening",
+      "question_id": "v2_love_21",
+      "category": "연애",
+      "comment_type": "프로필유도:0",
+      "cta_index": "0",
+      "hashtags": "#연애",
+      "card_image": "data/cards/2026-10-24_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@430c73fd5ec02e2d742f604f6990ccd0eec52e10/data/cards/2026-10-24_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/De36_Bkj7Iv",
+      "post_ids": [
+        "18112465214182439",
+        "17978077161168575",
+        "18048963800819844"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
