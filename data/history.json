@@ -2,23 +2,6 @@
   "entries": [
     {
       "date": "2026-09-10",
-      "slot": "morning",
-      "question_id": "v2_job_15",
-      "category": "직장생활",
-      "comment_type": "무댓글",
-      "cta_index": null,
-      "card_image": null,
-      "image_url": null,
-      "published": true,
-      "permalink": "https://www.threads.com/@ssuldaeri/post/DdFrV66D0Of",
-      "post_ids": [
-        "18114853975969327"
-      ],
-      "instagram_published": false,
-      "instagram_skipped_reason": "slot=morning (아침 슬롯은 텍스트 전용)"
-    },
-    {
-      "date": "2026-09-10",
       "slot": "evening",
       "question_id": "s_ijik_01",
       "category": "직장생활",
@@ -1874,6 +1857,27 @@
         "18112465214182439",
         "17978077161168575",
         "18048963800819844"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-25",
+      "slot": "morning",
+      "question_id": "s_dongup_01",
+      "category": "직장생활",
+      "comment_type": "프로필유도:1",
+      "cta_index": "1",
+      "hashtags": "#직장생활",
+      "card_image": "data/cards/2026-10-25_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@cddae0ce5f18deda3a613cc8bd6bc9eff44ab454/data/cards/2026-10-25_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/De5Q0kGgRrS",
+      "post_ids": [
+        "17911496766479287",
+        "17912879595504734",
+        "18118572437059049"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
