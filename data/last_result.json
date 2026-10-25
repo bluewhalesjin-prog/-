@@ -1,20 +1,20 @@
 {
-  "date": "2026-10-25",
-  "slot": "evening",
-  "question_id": "s_dongup_02",
+  "date": "2026-10-26",
+  "slot": "morning",
+  "question_id": "s_dongup_03",
   "category": "직장생활",
-  "comment_type": "프로필유도:9",
-  "cta_index": "9",
-  "hashtags": "#직장생활",
-  "card_image": "data/cards/2026-10-25_toon.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@9abc104f6f2ce250037b862f4764215e3a0f55c5/data/cards/2026-10-25_toon.png",
+  "comment_type": "프로필유도:8",
+  "cta_index": "8",
+  "hashtags": "#직장인썰",
+  "card_image": "data/cards/2026-10-26_toon.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@1ec479a405c5ab94c85ef4192edf6706a5a504f0/data/cards/2026-10-26_toon.png",
   "parts_count": 2,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/De6fxYJD3_3",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/De71nAXgTpV",
   "post_ids": [
-    "18031507619687853",
-    "17936288724401974",
-    "18097771478131247"
+    "18115755536145304",
+    "18113105372333303",
+    "18120780061943010"
   ],
   "instagram_published": false,
   "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
