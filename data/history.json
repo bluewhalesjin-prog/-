@@ -2,27 +2,6 @@
   "entries": [
     {
       "date": "2026-09-12",
-      "slot": "morning",
-      "question_id": "v2_job_04",
-      "category": "직장생활",
-      "comment_type": "프로필유도:0",
-      "cta_index": "0",
-      "card_image": null,
-      "image_url": null,
-      "parts_count": 3,
-      "published": true,
-      "permalink": "https://www.threads.com/@ssuldaeri/post/DdKioGPAc00",
-      "post_ids": [
-        "18166421467468236",
-        "17893250454416726",
-        "18148219426549279",
-        "18132957937779481"
-      ],
-      "instagram_published": false,
-      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
-    },
-    {
-      "date": "2026-09-12",
       "slot": "evening",
       "question_id": "s_sasu_01",
       "category": "직장생활",
@@ -1880,6 +1859,27 @@
         "18111603773136744",
         "18099623984400355",
         "18570911623076291"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-27",
+      "slot": "morning",
+      "question_id": "v2_love_31",
+      "category": "연애",
+      "comment_type": "프로필유도:3",
+      "cta_index": "3",
+      "hashtags": "#연애",
+      "card_image": "data/cards/2026-10-27_toon.png",
+      "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@09406b76c9bd07d9f1e6985aea3fcecddb7628b5/data/cards/2026-10-27_toon.png",
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/De-aZi7gTwo",
+      "post_ids": [
+        "18132770428818256",
+        "18152571628549545",
+        "18120562802061159"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
