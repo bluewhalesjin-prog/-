@@ -1,20 +1,20 @@
 {
   "date": "2026-10-26",
-  "slot": "morning",
-  "question_id": "s_dongup_03",
-  "category": "직장생활",
-  "comment_type": "프로필유도:8",
-  "cta_index": "8",
-  "hashtags": "#직장인썰",
+  "slot": "evening",
+  "question_id": "v2_nbr_04",
+  "category": "친구이웃",
+  "comment_type": "프로필유도:5",
+  "cta_index": "5",
+  "hashtags": "#인간관계",
   "card_image": "data/cards/2026-10-26_toon.png",
-  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@1ec479a405c5ab94c85ef4192edf6706a5a504f0/data/cards/2026-10-26_toon.png",
+  "image_url": "https://cdn.jsdelivr.net/gh/bluewhalesjin-prog/-@e3d3fda3df977759143933a1c6d58218c4abc9ea/data/cards/2026-10-26_toon.png",
   "parts_count": 2,
   "published": true,
-  "permalink": "https://www.threads.com/@ssuldaeri/post/De71nAXgTpV",
+  "permalink": "https://www.threads.com/@ssuldaeri/post/De9EkoQj7k4",
   "post_ids": [
-    "18115755536145304",
-    "18113105372333303",
-    "18120780061943010"
+    "18111603773136744",
+    "18099623984400355",
+    "18570911623076291"
   ],
   "instagram_published": false,
   "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
