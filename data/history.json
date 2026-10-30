@@ -1,27 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-09-15",
-      "slot": "evening",
-      "question_id": "v2_job_03",
-      "category": "직장생활",
-      "comment_type": "프로필유도:1",
-      "cta_index": "1",
-      "card_image": null,
-      "image_url": null,
-      "parts_count": 3,
-      "published": true,
-      "permalink": "https://www.threads.com/@ssuldaeri/post/DdTf-lyj7QR",
-      "post_ids": [
-        "18109886246157646",
-        "18015923585929323",
-        "18344676451268791",
-        "18103305173523225"
-      ],
-      "instagram_published": false,
-      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
-    },
-    {
       "date": "2026-09-16",
       "slot": "morning",
       "question_id": "v2_job_06",
@@ -1885,6 +1864,26 @@
         "17971426601961332",
         "18120658234756339",
         "18134211133782313"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-10-30",
+      "slot": "evening",
+      "question_id": "rt_20261030",
+      "category": "직장생활",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "hashtags": "#직장생활",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DfHXvkwjyzH",
+      "post_ids": [
+        "17913188019555230",
+        "18125977798898053"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
