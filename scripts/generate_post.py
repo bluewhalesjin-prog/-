@@ -250,6 +250,16 @@ def pick_question(history: dict) -> dict:
             "question_bank_v2.py에 새 글을 추가하세요."
         )
 
+    # 2026-10-30: 실시간 썰 최우선.
+    #   매일 예약 작업이 스레드 검색과 네이트판 회사생활에서 그날 소재를 읽고
+    #   써서 fresh=True 로 뱅크에 넣는다. 시의성이 생명이라 재고보다 먼저 나간다.
+    #   여러 편이 밀려 있으면 먼저 쓴 것부터 소진한다.
+    #   기존 재고 32편은 생성이 실패한 날의 대체분이다.
+    #   되돌리려면 이 블록만 지우면 된다.
+    fresh = [q for q in unused if q.get("fresh")]
+    if fresh:
+        return sorted(fresh, key=lambda q: (q.get("written_on") or "", q["id"]))[0]
+
     # 시리즈 후속화는 next_series_episode()로만 나가야 하므로 일반 추첨에서 제외
     pool = [q for q in unused if (q.get("ep") or 1) == 1]
     if not pool:

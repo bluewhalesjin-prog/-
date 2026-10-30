@@ -37,10 +37,13 @@ from datetime import datetime
 BANK_PATH = "scripts/question_bank_v2.py"
 FOLDER_NAME = "쓰레드 100만 팔로워 달성하기"
 
+# 2026-10-30: fresh / written_on 추가.
+#   실시간으로 쓴 썰임을 표시한다. generate_post.pick_question 이 이걸 보고
+#   기존 재고보다 먼저 뽑는다. KEY_ORDER 에 없으면 뱅크에 안 적히므로 반드시 필요.
 KEY_ORDER = ["id", "category", "series", "ep", "ep_total",
              "hook", "body", "closing",
              "option_a", "option_a_sub", "option_b", "option_b_sub",
-             "panels"]
+             "panels", "fresh", "written_on"]
 
 
 def find_pending_dir():
