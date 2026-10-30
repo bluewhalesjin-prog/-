@@ -134,7 +134,10 @@ def fmt(q):
         f' "option_a": {g("option_a")}, "option_a_sub": {g("option_a_sub")},\n'
         f' "option_b": {g("option_b")}, "option_b_sub": {g("option_b_sub")},\n'
         # 2026-10-08: panels 를 안 적으면 병합 때 만화 데이터가 통째로 사라진다
-        f' "panels": {g("panels")}}},\n'
+        f' "panels": {g("panels")},\n'
+        # 2026-10-30: fresh/written_on 을 안 적으면 실시간 썰이 일반 재고로 묻힌다.
+        #   이 함수는 KEY_ORDER 를 쓰지 않는다. 키를 여기 직접 적어야 한다.
+        f' "fresh": {g("fresh")}, "written_on": {g("written_on")}}},\n'
     )
 
 

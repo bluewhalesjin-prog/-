@@ -1337,4 +1337,13 @@ V2_QUESTIONS = [
  "option_a": "회의 전에 짚는다", "option_a_sub": "내 원고가 어디 갔는지\n십오 년 지나도 모르잖아!",
  "option_b": "웃고 넘긴다", "option_b_sub": "거래처 사람이랑\n문집 얘기로 틀겠나!",
  "panels": [{"scene": "plain", "narration": "십오 년 만에 동창회에 갔음.", "chars": [["me", "normal"], ["peer", "normal"]], "speaker": 1, "line": "졸업문집 복사해 왔어."}, {"scene": "plain", "narration": "내 장래희망 칸 글씨가 달랐음.", "chars": [["me", "shock", "none", "shock"]], "speaker": 0, "line": "나는 교사라고 썼는데."}, {"scene": "plain", "narration": "옆자리 동창이 보고 웃었음.", "chars": [["me", "flat"], ["peer", "smug"]], "speaker": 1, "line": "그거 내가 대신 썼어."}, {"scene": "home", "narration": "집에 와서 문집을 다시 봤음.", "chars": [["me", "flat", "none", "dots"]], "speaker": 0, "line": "원고는 분명히 냈는데."}]},
+
+{"id": "rt_20261030", "category": "직장생활",
+ "series": None, "ep": None, "ep_total": None,
+ "hook": "연차 다 쓰라고 해서 썼더니 팀장이 노트북은 챙겨가라고 함",
+ "body": "10월 말에 인사팀 메일이 왔음. 남은 연차 11개, 12월 20일까지 안 쓰면 소멸, 수당 없음. 9년 다니면서 회사가 이렇게 내 휴식에 관심 가진 거 처음 봤음.\n\n그래서 다음 주 목금 이틀 올렸음. 팀장이 결재는 1분 만에 해주더니 자리로 부르더라.\n\n\"쉬는 건 쉬는 건데 메신저는 켜놔. 노트북도 챙기고. 급한 거 생기면 30분 안에만 봐주면 돼.\"\n\n옆자리 3년차 후배가 모니터 보면서 작게 말했음. \"저 작년에 연차 5개 그렇게 썼어요. 기록상으로만요.\"\n\n기록엔 휴가, 실제론 재택. 수당은 안 주고 일은 그대로 시키는 구조였던 거임.\n\n결국 노트북은 회사 서랍에 넣고 퇴근했음. 근데 목요일 아침 9시 3분에 폰으로 첫 메신저 옴.",
+ "closing": "연차 날 회사 메신저 받아본 사람? 첫 연락 몇 시에 왔는지 적어줘",
+ "option_a": "메신저 끈다", "option_a_sub": "연차는 연차임\n안 읽고 월요일에 본다!",
+ "option_b": "그냥 받는다", "option_b_sub": "어차피 월요일에 터짐\n30분만 보고 끈다!",
+ "panels": None, "fresh": True, "written_on": "2026-10-30"},
 ]
