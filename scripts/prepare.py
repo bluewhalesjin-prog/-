@@ -92,8 +92,15 @@ def main():
     # 아껴 쓸 이유가 없어졌다. panels 가 있으면 어느 슬롯이든 그린다.
     # 텍스트로 돌리고 싶으면 아래 TOON_EVERY_SLOT 를 False 로 바꾸면
     # 예전처럼 월·목 아침만 나간다.
+    # 2026-10-30: 만화를 끈다.
+    #   149만/83만이 나온 9/16~17 은 순수 텍스트였다.
+    #   만화는 10/8 도입, 10/16 전면 적용했고 그 뒤 일간 조회 중위가 98이다.
+    #   만화가 원인이라는 증거는 없다. 다만 효과가 확인된 적도 없어서,
+    #   회복 실험 동안에는 확실히 됐던 구성으로 되돌린다.
+    #   다시 켜려면 ENABLE_TOON 을 True 로 바꾸면 된다.
+    ENABLE_TOON = False
     TOON_EVERY_SLOT = True
-    _toon_day = TOON_EVERY_SLOT or (slot == "morning" and datetime.now().weekday() in (0, 3))
+    _toon_day = ENABLE_TOON and (TOON_EVERY_SLOT or (slot == "morning" and datetime.now().weekday() in (0, 3)))
     if _toon_day and thread.get("panels"):
         try:
             from toon_render import render_toon

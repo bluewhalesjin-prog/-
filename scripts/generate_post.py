@@ -123,12 +123,30 @@ def load_history(history_path: str) -> dict:
 
 # 카테고리별 선택 가중치. 실제 조회수 데이터상 직장생활 카테고리가 평균적으로
 # 반응이 좋아 살짝 더 자주 뽑히도록 하되, 완전히 몰아주지는 않는다(다양성 유지).
+# 2026-10-30: 주제를 "직장인이기 때문에 겪는 일" 하나로 좁혔다.
+#   근거 — 절벽 전(9/16~10/5) 45편 실측
+#     직장   24편  조회 중위 6,658  최대 1,470,406
+#     비직장 21편  조회 중위 2,340  최대   106,868
+#   10만 이상 터진 4편 중 3편이 직장이고, 백만 단위는 직장에서만 나왔다.
+#   계정명(썰대리)과 바이오(9년차 대리)도 직장이다. 화자가 며느리·형제가 되면
+#   독자도 알고리즘도 이 계정이 뭔지 모르게 된다.
+#
+#   비직장은 지우지 않는다. 발행에서만 뺀다. 되돌리려면 HOLD_CATEGORIES 를 비우면 된다.
 CATEGORY_WEIGHTS = {
-    "직장생활": 1.5,
-    "연애": 1.0,
-    "라이프스타일": 1.0,
-    "가벼운취향": 1.0,
+    "직장생활": 1.0,
 }
+
+HOLD_CATEGORIES = {
+    "연애", "라이프스타일", "가족시댁", "친구이웃", "가벼운취향", "와일드카드",
+}
+
+# 2026-10-30: CTA 전용 게시물 중단.
+#   이 댓글은 체인 마지막 게시물로 나가 프로필 피드에 한 칸을 차지한다.
+#   9/1 이후 약 90회 나갔고 전부 좋아요 0~1 이다.
+#   발행 게시물의 3분의 1이 반응 0인 홍보 글이었고, 그게 계정 평균
+#   참여율(누적 307만 조회에 0.146%)을 끌어내렸다.
+#   팔로우 유도는 2화 끝의 제보 안내가 이미 하고 있다.
+ENABLE_CTA_COMMENT = False
 
 
 PUBLISHED_LOG_PATH = "data/published_ids.json"
@@ -177,7 +195,8 @@ def published_ids(history: dict) -> list:
 def unused_questions(history: dict) -> list:
     """아직 한 번도 발행된 적 없는 질문 목록 (재고 감시용)."""
     used = set(published_ids(history))
-    return [q for q in QUESTIONS if q["id"] not in used]
+    return [q for q in QUESTIONS
+            if q["id"] not in used and q.get("category") not in HOLD_CATEGORIES]
 
 
 class SoldOutError(RuntimeError):
@@ -280,6 +299,9 @@ def pick_comment_type(history: dict, blog_url: str, today=None) -> tuple[str, st
       다만 비용이 0이라 먼저 켜두고, 일주일 뒤에 효과를 본다.
       절반씩 섞여 있으면 측정 자체가 안 된다.
     """
+    if not ENABLE_CTA_COMMENT:
+        return "무댓글", None
+
     entries = history.get("entries", [])
     today = today or datetime.now().date()
     week_start = today - timedelta(days=today.weekday())
