@@ -2,27 +2,6 @@
   "entries": [
     {
       "date": "2026-09-20",
-      "slot": "morning",
-      "question_id": "s_hubae_01",
-      "category": "직장생활",
-      "comment_type": "프로필유도:4",
-      "cta_index": "4",
-      "card_image": null,
-      "image_url": null,
-      "parts_count": 3,
-      "published": true,
-      "permalink": "https://www.threads.com/@ssuldaeri/post/DdfI_G4AbJQ",
-      "post_ids": [
-        "18072859805475432",
-        "18125574025868791",
-        "18026851001857767",
-        "18115212985796168"
-      ],
-      "instagram_published": false,
-      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
-    },
-    {
-      "date": "2026-09-20",
       "slot": "evening",
       "question_id": "s_hubae_02",
       "category": "직장생활",
@@ -1877,6 +1856,26 @@
       "post_ids": [
         "18111061679280121",
         "17989604238116342"
+      ],
+      "instagram_published": false,
+      "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
+    },
+    {
+      "date": "2026-11-08",
+      "slot": "evening",
+      "question_id": "rt_20261108",
+      "category": "직장생활",
+      "comment_type": "무댓글",
+      "cta_index": null,
+      "hashtags": "#직장인썰",
+      "card_image": null,
+      "image_url": null,
+      "parts_count": 2,
+      "published": true,
+      "permalink": "https://www.threads.com/@ssuldaeri/post/Dfei6QaDyZ1",
+      "post_ids": [
+        "18050187209821872",
+        "18113144111588059"
       ],
       "instagram_published": false,
       "instagram_skipped_reason": "Instagram 운영 중단 (ENABLE_INSTAGRAM 미설정)"
