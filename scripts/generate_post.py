@@ -148,6 +148,14 @@ HOLD_CATEGORIES = {
 #   팔로우 유도는 2화 끝의 제보 안내가 이미 하고 있다.
 ENABLE_CTA_COMMENT = False
 
+# 2026-11-13: 형식 리셋. 2부 체인 → 단일 글.
+#   10/30 이후 2주간 소재를 매일 바꿨지만 1화 좋아요 1~3, 외부 답글 0.
+#   지금 스레드에서 반응 받는 직장 썰은 전부 음슴체 단일 글이고
+#   접두어·A/B 블록·고지문이 없다. 우리 글은 매일 같은 틀이었다.
+#   각색 고지는 프로필 소개에 이미 있다.
+#   500자를 넘는 편만 예전 2부 방식으로 나간다. 되돌리려면 False.
+SINGLE_POST = True
+
 
 PUBLISHED_LOG_PATH = "data/published_ids.json"
 
@@ -425,10 +433,15 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         #   즉 반응 요청을 답글이 안 나오는 자리에 두고 있었다.
         #   A/B(3초면 답하는 낮은 문턱)는 100%가 보는 1화로,
         #   썰 요청(긴 답글)은 끝까지 읽은 사람이 보는 2화에 남긴다.
-        front, back = split_body_for_chain(body)
-        part1 = f"{headline}\n\n{front}\n\n{build_choice_block(q)}"
-        part2 = f"{back}\n\n{closing}\n\n{DISCLOSURE}\n\n{tags}"
-        part3 = ""
+        single = f"{hook}\n\n{body}\n\n{closing}\n\n{tags}"
+        if SINGLE_POST and len(single) <= 500:
+            full_text = single
+            part1, part2, part3 = single, "", ""
+        else:
+            front, back = split_body_for_chain(body)
+            part1 = f"{headline}\n\n{front}\n\n{build_choice_block(q)}"
+            part2 = f"{back}\n\n{closing}\n\n{DISCLOSURE}\n\n{tags}"
+            part3 = ""
         title = hook
     else:
         # v1 구조(구버전): setup 2줄 + 자동 생성 클로징
