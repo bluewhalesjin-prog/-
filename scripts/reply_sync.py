@@ -83,12 +83,12 @@ OUTBOX = "replies_outbox.json"
 LOGFILE = "replies_log.jsonl"
 FOLLOWERS_LOG = "followers_log.jsonl"
 
-MAX_PER_RUN = 2          # 한 번에 게시할 최대 개수 (5 → 2)
-MAX_PER_DAY = 4          # 하루 총량 (20 → 4)
+MAX_PER_RUN = 5          # 2026-11-15: 답글 전부 회신 (2 → 5)
+MAX_PER_DAY = 10         # 2026-11-15: 스팸 방지 상한만 남김 (4 → 10)
 LOOKBACK_DAYS = 3        # 최근 며칠 글까지 훑을지
 SCAN_LIMIT = 50          # 글 하나당 훑을 답글 수
 CAND_CAP = 60            # inbox에 넘길 후보 상한. Cowork가 좋아요 보고 다시 고른다
-MIN_LEN = 15             # 이보다 짧으면 회신할 말이 안 나온다 (6 → 15)
+MIN_LEN = 2              # 2026-11-15: 짧은 답글도 회신 대상 (15 → 2)
 
 # 이런 게 섞인 답글에는 회신하지 않는다. 잘못 엮이면 계정이 위험하다.
 BLOCK = re.compile(
@@ -267,10 +267,8 @@ def collect(token, me, folder):
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "account": me,
         "how_to_pick": (
-            "순위가 매겨져 있지 않다. 길이순일 뿐이다. "
-            "posts[].permalink 를 브라우저로 열어 답글별 좋아요를 직접 읽고, "
-            "좋아요가 가장 많은 1~2건에만 회신한다. "
-            "좋아요 10 미만이면 회신하지 않는다."
+            "2026-11-15부터 좋아요와 무관하게 후보 전부에 회신한다. "
+            "민감어는 수집 단계에서 이미 걸렀다."
         ),
         "posts": posts,
         "candidates": top,
