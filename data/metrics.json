@@ -5468,8 +5468,8 @@
       "replies": 1,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 144.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 168.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "18157679368523701",
@@ -5501,18 +5501,18 @@
       "hook": "막내 퇴사 사유서를 팀장이 사수인 나보고 대신 쓰라고 함",
       "permalink": "https://www.threads.com/@ssuldaeri/post/DfjsfzaDyPu",
       "parts_count": 2,
-      "views": 211,
-      "views_all_parts": 260,
+      "views": 214,
+      "views_all_parts": 263,
       "likes": 2,
       "replies": 1,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 120.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 144.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "18095858465176972",
-          "views": 211,
+          "views": 214,
           "likes": 1,
           "replies": 1,
           "reposts": 1,
@@ -5546,8 +5546,8 @@
       "replies": 1,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 96.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 120.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "18090796433285471",
@@ -5585,8 +5585,8 @@
       "replies": 1,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 72.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 96.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "17877350550650326",
@@ -5618,18 +5618,18 @@
       "hook": "작년 이맘때 인사팀이 남은 연차 다 쓰라길래 진짜 다 써봤음",
       "permalink": "https://www.threads.com/@ssuldaeri/post/Dfra4ciEyVw",
       "parts_count": 2,
-      "views": 92,
-      "views_all_parts": 103,
+      "views": 98,
+      "views_all_parts": 110,
       "likes": 2,
       "replies": 1,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 48.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 72.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "18118732841009213",
-          "views": 92,
+          "views": 98,
           "likes": 1,
           "replies": 1,
           "reposts": 1,
@@ -5638,7 +5638,7 @@
         },
         {
           "post_id": "18104892089437681",
-          "views": 11,
+          "views": 12,
           "likes": 1,
           "replies": 0,
           "reposts": 1,
@@ -5657,28 +5657,67 @@
       "hook": "팀장 실수가 임원 보고서에선 내 실수로 바뀌어 있었음",
       "permalink": "https://www.threads.com/@ssuldaeri/post/Dft_rOwE82a",
       "parts_count": 2,
-      "views": 301,
-      "views_all_parts": 379,
+      "views": 307,
+      "views_all_parts": 386,
       "likes": 4,
-      "replies": 2,
+      "replies": 3,
       "reposts": 2,
       "quotes": 0,
-      "age_h": 24.0,
-      "updated_at": "2026-11-15T19:30:33",
+      "age_h": 48.0,
+      "updated_at": "2026-11-16T19:30:20",
       "parts": [
         {
           "post_id": "17977435983158639",
-          "views": 301,
+          "views": 307,
           "likes": 2,
-          "replies": 2,
+          "replies": 3,
           "reposts": 1,
           "quotes": 0,
           "shares": 0
         },
         {
           "post_id": "18146281186594224",
-          "views": 78,
+          "views": 79,
           "likes": 2,
+          "replies": 0,
+          "reposts": 1,
+          "quotes": 0,
+          "shares": 0
+        }
+      ]
+    },
+    "2026-11-15__evening__rt_20261115": {
+      "question_id": "rt_20261115",
+      "date": "2026-11-15",
+      "slot": "evening",
+      "category": "직장생활",
+      "series": null,
+      "ep": null,
+      "hook": "퇴사 통보한 후배한테 팀장이 신규 프로젝트를 줬음",
+      "permalink": "https://www.threads.com/@ssuldaeri/post/DfwkeQVk1Wa",
+      "parts_count": 2,
+      "views": 50,
+      "views_all_parts": 56,
+      "likes": 3,
+      "replies": 4,
+      "reposts": 3,
+      "quotes": 0,
+      "age_h": 24.0,
+      "updated_at": "2026-11-16T19:30:20",
+      "parts": [
+        {
+          "post_id": "18486152359112421",
+          "views": 50,
+          "likes": 2,
+          "replies": 4,
+          "reposts": 2,
+          "quotes": 0,
+          "shares": 0
+        },
+        {
+          "post_id": "18091043462301396",
+          "views": 6,
+          "likes": 1,
           "replies": 0,
           "reposts": 1,
           "quotes": 0,
@@ -5957,6 +5996,11 @@
       "date": "2026-11-15",
       "at": "2026-11-15T19:30:33",
       "followers_count": 272
+    },
+    {
+      "date": "2026-11-16",
+      "at": "2026-11-16T19:30:20",
+      "followers_count": 273
     }
   ]
 }
