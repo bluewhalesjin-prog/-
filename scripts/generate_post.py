@@ -140,6 +140,10 @@ HOLD_CATEGORIES = {
     "연애", "라이프스타일", "가족시댁", "친구이웃", "가벼운취향", "와일드카드",
 }
 
+# 2026-11-27: 다체로 쓰인 예비 재고 20편 보류. 실시간 썰이 실패한 날의 대체분인데
+#   음슴체 계정에 "~했다"체 글이 섞이면 남의 얘기처럼 읽힌다. 삭제가 아니라 발행 제외.
+HOLD_IDS = set(["s_reference_01", "s_reference_02", "s_reference_03", "v2_job_34", "v2_job_35", "v2_job_37", "v2_job_39", "v2_job_40", "v2_job_42", "v2_job_43", "v2_job_44", "v2_job_45", "v2_job_47", "v2_job_48", "v2_job_49", "v2_job_50", "v2_job_51", "v2_job_52", "v2_job_53", "v2_job_54"])
+
 # 2026-10-30: CTA 전용 게시물 중단.
 #   이 댓글은 체인 마지막 게시물로 나가 프로필 피드에 한 칸을 차지한다.
 #   9/1 이후 약 90회 나갔고 전부 좋아요 0~1 이다.
@@ -215,7 +219,8 @@ def unused_questions(history: dict) -> list:
     """아직 한 번도 발행된 적 없는 질문 목록 (재고 감시용)."""
     used = set(published_ids(history))
     return [q for q in QUESTIONS
-            if q["id"] not in used and q.get("category") not in HOLD_CATEGORIES]
+            if q["id"] not in used and q.get("category") not in HOLD_CATEGORIES
+            and q["id"] not in HOLD_IDS]
 
 
 class SoldOutError(RuntimeError):

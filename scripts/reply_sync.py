@@ -64,6 +64,7 @@ GET /{id}/insights 는 내 소유 미디어만 조회된다. 후보 답글은 �
 """
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -395,7 +396,9 @@ def publish(token, me, me_id, folder, dry_run=False):
             }, ensure_ascii=False) + "\n")
         print(f"[publish] 완료 → @{item.get('username')} "
               f"(상대 답글 좋아요 {item.get('their_likes', '?')})")
-        time.sleep(2)
+        # 2026-11-27: 2초 간격 연속 게시 → 1~3분 무작위. 사람이 이렇게 몰아서 답하지 않는다.
+        if done < room:
+            time.sleep(random.uniform(60, 180))
 
     save_json(REPLIED_PATH, sorted(replied))
     if kept:
