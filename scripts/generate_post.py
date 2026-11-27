@@ -156,6 +156,17 @@ ENABLE_CTA_COMMENT = False
 #   500자를 넘는 편만 예전 2부 방식으로 나간다. 되돌리려면 False.
 SINGLE_POST = True
 
+# 2026-11-27: 글 끝 정체성 한 줄.
+#   30일간 비팔로워 29만 명이 봤는데 순 팔로워 +11. 팔로우할 이유를 안 줬다.
+#   별도 CTA 글(9월, 반응 0)과 달리 본문 안에 붙인다. 날짜로 돌려 연속 중복을 피한다.
+#   넣으면 500자를 넘는 편은 이 줄만 빼고 나간다. 되돌리려면 False.
+ENABLE_IDENTITY = True
+IDENTITY_LINES = [
+    "9년차 대리가 회사에서 주워들은 썰, 매일 저녁 7시 반에 하나씩 풀고 있음",
+    "회사에서 주워들은 썰 매일 저녁 7시 반에 올림. 9년차 대리임",
+    "9년차 대리의 회사 썰, 매일 저녁 7시 반에 하나씩 나옴",
+]
+
 
 PUBLISHED_LOG_PATH = "data/published_ids.json"
 
@@ -434,6 +445,11 @@ def build_thread(history_path: str, blog_url: str, today=None) -> dict:
         #   A/B(3초면 답하는 낮은 문턱)는 100%가 보는 1화로,
         #   썰 요청(긴 답글)은 끝까지 읽은 사람이 보는 2화에 남긴다.
         single = f"{hook}\n\n{body}\n\n{closing}\n\n{tags}"
+        if ENABLE_IDENTITY:
+            ident = IDENTITY_LINES[datetime.now().timetuple().tm_yday % len(IDENTITY_LINES)]
+            with_id = f"{hook}\n\n{body}\n\n{closing}\n\n{ident}\n\n{tags}"
+            if len(with_id) <= 500:
+                single = with_id
         if SINGLE_POST and len(single) <= 500:
             full_text = single
             part1, part2, part3 = single, "", ""

@@ -84,7 +84,7 @@ LOGFILE = "replies_log.jsonl"
 FOLLOWERS_LOG = "followers_log.jsonl"
 
 MAX_PER_RUN = 5          # 2026-11-15: 답글 전부 회신 (2 → 5)
-MAX_PER_DAY = 10         # 2026-11-15: 스팸 방지 상한만 남김 (4 → 10)
+MAX_PER_DAY = 20         # 2026-11-27: 글 하나에 답글 200개+. 10 → 20
 LOOKBACK_DAYS = 3        # 최근 며칠 글까지 훑을지
 SCAN_LIMIT = 50          # 글 하나당 훑을 답글 수
 CAND_CAP = 60            # inbox에 넘길 후보 상한. Cowork가 좋아요 보고 다시 고른다
